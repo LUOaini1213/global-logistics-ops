@@ -1,0 +1,13 @@
+rule,export_packaging,loading_at_seller,export_clearance,pre_carriage,unloading_export_terminal,loading_main_carriage,main_carriage,cargo_insurance,unloading_import_terminal,import_clearance,import_duty,import_tax,on_carriage,unloading_at_destination
+EXW,S,B,B,B,B,B,B,B,B,B,B,B,B,B
+FCA,S,S,S,B,B,B,B,B,B,B,B,B,B,B
+FCA_TERMINAL,S,S,S,S,B,B,B,B,B,B,B,B,B,B
+FAS,S,S,S,S,S,B,B,B,B,B,B,B,B,B
+FOB,S,S,S,S,S,S,B,B,B,B,B,B,B,B
+CFR,S,S,S,S,S,S,S,B,B,B,B,B,B,B
+CIF,S,S,S,S,S,S,S,S,B,B,B,B,B,B
+CPT,S,S,S,S,S,S,S,B,B,B,B,B,B,B
+CIP,S,S,S,S,S,S,S,S,B,B,B,B,B,B
+DAP,S,S,S,S,S,S,S,S,S,B,B,B,S,B
+DPU,S,S,S,S,S,S,S,S,S,B,B,B,S,S
+DDP,S,S,S,S,S,S,S,S,S,S,S,S,S,B

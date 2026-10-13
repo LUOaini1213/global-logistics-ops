@@ -1,0 +1,21 @@
+{
+  "air_vs_lcl_per_unit": {
+    "air": 103.5254380740126,
+    "air_premium_pct": 2.546483686430226,
+    "lcl": 100.95464452060185
+  },
+  "conservation_max_spread_usd": 5.820766091346741e-11,
+  "fcl_sg": {
+    "ddp_net": 1073563.5358546476,
+    "ddp_premium_pct": 9.018585073252078,
+    "exw_net": 984743.7546952472,
+    "fca_net": 984752.7695697901,
+    "gst": 88569.2492612811,
+    "non_ddp_spread_pct": 0.08377166354853571
+  },
+  "markup": 0.05,
+  "us_fob_basis_vs_cif_basis_duty": {
+    "cif_basis": 15086.868332749036,
+    "fob_basis": 15016.975
+  }
+}

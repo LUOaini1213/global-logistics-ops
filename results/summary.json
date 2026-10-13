@@ -1,0 +1,885 @@
+{
+  "inventory": {
+    "base_stock_vs_rQ_ocean_95_pct": 117.7622984483335,
+    "best": {
+      "air|base_stock": {
+        "at_95": {
+          "cost_hi": 537.9228117295922,
+          "cost_lo": 536.2554167554888,
+          "cost_total": 537.0891142425405,
+          "fill_rate": 0.955139208144599,
+          "on_hand": 108.26538227524202,
+          "z": 1.0
+        },
+        "unconstrained": {
+          "cost_total": 534.7888155407101,
+          "fill_rate": 0.9151417302308579,
+          "on_hand": 91.66925063972553,
+          "z": 0.75
+        }
+      },
+      "air|rQ": {
+        "at_95": {
+          "cost_hi": 416.635484233041,
+          "cost_lo": 414.3504673212432,
+          "cost_total": 415.4929757771421,
+          "fill_rate": 0.9556237209376031,
+          "on_hand": 189.28432334401134,
+          "z": 0.5
+        },
+        "unconstrained": {
+          "cost_total": 414.3411122857398,
+          "fill_rate": 0.9383015159073473,
+          "on_hand": 172.87123924203462,
+          "z": 0.25
+        }
+      },
+      "air|sS": {
+        "at_95": {
+          "cost_hi": 417.33966788195494,
+          "cost_lo": 414.04496700675725,
+          "cost_total": 415.6923174443561,
+          "fill_rate": 0.9597591988725828,
+          "on_hand": 200.53891122568402,
+          "z": 0.5
+        },
+        "unconstrained": {
+          "cost_total": 414.0438007937779,
+          "fill_rate": 0.9227265614442242,
+          "on_hand": 167.8171761096181,
+          "z": 0.0
+        }
+      },
+      "ocean|base_stock": {
+        "at_95": {
+          "cost_hi": 1353.571920694486,
+          "cost_lo": 1350.559506070962,
+          "cost_total": 1352.065713382724,
+          "fill_rate": 0.9767778153287126,
+          "on_hand": 227.52420636938922,
+          "z": 0.75
+        },
+        "unconstrained": {
+          "cost_total": 1346.5512617144884,
+          "fill_rate": 0.9202527621256358,
+          "on_hand": 166.9453335285047,
+          "z": 0.5
+        }
+      },
+      "ocean|rQ": {
+        "at_95": {
+          "cost_hi": 628.2344934858006,
+          "cost_lo": 613.5467726166203,
+          "cost_total": 620.8906330512104,
+          "fill_rate": 0.9501733735958192,
+          "on_hand": 485.57103931225737,
+          "z": 0.75
+        },
+        "unconstrained": {
+          "cost_total": 620.8906330512104,
+          "fill_rate": 0.9501733735958192,
+          "on_hand": 485.57103931225737,
+          "z": 0.75
+        }
+      },
+      "ocean|sS": {
+        "at_95": {
+          "cost_hi": 627.2647825698396,
+          "cost_lo": 614.325746385327,
+          "cost_total": 620.7952644775833,
+          "fill_rate": 0.9509245686509828,
+          "on_hand": 506.374447410756,
+          "z": 0.75
+        },
+        "unconstrained": {
+          "cost_total": 620.7952644775833,
+          "fill_rate": 0.9509245686509828,
+          "on_hand": 506.374447410756,
+          "z": 0.75
+        }
+      }
+    },
+    "breakeven_table": [
+      {
+        "cost_at_95": 147.98470458768014,
+        "mode": "ocean",
+        "unit_value": 50,
+        "z": 1.5
+      },
+      {
+        "cost_at_95": 294.90877267094163,
+        "mode": "air",
+        "unit_value": 50,
+        "z": 0.875
+      },
+      {
+        "cost_at_95": 225.8434947797622,
+        "mode": "ocean",
+        "unit_value": 100,
+        "z": 1.25
+      },
+      {
+        "cost_at_95": 316.24641413097504,
+        "mode": "air",
+        "unit_value": 100,
+        "z": 0.625
+      },
+      {
+        "cost_at_95": 301.4834801202199,
+        "mode": "ocean",
+        "unit_value": 150,
+        "z": 1.25
+      },
+      {
+        "cost_at_95": 336.0801427024886,
+        "mode": "air",
+        "unit_value": 150,
+        "z": 0.5
+      },
+      {
+        "cost_at_95": 367.0646377461288,
+        "mode": "ocean",
+        "unit_value": 200,
+        "z": 1.0
+      },
+      {
+        "cost_at_95": 351.75215708071784,
+        "mode": "air",
+        "unit_value": 200,
+        "z": 0.375
+      },
+      {
+        "cost_at_95": 435.1565620304476,
+        "mode": "ocean",
+        "unit_value": 250,
+        "z": 0.875
+      },
+      {
+        "cost_at_95": 367.28247548315557,
+        "mode": "air",
+        "unit_value": 250,
+        "z": 0.25
+      },
+      {
+        "cost_at_95": 496.9469321097795,
+        "mode": "ocean",
+        "unit_value": 300,
+        "z": 0.875
+      },
+      {
+        "cost_at_95": 384.8858599024692,
+        "mode": "air",
+        "unit_value": 300,
+        "z": 0.375
+      },
+      {
+        "cost_at_95": 620.523694766632,
+        "mode": "ocean",
+        "unit_value": 400,
+        "z": 0.875
+      },
+      {
+        "cost_at_95": 414.52939751533904,
+        "mode": "air",
+        "unit_value": 400,
+        "z": 0.5
+      },
+      {
+        "cost_at_95": 862.3409498825538,
+        "mode": "ocean",
+        "unit_value": 600,
+        "z": 0.875
+      },
+      {
+        "cost_at_95": 472.67217247771794,
+        "mode": "air",
+        "unit_value": 600,
+        "z": 0.5
+      }
+    ],
+    "breakeven_unit_value": 184.65964383577864,
+    "ocean_vs_air_rq_95": {
+      "air_cost_per_day": 415.4929757771421,
+      "air_minus_ocean_pct": -33.081133188415706,
+      "air_on_hand": 189.28432334401134,
+      "ocean_cost_per_day": 620.8906330512104,
+      "ocean_on_hand": 485.57103931225737
+    },
+    "seasonality": {
+      "flat_fill_rate": 0.9501733735958192,
+      "flat_monthly_fill": [
+        0.9524109252736809,
+        0.9583239297688901,
+        0.9565627032439776,
+        0.9571077162997851,
+        0.9498652529339708,
+        0.9382254819568125,
+        0.9472144546657357,
+        0.9563064853761746,
+        0.9284027917427116,
+        0.9567084430326113,
+        0.9512609340893414,
+        0.9503041144138767
+      ],
+      "index": [
+        0.9918469679495688,
+        0.9090567006974659,
+        1.0183173516602326,
+        0.9850898486799768,
+        1.0305802515927487,
+        1.00153055037186,
+        1.033563771688916,
+        1.0274343110203676,
+        0.9816653553098017,
+        1.0078023810383139,
+        0.9893356695974524,
+        1.0237768403932954
+      ],
+      "overall_seasonal_fill": 0.9496095121748018,
+      "seasonal_monthly_fill": [
+        0.9532200672070532,
+        0.9774700289009736,
+        0.9746600098152153,
+        0.9461634362109459,
+        0.9472615879590524,
+        0.9499387657129914,
+        0.9384587445198371,
+        0.9400067298655277,
+        0.9488881188469271,
+        0.9406442798693301,
+        0.9518837887061363,
+        0.9295014568612368
+      ],
+      "worst_month": 12,
+      "worst_month_fill": 0.9295014568612368
+    },
+    "zgrid": [
+      -0.5,
+      -0.25,
+      0.0,
+      0.25,
+      0.5,
+      0.75,
+      1.0,
+      1.25,
+      1.5,
+      1.75,
+      2.0,
+      2.25,
+      2.5,
+      2.75,
+      3.0
+    ]
+  },
+  "inventory_validation": {
+    "days": 20000,
+    "lead_time": 10,
+    "max_abs_fill_rate_diff_pp": 0.02707140329952784,
+    "max_balance_error": 2.3302959561988246e-10,
+    "max_pipeline_error": 6.821210263296962e-13,
+    "n_checks": 20,
+    "n_pass_3se": 20,
+    "n_within_95ci": 19,
+    "random_lt_formula": [
+      {
+        "mode": "ocean",
+        "sim_csl": 0.993125,
+        "sim_fill_rate": 0.9956332207786108,
+        "target_csl": 0.8413447460685429,
+        "z": 1.0
+      },
+      {
+        "mode": "ocean",
+        "sim_csl": 0.9999500000000001,
+        "sim_fill_rate": 0.9999677996942982,
+        "target_csl": 0.9500150944608786,
+        "z": 1.645
+      },
+      {
+        "mode": "ocean",
+        "sim_csl": 1.0,
+        "sim_fill_rate": 1.0,
+        "target_csl": 0.9899907246591323,
+        "z": 2.326
+      },
+      {
+        "mode": "air",
+        "sim_csl": 0.9183625,
+        "sim_fill_rate": 0.9572620426365173,
+        "target_csl": 0.8413447460685429,
+        "z": 1.0
+      },
+      {
+        "mode": "air",
+        "sim_csl": 0.9876000000000001,
+        "sim_fill_rate": 0.9942602260303804,
+        "target_csl": 0.9500150944608786,
+        "z": 1.645
+      },
+      {
+        "mode": "air",
+        "sim_csl": 0.9987874999999999,
+        "sim_fill_rate": 0.9995738911232547,
+        "target_csl": 0.9899907246591323,
+        "z": 2.326
+      }
+    ],
+    "reps": 20
+  },
+  "landed": {
+    "air_vs_lcl_per_unit": {
+      "air": 103.5254380740126,
+      "air_premium_pct": 2.546483686430226,
+      "lcl": 100.95464452060185
+    },
+    "conservation_max_spread_usd": 5.820766091346741e-11,
+    "fcl_sg": {
+      "ddp_net": 1073563.5358546476,
+      "ddp_premium_pct": 9.018585073252078,
+      "exw_net": 984743.7546952472,
+      "fca_net": 984752.7695697901,
+      "gst": 88569.2492612811,
+      "non_ddp_spread_pct": 0.08377166354853571
+    },
+    "markup": 0.05,
+    "us_fob_basis_vs_cif_basis_duty": {
+      "cif_basis": 15086.868332749036,
+      "fob_basis": 15016.975
+    }
+  },
+  "public": {
+    "annual_totals_thousand_teu": {
+      "1995": 11846.029999999999,
+      "1996": 12944.48,
+      "1997": 14135.880000000001,
+      "1998": 15135.550000000001,
+      "1999": 15944.8,
+      "2000": 17086.91,
+      "2001": 15571.09,
+      "2002": 16940.929999999997,
+      "2003": 18410.47,
+      "2004": 21329.11,
+      "2005": 23192.210000000003,
+      "2006": 24792.37,
+      "2007": 27935.46,
+      "2008": 29918.27,
+      "2009": 25866.57,
+      "2010": 28431.119999999995,
+      "2011": 29937.690000000002,
+      "2012": 31649.36,
+      "2013": 32578.69,
+      "2014": 33869.259999999995,
+      "2015": 30922.260000000002,
+      "2016": 30903.640000000003,
+      "2017": 33666.55,
+      "2018": 36599.270000000004,
+      "2019": 37255.97,
+      "2020": 36942.35,
+      "2021": 37571.200000000004,
+      "2022": 37289.590000000004,
+      "2023": 39012.950000000004,
+      "2024": 41124.04,
+      "2025": 44663.71
+    },
+    "feb_index": 0.9090567006974659,
+    "meta": {
+      "accessed": "2026-10-13",
+      "attribution": "Contains information from Container Throughput, Monthly accessed on 2026-10-13 from data.gov.sg (Maritime and Port Authority of Singapore) which is made available under the terms of the Singapore Open Data Licence version 1.0 https://data.gov.sg/open-data-licence",
+      "dataset": "Container Throughput, Monthly",
+      "dataset_id": "d_da030f7028200d19ffcbe4a2d71af39c",
+      "licence": "Singapore Open Data Licence version 1.0, https://data.gov.sg/open-data-licence",
+      "publisher": "Maritime and Port Authority of Singapore (via data.gov.sg)",
+      "rows": 380,
+      "unit_note": "Values are TEU in thousands. Inferred, not stated on the dataset page: the 2024 monthly values sum to 41,124.0, matching SingStat's 2024 total of 41,124.1 thousand TEU. Latest month is a preliminary estimate per the publisher.",
+      "url": "https://data.gov.sg/datasets/d_da030f7028200d19ffcbe4a2d71af39c/view"
+    },
+    "seasonal_index": [
+      0.9918469679495688,
+      0.9090567006974659,
+      1.0183173516602326,
+      0.9850898486799768,
+      1.0305802515927487,
+      1.00153055037186,
+      1.033563771688916,
+      1.0274343110203676,
+      0.9816653553098017,
+      1.0078023810383139,
+      0.9893356695974524,
+      1.0237768403932954
+    ]
+  },
+  "reverse": {
+    "finite_difference_penang": 8.944000000017695,
+    "greedy_net_value": 357298.0,
+    "lp_vs_greedy_gain_pct": 3.4072398949896163,
+    "net_value": 369472.0,
+    "no_cross_border": {
+      "loss_pct": 1.2405089785784504,
+      "net_value": 364888.6666666666
+    },
+    "refurb_threshold_price": 50,
+    "shadow_price_market_cap": 21.700000000000017,
+    "shadow_price_penang_capacity": 8.94399999999999,
+    "summary": {
+      "cross_border_waste_units": 333.33333333333314,
+      "overflow": 0.0,
+      "parts": 0.0,
+      "recycled": 4850.0,
+      "recycler_utilisation": {
+        "ID recycler": 1.0,
+        "MY recycler": 0.7881481481481479,
+        "PH recycler": 1.0,
+        "SG recycler": 0.7208888888888888,
+        "TH recycler": 0.7916666666666666
+      },
+      "refurb_share_A": 0.9999999999999998,
+      "refurb_share_B": 0.10666666666666674,
+      "refurb_utilisation": {
+        "Penang refurb": 0.9999999999999998,
+        "Singapore refurb": 0.9444444444444445
+      },
+      "resold": 3800.0,
+      "returns": {
+        "A": 4000,
+        "B": 2500,
+        "C": 2150
+      }
+    }
+  },
+  "slotting": {
+    "lambda_star": 0.5,
+    "lambda_tuning": [
+      {
+        "dev_mean_travel_m": 78.41642222222224,
+        "lambda": 0.0
+      },
+      {
+        "dev_mean_travel_m": 70.94615555555555,
+        "lambda": 0.25
+      },
+      {
+        "dev_mean_travel_m": 70.54171111111111,
+        "lambda": 0.5
+      },
+      {
+        "dev_mean_travel_m": 70.74393333333335,
+        "lambda": 1.0
+      },
+      {
+        "dev_mean_travel_m": 70.92022222222222,
+        "lambda": 2.0
+      }
+    ],
+    "large": {
+      "red_vs_abc": {
+        "heuristic": {
+          "return": {
+            "hi": 26.03,
+            "lo": 24.46,
+            "mean": 25.24,
+            "n": 20,
+            "sd": 1.68
+          },
+          "s_shape": {
+            "hi": 21.84,
+            "lo": 20.57,
+            "mean": 21.2,
+            "n": 20,
+            "sd": 1.36
+          }
+        },
+        "random": {
+          "return": {
+            "hi": -74.85,
+            "lo": -81.25,
+            "mean": -78.05,
+            "n": 20,
+            "sd": 6.84
+          },
+          "s_shape": {
+            "hi": -53.5,
+            "lo": -58.47,
+            "mean": -55.99,
+            "n": 20,
+            "sd": 5.32
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 20.1,
+            "lo": 18.3,
+            "mean": 19.2,
+            "n": 20,
+            "sd": 1.92
+          },
+          "s_shape": {
+            "hi": 13.88,
+            "lo": 12.2,
+            "mean": 13.04,
+            "n": 20,
+            "sd": 1.8
+          }
+        }
+      },
+      "red_vs_random": {
+        "abc": {
+          "return": {
+            "hi": 44.76,
+            "lo": 42.76,
+            "mean": 43.76,
+            "n": 20,
+            "sd": 2.13
+          },
+          "s_shape": {
+            "hi": 36.84,
+            "lo": 34.8,
+            "mean": 35.82,
+            "n": 20,
+            "sd": 2.17
+          }
+        },
+        "heuristic": {
+          "return": {
+            "hi": 58.69,
+            "lo": 57.25,
+            "mean": 57.97,
+            "n": 20,
+            "sd": 1.53
+          },
+          "s_shape": {
+            "hi": 50.21,
+            "lo": 48.67,
+            "mean": 49.44,
+            "n": 20,
+            "sd": 1.64
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 55.37,
+            "lo": 53.77,
+            "mean": 54.57,
+            "n": 20,
+            "sd": 1.71
+          },
+          "s_shape": {
+            "hi": 45.13,
+            "lo": 43.26,
+            "mean": 44.2,
+            "n": 20,
+            "sd": 1.99
+          }
+        }
+      },
+      "travel": {
+        "abc": {
+          "return": {
+            "hi": 81.22,
+            "lo": 79.33,
+            "mean": 80.27,
+            "n": 20,
+            "sd": 2.02
+          },
+          "s_shape": {
+            "hi": 91.06,
+            "lo": 89.44,
+            "mean": 90.25,
+            "n": 20,
+            "sd": 1.74
+          }
+        },
+        "heuristic": {
+          "return": {
+            "hi": 60.82,
+            "lo": 59.18,
+            "mean": 60.0,
+            "n": 20,
+            "sd": 1.76
+          },
+          "s_shape": {
+            "hi": 71.8,
+            "lo": 70.41,
+            "mean": 71.11,
+            "n": 20,
+            "sd": 1.49
+          }
+        },
+        "random": {
+          "return": {
+            "hi": 144.02,
+            "lo": 141.6,
+            "mean": 142.81,
+            "n": 20,
+            "sd": 2.58
+          },
+          "s_shape": {
+            "hi": 142.11,
+            "lo": 139.3,
+            "mean": 140.7,
+            "n": 20,
+            "sd": 3.0
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 65.77,
+            "lo": 63.93,
+            "mean": 64.85,
+            "n": 20,
+            "sd": 1.97
+          },
+          "s_shape": {
+            "hi": 79.32,
+            "lo": 77.63,
+            "mean": 78.47,
+            "n": 20,
+            "sd": 1.81
+          }
+        }
+      }
+    },
+    "large_instance": {
+      "seeds": 20,
+      "skus": 1000,
+      "slots": 1200,
+      "test_orders_per_seed": 3000
+    },
+    "small": {
+      "milp": {
+        "heuristic_gap_pct": {
+          "hi": 1.277,
+          "lo": -0.023,
+          "mean": 0.627,
+          "n": 10,
+          "sd": 0.908
+        },
+        "max_heuristic_gap_pct": 2.3686512084301854,
+        "max_mip_gap": 2.755555932226223e-07,
+        "mean_runtime_s": 4.635959458351135,
+        "n": 10,
+        "n_binaries": 954,
+        "n_optimal": 10,
+        "n_pairs": 30
+      },
+      "red_vs_abc": {
+        "heuristic": {
+          "return": {
+            "hi": 15.43,
+            "lo": 8.94,
+            "mean": 12.19,
+            "n": 10,
+            "sd": 4.54
+          },
+          "s_shape": {
+            "hi": 12.88,
+            "lo": 8.01,
+            "mean": 10.45,
+            "n": 10,
+            "sd": 3.41
+          }
+        },
+        "milp": {
+          "return": {
+            "hi": 16.05,
+            "lo": 10.16,
+            "mean": 13.11,
+            "n": 10,
+            "sd": 4.12
+          },
+          "s_shape": {
+            "hi": 13.43,
+            "lo": 8.94,
+            "mean": 11.18,
+            "n": 10,
+            "sd": 3.14
+          }
+        },
+        "random": {
+          "return": {
+            "hi": -66.38,
+            "lo": -101.36,
+            "mean": -83.87,
+            "n": 10,
+            "sd": 24.45
+          },
+          "s_shape": {
+            "hi": -59.86,
+            "lo": -98.57,
+            "mean": -79.22,
+            "n": 10,
+            "sd": 27.06
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 12.63,
+            "lo": 7.25,
+            "mean": 9.94,
+            "n": 10,
+            "sd": 3.76
+          },
+          "s_shape": {
+            "hi": 11.02,
+            "lo": 6.75,
+            "mean": 8.88,
+            "n": 10,
+            "sd": 2.99
+          }
+        }
+      },
+      "red_vs_random": {
+        "abc": {
+          "return": {
+            "hi": 49.85,
+            "lo": 39.71,
+            "mean": 44.78,
+            "n": 10,
+            "sd": 7.08
+          },
+          "s_shape": {
+            "hi": 48.66,
+            "lo": 37.7,
+            "mean": 43.18,
+            "n": 10,
+            "sd": 7.66
+          }
+        },
+        "heuristic": {
+          "return": {
+            "hi": 56.18,
+            "lo": 46.91,
+            "mean": 51.55,
+            "n": 10,
+            "sd": 6.48
+          },
+          "s_shape": {
+            "hi": 53.98,
+            "lo": 44.39,
+            "mean": 49.18,
+            "n": 10,
+            "sd": 6.7
+          }
+        },
+        "milp": {
+          "return": {
+            "hi": 56.42,
+            "lo": 47.73,
+            "mean": 52.07,
+            "n": 10,
+            "sd": 6.07
+          },
+          "s_shape": {
+            "hi": 54.3,
+            "lo": 44.91,
+            "mean": 49.6,
+            "n": 10,
+            "sd": 6.56
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 54.81,
+            "lo": 45.83,
+            "mean": 50.32,
+            "n": 10,
+            "sd": 6.28
+          },
+          "s_shape": {
+            "hi": 53.04,
+            "lo": 43.57,
+            "mean": 48.31,
+            "n": 10,
+            "sd": 6.62
+          }
+        }
+      },
+      "travel": {
+        "abc": {
+          "return": {
+            "hi": 18.11,
+            "lo": 15.19,
+            "mean": 16.65,
+            "n": 10,
+            "sd": 2.04
+          },
+          "s_shape": {
+            "hi": 18.1,
+            "lo": 15.37,
+            "mean": 16.74,
+            "n": 10,
+            "sd": 1.91
+          }
+        },
+        "heuristic": {
+          "return": {
+            "hi": 15.6,
+            "lo": 13.52,
+            "mean": 14.56,
+            "n": 10,
+            "sd": 1.45
+          },
+          "s_shape": {
+            "hi": 16.02,
+            "lo": 13.89,
+            "mean": 14.95,
+            "n": 10,
+            "sd": 1.49
+          }
+        },
+        "milp": {
+          "return": {
+            "hi": 15.42,
+            "lo": 13.4,
+            "mean": 14.41,
+            "n": 10,
+            "sd": 1.41
+          },
+          "s_shape": {
+            "hi": 15.88,
+            "lo": 13.78,
+            "mean": 14.83,
+            "n": 10,
+            "sd": 1.47
+          }
+        },
+        "random": {
+          "return": {
+            "hi": 32.41,
+            "lo": 28.15,
+            "mean": 30.28,
+            "n": 10,
+            "sd": 2.97
+          },
+          "s_shape": {
+            "hi": 31.4,
+            "lo": 27.84,
+            "mean": 29.62,
+            "n": 10,
+            "sd": 2.49
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 16.07,
+            "lo": 13.83,
+            "mean": 14.95,
+            "n": 10,
+            "sd": 1.57
+          },
+          "s_shape": {
+            "hi": 16.33,
+            "lo": 14.12,
+            "mean": 15.22,
+            "n": 10,
+            "sd": 1.54
+          }
+        }
+      }
+    },
+    "small_instance": {
+      "seeds": 10,
+      "skus": 30,
+      "slots": 36
+    }
+  }
+}

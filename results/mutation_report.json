@@ -1,0 +1,181 @@
+{
+  "caught": 25,
+  "total": 25,
+  "mutants": [
+    {
+      "id": 1,
+      "file": "config/incoterms_2020.json",
+      "mutant": "FOB: origin loading charged to buyer",
+      "status": "caught",
+      "detail": "FAILED tests/test_incoterms.py::test_payer_cell[4-FOB] - AssertionError: ('FO..."
+    },
+    {
+      "id": 2,
+      "file": "config/incoterms_2020.json",
+      "mutant": "DAP: seller unloads at destination",
+      "status": "caught",
+      "detail": "FAILED tests/test_incoterms.py::test_payer_cell[11-DAP] - AssertionError: ('D..."
+    },
+    {
+      "id": 3,
+      "file": "config/incoterms_2020.json",
+      "mutant": "CIF insured at ICC (A) instead of (C)",
+      "status": "caught",
+      "detail": "FAILED tests/test_incoterms.py::test_insurance_obligation_only_cif_cip[CIF]"
+    },
+    {
+      "id": 4,
+      "file": "glops/landed.py",
+      "mutant": "customs value omits insurance",
+      "status": "caught",
+      "detail": "FAILED tests/test_incoterms.py::test_singapore_gst_by_hand - assert 982470.0 ..."
+    },
+    {
+      "id": 5,
+      "file": "glops/landed.py",
+      "mutant": "VAT/GST base forgets duty",
+      "status": "caught",
+      "detail": "FAILED tests/test_incoterms.py::test_vat_base_includes_duty_eu_style - assert..."
+    },
+    {
+      "id": 6,
+      "file": "glops/landed.py",
+      "mutant": "insurance premium not grossed up",
+      "status": "caught",
+      "detail": "FAILED tests/test_incoterms.py::test_insurance_premium_110pct_including_premium"
+    },
+    {
+      "id": 7,
+      "file": "glops/landed.py",
+      "mutant": "markup also applied to buyer-paid elements",
+      "status": "caught",
+      "detail": "FAILED tests/test_incoterms.py::test_exw_and_ddp_extremes[FCL radio units] - ..."
+    },
+    {
+      "id": 8,
+      "file": "glops/landed.py",
+      "mutant": "air volumetric divisor ignored",
+      "status": "caught",
+      "detail": "FAILED tests/test_incoterms.py::test_chargeable_weight_conventions - assert 2..."
+    },
+    {
+      "id": 9,
+      "file": "glops/inventory.py",
+      "mutant": "receipts usable before the day's demand",
+      "status": "caught",
+      "detail": "FAILED tests/test_inventory.py::test_deterministic_demand_timing_is_exact[1]"
+    },
+    {
+      "id": 10,
+      "file": "glops/inventory.py",
+      "mutant": "shortage computed from net (not on-hand) inventory",
+      "status": "caught",
+      "detail": "FAILED tests/test_inventory.py::test_invariants[mode0-base_stock-params0] - a..."
+    },
+    {
+      "id": 11,
+      "file": "glops/inventory.py",
+      "mutant": "(r,Q) misses the +1 batch",
+      "status": "caught",
+      "detail": "FAILED tests/test_inventory.py::test_rq_lifts_position_above_reorder_point - ..."
+    },
+    {
+      "id": 12,
+      "file": "glops/inventory.py",
+      "mutant": "on-order not reduced by receipts",
+      "status": "caught",
+      "detail": "FAILED tests/test_inventory.py::test_deterministic_demand_timing_is_exact[1]"
+    },
+    {
+      "id": 13,
+      "file": "glops/inventory.py",
+      "mutant": "analytic fill rate drops the E[(D_L-S)+] term",
+      "status": "caught",
+      "detail": "FAILED tests/test_inventory.py::test_analytic_vs_simulation[0.0] - AssertionE..."
+    },
+    {
+      "id": 14,
+      "file": "glops/inventory.py",
+      "mutant": "holding cost on a 360-day year",
+      "status": "caught",
+      "detail": "FAILED tests/test_inventory.py::test_holding_cost_convention - assert 0.27777..."
+    },
+    {
+      "id": 15,
+      "file": "glops/inventory.py",
+      "mutant": "lead time off by one day",
+      "status": "caught",
+      "detail": "FAILED tests/test_inventory.py::test_deterministic_demand_timing_is_exact[1]"
+    },
+    {
+      "id": 16,
+      "file": "glops/slotting.py",
+      "mutant": "S-shape odd case uses the first aisle's depth",
+      "status": "caught",
+      "detail": "FAILED tests/test_slotting.py::test_tour_length_geometry - assert 55.0 == 57...."
+    },
+    {
+      "id": 17,
+      "file": "glops/slotting.py",
+      "mutant": "cross-aisle travel to nearest instead of farthest aisle",
+      "status": "caught",
+      "detail": "FAILED tests/test_slotting.py::test_tour_length_geometry - assert 24.0 == 40...."
+    },
+    {
+      "id": 18,
+      "file": "glops/slotting.py",
+      "mutant": "greedy ignores low-level reservation",
+      "status": "caught",
+      "detail": "FAILED tests/test_slotting.py::test_level_constraints_enforced_on_tight_instance"
+    },
+    {
+      "id": 19,
+      "file": "glops/slotting.py",
+      "mutant": "MILP pair distance linearised on one side only",
+      "status": "caught",
+      "detail": "FAILED tests/test_slotting.py::test_milp_matches_brute_force[0] - assert 5509..."
+    },
+    {
+      "id": 20,
+      "file": "glops/slotting.py",
+      "mutant": "local search accepts worsening swaps",
+      "status": "caught",
+      "detail": "FAILED tests/test_slotting.py::test_all_methods_feasible_and_heuristic_improves_proxy"
+    },
+    {
+      "id": 21,
+      "file": "glops/slotting.py",
+      "mutant": "level rule lets L-size items go to level 1",
+      "status": "caught",
+      "detail": "FAILED tests/test_slotting.py::test_generator_level_rules - assert np.False_"
+    },
+    {
+      "id": 22,
+      "file": "glops/reverse.py",
+      "mutant": "failures use yield instead of 1 - yield",
+      "status": "caught",
+      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - Assertion..."
+    },
+    {
+      "id": 23,
+      "file": "glops/reverse.py",
+      "mutant": "cross-border waste cost dropped from the LP",
+      "status": "caught",
+      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - assert -3..."
+    },
+    {
+      "id": 24,
+      "file": "glops/reverse.py",
+      "mutant": "market cap row dropped",
+      "status": "caught",
+      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - Assertion..."
+    },
+    {
+      "id": 25,
+      "file": "glops/reverse.py",
+      "mutant": "cross-border recycling flag ignored",
+      "status": "caught",
+      "detail": "FAILED tests/test_reverse.py::test_cross_border_flag_respected - assert np.fl..."
+    }
+  ]
+}

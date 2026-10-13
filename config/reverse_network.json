@@ -1,0 +1,183 @@
+{
+  "_about": "ILLUSTRATIVE reverse-logistics network for returned network equipment (e.g. customer-premises units, small cells) in South-East Asia. Volumes, costs, prices, capacities and yields are synthetic round numbers chosen by the author; city names only locate nodes. Monthly units. USD.",
+  "grades": {
+    "A": "cosmetic / no-fault-found return: test, re-flash, repackage",
+    "B": "faulty but repairable: board-level repair or part harvest",
+    "C": "end of life / beyond economic repair: recycling only"
+  },
+  "hubs": {
+    "Singapore": {
+      "country": "SG",
+      "returns": {
+        "A": 900,
+        "B": 500,
+        "C": 400
+      }
+    },
+    "Kuala Lumpur": {
+      "country": "MY",
+      "returns": {
+        "A": 700,
+        "B": 450,
+        "C": 350
+      }
+    },
+    "Bangkok": {
+      "country": "TH",
+      "returns": {
+        "A": 800,
+        "B": 500,
+        "C": 450
+      }
+    },
+    "Jakarta": {
+      "country": "ID",
+      "returns": {
+        "A": 1000,
+        "B": 650,
+        "C": 600
+      }
+    },
+    "Manila": {
+      "country": "PH",
+      "returns": {
+        "A": 600,
+        "B": 400,
+        "C": 350
+      }
+    }
+  },
+  "refurb_centres": {
+    "Singapore refurb": {
+      "country": "SG",
+      "capacity": 2400,
+      "cost": {
+        "A": 38,
+        "B": 95
+      },
+      "yield": {
+        "A": 0.92,
+        "B": 0.62
+      }
+    },
+    "Penang refurb": {
+      "country": "MY",
+      "capacity": 2000,
+      "cost": {
+        "A": 26,
+        "B": 70
+      },
+      "yield": {
+        "A": 0.9,
+        "B": 0.58
+      }
+    }
+  },
+  "recyclers": {
+    "SG recycler": {
+      "country": "SG",
+      "capacity": 1500,
+      "net_cost": 4.0
+    },
+    "MY recycler": {
+      "country": "MY",
+      "capacity": 1800,
+      "net_cost": 2.5
+    },
+    "TH recycler": {
+      "country": "TH",
+      "capacity": 1200,
+      "net_cost": 3.0
+    },
+    "ID recycler": {
+      "country": "ID",
+      "capacity": 900,
+      "net_cost": 3.5
+    },
+    "PH recycler": {
+      "country": "PH",
+      "capacity": 500,
+      "net_cost": 5.0
+    }
+  },
+  "market": {
+    "resale_price": 150.0,
+    "resale_demand_cap": 3800,
+    "parts_value": 18.0,
+    "_note": "refurbished units beyond the resale cap are harvested for parts at parts_value"
+  },
+  "transport_per_unit": {
+    "_note": "per-unit transport from hub to facility; same-city 1.0, regional road 3-5, sea/air consolidation 6-9. Illustrative.",
+    "Singapore": {
+      "Singapore refurb": 1.0,
+      "Penang refurb": 4.0,
+      "SG recycler": 1.0,
+      "MY recycler": 3.0,
+      "TH recycler": 6.0,
+      "ID recycler": 6.0,
+      "PH recycler": 9.0
+    },
+    "Kuala Lumpur": {
+      "Singapore refurb": 3.5,
+      "Penang refurb": 2.5,
+      "SG recycler": 3.5,
+      "MY recycler": 1.2,
+      "TH recycler": 5.0,
+      "ID recycler": 7.0,
+      "PH recycler": 9.0
+    },
+    "Bangkok": {
+      "Singapore refurb": 7.0,
+      "Penang refurb": 4.5,
+      "SG recycler": 7.0,
+      "MY recycler": 5.0,
+      "TH recycler": 1.2,
+      "ID recycler": 9.0,
+      "PH recycler": 9.0
+    },
+    "Jakarta": {
+      "Singapore refurb": 6.0,
+      "Penang refurb": 7.5,
+      "SG recycler": 6.0,
+      "MY recycler": 7.0,
+      "TH recycler": 9.0,
+      "ID recycler": 1.2,
+      "PH recycler": 9.0
+    },
+    "Manila": {
+      "Singapore refurb": 8.0,
+      "Penang refurb": 8.5,
+      "SG recycler": 8.0,
+      "MY recycler": 8.5,
+      "TH recycler": 9.0,
+      "ID recycler": 9.0,
+      "PH recycler": 1.5
+    }
+  },
+  "refurb_to_recycler_per_unit": {
+    "Singapore refurb": {
+      "SG recycler": 0.5,
+      "MY recycler": 3.0,
+      "TH recycler": 6.0,
+      "ID recycler": 6.0,
+      "PH recycler": 9.0
+    },
+    "Penang refurb": {
+      "SG recycler": 4.0,
+      "MY recycler": 1.0,
+      "TH recycler": 4.5,
+      "ID recycler": 7.5,
+      "PH recycler": 9.0
+    }
+  },
+  "cross_border": {
+    "returns_for_repair_per_unit": 2.0,
+    "waste_for_recycling_per_unit": 6.0,
+    "allow_cross_border_recycling": true,
+    "_note": "Per-unit customs/compliance cost when a flow crosses a border. Transboundary movement of e-waste can require prior informed consent under the Basel Convention and national rules; the flag lets a scenario forbid it. Simplified, not legal advice."
+  },
+  "overflow": {
+    "cost_per_unit": 30.0,
+    "_note": "third-party spot recycling at the source location, uncapacitated but expensive; keeps the LP feasible when contracted recycling capacity is exhausted"
+  }
+}

@@ -1,0 +1,24 @@
+type,key,units
+x,Singapore -> Singapore refurb -> A,900.0
+x,Kuala Lumpur -> Penang refurb -> A,700.0
+x,Bangkok -> Penang refurb -> A,800.0
+x,Jakarta -> Singapore refurb -> A,1000.0
+x,Jakarta -> Penang refurb -> B,16.666667
+x,Manila -> Singapore refurb -> A,366.666667
+x,Manila -> Penang refurb -> A,233.333333
+x,Manila -> Penang refurb -> B,250.0
+y,Singapore -> SG recycler -> B,500.0
+y,Singapore -> SG recycler -> C,400.0
+y,Kuala Lumpur -> MY recycler -> B,450.0
+y,Kuala Lumpur -> MY recycler -> C,350.0
+y,Bangkok -> TH recycler -> B,500.0
+y,Bangkok -> TH recycler -> C,450.0
+y,Jakarta -> MY recycler -> C,333.333333
+y,Jakarta -> ID recycler -> B,633.333333
+y,Jakarta -> ID recycler -> C,266.666667
+y,Manila -> PH recycler -> B,150.0
+y,Manila -> PH recycler -> C,350.0
+f,Singapore refurb -> SG recycler,181.333333
+f,Penang refurb -> MY recycler,285.333333
+s,S -> i -> n -> g -> a -> p -> o -> r -> e ->   -> r -> e -> f -> u -> r -> b,2085.333333
+s,P -> e -> n -> a -> n -> g ->   -> r -> e -> f -> u -> r -> b,1714.666667

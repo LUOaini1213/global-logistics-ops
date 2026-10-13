@@ -1,0 +1,38 @@
+{
+  "finite_difference_penang": 8.944000000017695,
+  "greedy_net_value": 357298.0,
+  "lp_vs_greedy_gain_pct": 3.4072398949896163,
+  "net_value": 369472.0,
+  "no_cross_border": {
+    "loss_pct": 1.2405089785784504,
+    "net_value": 364888.6666666666
+  },
+  "refurb_threshold_price": 50,
+  "shadow_price_market_cap": 21.700000000000017,
+  "shadow_price_penang_capacity": 8.94399999999999,
+  "summary": {
+    "cross_border_waste_units": 333.33333333333314,
+    "overflow": 0.0,
+    "parts": 0.0,
+    "recycled": 4850.0,
+    "recycler_utilisation": {
+      "ID recycler": 1.0,
+      "MY recycler": 0.7881481481481479,
+      "PH recycler": 1.0,
+      "SG recycler": 0.7208888888888888,
+      "TH recycler": 0.7916666666666666
+    },
+    "refurb_share_A": 0.9999999999999998,
+    "refurb_share_B": 0.10666666666666674,
+    "refurb_utilisation": {
+      "Penang refurb": 0.9999999999999998,
+      "Singapore refurb": 0.9444444444444445
+    },
+    "resold": 3800.0,
+    "returns": {
+      "A": 4000,
+      "B": 2500,
+      "C": 2150
+    }
+  }
+}

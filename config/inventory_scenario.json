@@ -1,0 +1,14 @@
+{
+  "_about": "ILLUSTRATIVE single-SKU scenario: an optical module stocked at a regional DC and replenished from an overseas factory either by ocean (LCL/FCL consolidation) or by air. Numbers are round, plausible-order-of-magnitude assumptions, not market data.",
+  "item": {"demand_mean": 40.0, "demand_sd": 12.0, "unit_value": 400.0, "holding_rate": 0.25,
+            "backorder_cost": 6.0, "transit_holding": true,
+            "_note": "holding 25%/yr of value (capital + storage + obsolescence); backorder cost per unit per day; buyer owns goods in transit (e.g. bought FCA/FOB)."},
+  "modes": {
+    "ocean": {"lt_mean": 32.0, "lt_sd": 6.0, "freight_per_unit": 0.9, "order_fixed_cost": 900.0,
+              "_note": "factory-to-DC incl. port dwell and clearance; per-order cost = booking, documents, drayage minimums"},
+    "air":   {"lt_mean": 6.0, "lt_sd": 1.5, "freight_per_unit": 6.5, "order_fixed_cost": 180.0,
+              "_note": "chargeable ~1.5 kg/unit x ~4.3 USD/kg incl. surcharges; per-order cost = airway bill, handling, clearance"}
+  },
+  "simulation": {"n_days": 3650, "warmup": 365, "reps": 10, "seed": 20261013},
+  "validation": {"lead_time_days": 10, "n_days": 20000, "warmup": 200, "reps": 20, "z": [0.0, 0.5, 1.0, 1.645, 2.326], "seed": 7}
+}

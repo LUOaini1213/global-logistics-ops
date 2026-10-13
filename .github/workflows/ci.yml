@@ -1,0 +1,30 @@
+name: ci
+
+on:
+  push:
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    timeout-minutes: 30
+    env:
+      OMP_NUM_THREADS: "2"
+      OPENBLAS_NUM_THREADS: "2"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+      - name: Install
+        run: python -m pip install -r requirements.txt
+      - name: Unit tests (incl. README numbers vs committed results)
+        run: python -m pytest
+      - name: Reproduce all results from scratch
+        run: python run_all.py
+      - name: Show drift of regenerated results (informational)
+        run: git diff --stat -- results/ README.md || true
+      - name: README numbers reproduce (run_all rewrites them; any change fails)
+        run: git diff --exit-code -- README.md

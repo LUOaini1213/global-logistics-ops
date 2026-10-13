@@ -1,0 +1,44 @@
+{
+  "_about": "EXAMPLE import-tax regimes for the landed-cost model. Configurable inputs, NOT tax advice. Only the Singapore GST rate and valuation basis were checked against official pages; duty rates in the other two regimes are placeholders chosen to show the arithmetic and are NOT the tariff for any real HS code.",
+  "regimes": {
+    "SG": {
+      "label": "Singapore (GST, checked 2026-10-13)",
+      "valuation_basis": "CIF",
+      "duty_rate": 0.0,
+      "tax_rate": 0.09,
+      "tax_base": "customs_value_plus_duty",
+      "status": "checked",
+      "sources": [
+        "IRAS, 'Current GST rates': 'The current GST rate in Singapore is 9%.' https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/basics-of-gst/current-gst-rates (accessed 2026-10-13)",
+        "IRAS, GST on imports of low-value goods: 9% applies on/after 1 Jan 2024. https://www.iras.gov.sg/taxes/goods-services-tax-(gst)/gst-rate-change/gst-rate-change-for-business/gst-rate-on-imports-of-low-value-goods-and-b2c-imported-non-digital-services",
+        "Singapore Customs, GST page: GST payable = prevailing GST rate x (customs value + duties payable); customs value examples add freight, handling and insurance to the FOB price. https://www.customs.gov.sg/businesses/valuation-duties-taxes-fees/goods-and-services-tax-gst/",
+        "Singapore Customs: dutiable goods are intoxicating liquors, tobacco products, motor vehicles, petroleum products and biodiesel blends; telecom equipment is not in these categories, hence duty 0. https://www.customs.gov.sg/doing-business/valuation-duties-and-fees/duties-and-dutiable-goods/list-of-dutiable-goods/"
+      ],
+      "caveats": "Import GST is generally recoverable as input tax by a GST-registered importer (subject to IRAS rules); schemes such as Major Exporter Scheme or zero-GST warehouses are not modelled."
+    },
+    "EU_STYLE_EXAMPLE": {
+      "label": "EU-style example (CIF valuation; duty and VAT rates ILLUSTRATIVE)",
+      "valuation_basis": "CIF",
+      "duty_rate": 0.02,
+      "tax_rate": 0.21,
+      "tax_base": "customs_value_plus_duty",
+      "status": "illustrative",
+      "sources": [
+        "Union Customs Code (Reg. (EU) 952/2013) Art. 71(1)(e): transport and insurance costs, and loading/handling charges, up to the place where goods are brought into the customs territory are added to the customs value; Art. 72 excludes post-entry transport. Text via https://www.legislation.gov.uk/eur/2013/952/article/71 (UK retained copy; check EUR-Lex for the current EU text)."
+      ],
+      "caveats": "Duty 2% and VAT 21% are placeholders (VAT varies by member state; many telecom goods are duty-free under the ITA). The EU VAT base also includes incidental costs up to the first place of destination, which this simplified model ignores."
+    },
+    "US_STYLE_EXAMPLE": {
+      "label": "US-style example (transaction value excl. international freight/insurance; duty ILLUSTRATIVE; no VAT)",
+      "valuation_basis": "FOB",
+      "duty_rate": 0.025,
+      "tax_rate": 0.0,
+      "tax_base": "customs_value_plus_duty",
+      "status": "illustrative",
+      "sources": [
+        "19 U.S.C. 1401a(b) transaction value; international freight and insurance are excluded when separately identified and documented (CBP Informed Compliance Publication 'Proper Deductions of Freight and Other Costs from Customs Value'). Secondary summaries: https://shippingsolutions.com/blog/import-valuation-basics-transaction-value"
+      ],
+      "caveats": "Duty 2.5% is a placeholder. Additional duties (e.g. trade-remedy or Section 301 tariffs), MPF/HMF fees and foreign inland freight rules are not modelled."
+    }
+  }
+}

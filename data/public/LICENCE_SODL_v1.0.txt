@@ -1,0 +1,49 @@
+Singapore Open Data Licence version 1.0
+Source: https://data.gov.sg/open-data-licence (text captured 2026-10-13; page markup stripped, wording unchanged)
+
+Open data licence
+Acceptance and grant of Licence
+By Using (as defined below) the datasets on the Relevant Websites, you agree to the terms of this Licence.
+The Agency grants you a worldwide, perpetual, royalty-free, non-exclusive licence to Use the datasets, subject to the terms of this Licence.
+What you can do
+You can use, access, download, copy, distribute, transmit, modify and adapt the datasets, or any derived analyses or applications, whether commercially or non-commercially (“Use”).
+You may grant a sub-licence of the datasets if this is necessary to enable users of your application and/or website (“your Sub-Licensees”), to use your application or access your website.
+If your Sub-Licensees require additional rights, your application and/or website should direct your Sub-Licensees to obtain the appropriate licence at
+data.gov.sg
+.
+Limitations
+This Licence does not grant you any rights over:
+any personal data in the dataset;
+third party rights that the Agency is not authorised to license;
+and patents, trademarks and design rights.
+You must not use the datasets in a way that suggests any official status or that an Agency endorses you or your Use of the datasets.
+This Licence does not grant any rights to Downstream Sub-Licensees.
+Additional conditions
+Attribution
+You must include in your products, applications or websites that Use the datasets, a conspicuous notice acknowledging the source of the datasets and including a link to the most recent version of this Licence. An example notice is provided below:
+[Contains information from {name of dataset} accessed on {date of access of dataset} from {source of data} which is made available under the terms of the Singapore Open Data Licence version 1.0 {URL link to licence}]*
+Disclaimers
+The datasets are provided on an “as is” and “as available” basis. The Agency makes no representations or warranties in relation to the datasets, including but not limited to any representation or warranty as to the accuracy, completeness, reliability, continued availability, timeliness, non-infringement, title, quality or fitness for any particular purpose of the datasets to the fullest extent permitted by the law.
+To the extent permitted by law, the Agency shall not be liable to you or any third party whether in contract, tort (including negligence), restitution, breach of statutory duty or otherwise, for damage or loss of any kind arising directly or indirectly from your or any third party’s Use of, or inability to Use, the datasets or the Relevant Websites.
+Indemnity
+You shall indemnify the Agency against all liabilities, damages, costs (including legal costs) and expenses arising directly or indirectly from:
+any claim made by a third party in connection with your Use of the datasets;
+your violation of any rights of another person; or
+any claim made by a third party in connection with the third party’s Use of the datasets or any derived analyses or applications which you have provided.
+Intellectual Property
+All datasets are the intellectual property of the Agency.
+You cannot enforce any intellectual property rights belonging to the Agency except with the prior written approval of the Agency. Rights of Third Parties: No one other than a party to this Licence shall have any right to enforce any of its terms.
+Termination of Licence
+The Agency may terminate this Licence immediately upon your breach of any of the terms of this Licence. The Disclaimers and Indemnity sections, and any other provision of this Licence which is required to give effect to termination or the consequences of such termination, shall survive the termination of this Licence.
+Governing Law and Jurisdiction
+This Licence is governed by the laws of the Republic of Singapore and the parties to the Licence submit to the exclusive jurisdiction of the Singapore courts.
+Definitions and interpretation
+In this Licence:
+“Agency” means the Singapore Government (including its Ministries, departments, and Organs of State) or the Statutory Board providing the dataset, and where the dataset derives its data from multiple Agencies, a reference to “Agency” shall include all the Agencies providing the source data.
+“Dataset” includes any data, or information within the dataset, that is offered for use under the terms of this Licence.
+“Downstream Sub-Licensee” means any person who may require a licence in order to access the website or use the application of a Sub-Licensee.
+“Statutory Board” means a body incorporated by or under written law from time to time to perform or discharge any public function.
+“Sub-Licensee” means a person that is granted a sub-licence by you, where allowed under this Licence.
+“Relevant Websites” means this website or other websites owned by an Agency that are linked from this website.
+About the Licence
+The Singapore Open Data Licence aims to promote and enable easy reuse of Public Sector data to create value for the community and businesses. This is version 1.0 of the Singapore Open Data Licence. The Singapore Government may, from time to time, issue new versions of the Singapore Open Data Licence. Your continued Use of the datasets constitutes your acceptance of the new version of this Licence.

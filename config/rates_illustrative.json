@@ -1,0 +1,33 @@
+{
+  "_about": "ILLUSTRATIVE rates for demonstrating the landed-cost arithmetic. They are round numbers of a plausible order of magnitude chosen by the author, NOT quotes, NOT market data, and NOT tied to any carrier, forwarder or broker. Replace them with real quotes before using the model for a decision. Currency: USD.",
+  "conventions": {
+    "lcl_wm_kg_per_cbm": 1000,
+    "air_volumetric_divisor_cm3_per_kg": 6000,
+    "_note": "LCL charges per 'weight or measure' (1 t = 1 cbm, the greater); air charges per chargeable kg = max(gross kg, cm3/6000). Both are common industry conventions; individual carriers may differ."
+  },
+  "insurance": {"rate_icc_a": 0.0015, "rate_icc_c": 0.0008, "insured_share": 1.10,
+                 "_note": "Premium = rate x 110% x CIF value. Rates are illustrative."},
+  "modes": {
+    "sea_fcl_40": {
+      "loading_at_seller": 120, "export_clearance": 60, "pre_carriage": 300,
+      "unloading_export_terminal": 0, "loading_main_carriage": 190,
+      "main_carriage_per_container": 1800,
+      "unloading_import_terminal": 210, "import_clearance": 90,
+      "on_carriage": 260, "unloading_at_destination": 90
+    },
+    "sea_lcl": {
+      "loading_at_seller": 60, "export_clearance": 60, "pre_carriage_base": 90, "pre_carriage_per_wm": 12,
+      "unloading_export_terminal_per_wm": 14, "loading_main_carriage_per_wm": 10,
+      "main_carriage_per_wm": 48, "main_carriage_min": 120,
+      "unloading_import_terminal_per_wm": 22, "import_clearance": 90,
+      "on_carriage_base": 110, "on_carriage_per_wm": 10, "unloading_at_destination": 50
+    },
+    "air": {
+      "loading_at_seller": 50, "export_clearance": 60, "pre_carriage_base": 80, "pre_carriage_per_kg": 0.08,
+      "unloading_export_terminal_per_kg": 0.05, "loading_main_carriage_per_kg": 0.12,
+      "main_carriage_per_kg": 4.2, "main_carriage_min": 150,
+      "unloading_import_terminal_per_kg": 0.15, "import_clearance": 90,
+      "on_carriage_base": 100, "on_carriage_per_kg": 0.06, "unloading_at_destination": 40
+    }
+  }
+}

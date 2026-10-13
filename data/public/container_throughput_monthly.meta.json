@@ -1,0 +1,11 @@
+{
+  "dataset": "Container Throughput, Monthly",
+  "dataset_id": "d_da030f7028200d19ffcbe4a2d71af39c",
+  "publisher": "Maritime and Port Authority of Singapore (via data.gov.sg)",
+  "url": "https://data.gov.sg/datasets/d_da030f7028200d19ffcbe4a2d71af39c/view",
+  "accessed": "2026-10-13",
+  "rows": 380,
+  "unit_note": "Values are TEU in thousands. Inferred, not stated on the dataset page: the 2024 monthly values sum to 41,124.0, matching SingStat's 2024 total of 41,124.1 thousand TEU. Latest month is a preliminary estimate per the publisher.",
+  "licence": "Singapore Open Data Licence version 1.0, https://data.gov.sg/open-data-licence",
+  "attribution": "Contains information from Container Throughput, Monthly accessed on 2026-10-13 from data.gov.sg (Maritime and Port Authority of Singapore) which is made available under the terms of the Singapore Open Data Licence version 1.0 https://data.gov.sg/open-data-licence"
+}
