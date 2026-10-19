@@ -146,6 +146,14 @@ cross-border compliance costs and a secondary-market cap (`config/reverse_networ
 * Forbidding cross-border shipment of e-waste for recycling (cf. Basel Convention controls) costs
   <!--n:rev_nocross-->1.2%<!--/n--> of network value in this instance.
 
+The independent flow checker rejects non-finite or non-numeric quantities, unknown nodes/grades,
+malformed flow keys, and prohibited cross-border recycling flows; omitted flow families mean zero flow.
+Cross-border returns for repair remain a separate permitted route. Summaries require a feasible plan.
+For a grade with no returns or a facility with zero capacity and no throughput, the reported ratio is
+`0.0`, meaning **no activity**, not measured operational performance. This convention keeps shutdown
+and zero-volume scenarios JSON-compatible for both LP and greedy solutions; positive throughput at a
+closed facility is a constraint violation (subject to the checker's numerical tolerance).
+
 ## Tests and mutation testing
 
 `pytest` covers: the Incoterms split cell by cell against a hand-typed table (12 rules x 12 elements),
