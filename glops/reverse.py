@@ -18,6 +18,9 @@ Objective: minimise transport + processing + compliance - resale - parts revenue
 from __future__ import annotations
 
 import copy
+import math
+from collections.abc import Mapping
+from numbers import Real
 
 import numpy as np
 
@@ -145,9 +148,69 @@ def evaluate_flows(net: dict, flows: dict) -> float:
     return float(cost)
 
 
-def check_flows(net: dict, flows: dict, tol: float = 1e-6) -> list:
-    """Return a list of violated constraints (empty = feasible)."""
+_FLOW_PARTS = ("x", "y", "f", "s", "p", "o")
+
+
+def _finite_real(value) -> bool:
+    if not isinstance(value, Real) or isinstance(value, (bool, np.bool_)):
+        return False
+    try:
+        return math.isfinite(float(value))
+    except (TypeError, ValueError, OverflowError):
+        return False
+
+
+def _validate_flow_inputs(net: dict, flows, tol) -> tuple[dict, list]:
+    """Validate the plan's domain before sums: NaN residuals and unknown arcs cannot certify feasibility."""
+    clean = {part: {} for part in _FLOW_PARTS}
     bad = []
+    if not _finite_real(tol) or tol < 0:
+        return clean, ["tolerance must be a finite nonnegative real number"]
+    if not isinstance(flows, Mapping):
+        return clean, ["flows must be a mapping of known flow families"]
+    for part in flows:
+        if part not in _FLOW_PARTS:
+            bad.append(f"unknown flow family {part!r}")
+    hubs, refs, recs = net["hubs"], net["refurb_centres"], net["recyclers"]
+    for part in _FLOW_PARTS:
+        entries = flows.get(part, {})
+        if not isinstance(entries, Mapping):
+            bad.append(f"invalid {part}: flow entries must be a mapping")
+            continue
+        for key, value in entries.items():
+            valid = False
+            if part in ("s", "p"):
+                valid = isinstance(key, str) and key in refs
+            else:
+                size = 3 if part in ("x", "y") else 2
+                if isinstance(key, tuple) and len(key) == size and all(isinstance(k, str) for k in key):
+                    if part == "x":
+                        valid = key[0] in hubs and key[1] in refs and key[2] in ("A", "B")
+                    elif part == "y":
+                        valid = key[0] in hubs and key[1] in recs and key[2] in ("A", "B", "C")
+                    elif part == "f":
+                        valid = key[0] in refs and key[1] in recs
+                    elif part == "o":
+                        valid = ((key[0] in hubs and key[1] in ("A", "B", "C"))
+                                 or (key[0] in refs and key[1] == "fail"))
+            if not valid:
+                bad.append(f"invalid {part} flow key {key!r}: check nodes, grade and key shape")
+            if not _finite_real(value):
+                bad.append(f"invalid {part} quantity at {key!r}: expected a finite real number")
+            elif valid:
+                clean[part][key] = float(value)
+                if part in ("y", "f") and value > tol and not net["cross_border"]["allow_cross_border_recycling"]:
+                    source = hubs[key[0]] if part == "y" else refs[key[0]]
+                    if source["country"] != recs[key[1]]["country"]:
+                        bad.append(f"cross-border recycling is disabled: {part} {key!r}")
+    return clean, bad
+
+
+def check_flows(net: dict, flows: dict, tol: float = 1e-6) -> list:
+    """Return readable violations (empty = feasible), accepting sparse plans with omitted zero-flow families."""
+    flows, bad = _validate_flow_inputs(net, flows, tol)
+    if bad:
+        return bad
     hubs, refs, recs = net["hubs"], net["refurb_centres"], net["recyclers"]
     for h, hv in hubs.items():
         for g, qty in hv["returns"].items():
@@ -237,12 +300,22 @@ def greedy_baseline(net: dict) -> dict:
 
 
 def summarise(net: dict, flows: dict) -> dict:
+    """Summarise a feasible plan; a zero supply/capacity ratio is 0.0 (no activity, not performance evidence)."""
+    bad = check_flows(net, flows)
+    if bad:
+        raise ValueError("cannot summarise infeasible flows: " + "; ".join(bad))
+    flows = {part: {key: float(q) for key, q in flows.get(part, {}).items()} for part in _FLOW_PARTS}
+
+    def ratio(activity, total):
+        # Feasibility was checked first: zero capacity cannot hide positive throughput behind an epsilon.
+        return float(activity / total) if total > 0 else 0.0
+
     ret = {g: sum(h["returns"][g] for h in net["hubs"].values()) for g in ("A", "B", "C")}
     refurb_in = {g: sum(q for k, q in flows["x"].items() if k[2] == g) for g in ("A", "B")}
-    util = {r: sum(q for k, q in flows["x"].items() if k[1] == r) / max(v["capacity"], 1e-9)
+    util = {r: ratio(sum(q for k, q in flows["x"].items() if k[1] == r), v["capacity"])
             for r, v in net["refurb_centres"].items()}
-    rec_util = {c: (sum(q for k, q in flows["y"].items() if k[1] == c) +
-                    sum(q for k, q in flows["f"].items() if k[1] == c)) / v["capacity"]
+    rec_util = {c: ratio(sum(q for k, q in flows["y"].items() if k[1] == c) +
+                         sum(q for k, q in flows["f"].items() if k[1] == c), v["capacity"])
                 for c, v in net["recyclers"].items()}
     cross_waste = sum(q for k, q in flows["y"].items()
                       if net["hubs"][k[0]]["country"] != net["recyclers"][k[1]]["country"])
@@ -250,8 +323,8 @@ def summarise(net: dict, flows: dict) -> dict:
                        if net["refurb_centres"][k[0]]["country"] != net["recyclers"][k[1]]["country"])
     return {
         "returns": ret,
-        "refurb_share_A": refurb_in["A"] / ret["A"],
-        "refurb_share_B": refurb_in["B"] / ret["B"],
+        "refurb_share_A": ratio(refurb_in["A"], ret["A"]),
+        "refurb_share_B": ratio(refurb_in["B"], ret["B"]),
         "resold": sum(flows["s"].values()),
         "parts": sum(flows["p"].values()),
         "recycled": sum(flows["y"].values()) + sum(flows["f"].values()),
