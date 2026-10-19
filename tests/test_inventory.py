@@ -14,7 +14,7 @@ def test_normal_loss_known_values():
     assert inv.normal_loss(-1.0) == pytest.approx(1.0833155, abs=1e-6)   # G(-z) = G(z) + z
 
 
-@pytest.mark.parametrize("L", [1, 5])
+@pytest.mark.parametrize("L", [0, 1, 5])
 def test_deterministic_demand_timing_is_exact(L):
     """With sd = 0 the protection interval is exactly L + 1 days."""
     item = inv.Item(40.0, 0.0, 100.0, 0.25, 1.0)
@@ -40,7 +40,8 @@ def _run(policy, params, mode=DET, reps=3, days=1500, seed=1, **kw):
     ("sS", {"s": np.array([150.0, 250.0]), "S": np.array([400.0, 500.0])}),
     ("rQ", {"r": np.array([150.0, 250.0]), "Q": np.array([200.0, 300.0])}),
 ])
-@pytest.mark.parametrize("mode", [DET, inv.Mode("rand", 8.0, 3.0, 1.0, 100.0)])
+@pytest.mark.parametrize("mode", [DET, inv.Mode("rand", 8.0, 3.0, 1.0, 100.0),
+                                inv.Mode("instant", 0.0, 0.0, 1.0, 100.0)])
 def test_invariants(policy, params, mode):
     r = _run(policy, params, mode)
     assert np.all(r["final_balance_error"] < 1e-6)          # NI_end = NI_0 - demand + receipts
@@ -60,6 +61,31 @@ def test_rq_orders_are_multiples_of_q():
     per_order = r["units_ordered_per_day"] / np.maximum(r["orders_per_day"], 1e-12)
     k = per_order / Q
     assert np.allclose(k, np.round(k), atol=1e-9) and np.all(k >= 1)
+
+
+def test_mixed_same_day_and_future_receipts_preserve_inventory(monkeypatch):
+    """Same-day supply clears today's backlog, but cannot undo a lost immediate fill."""
+    item = inv.Item(10.0, 0.0, 100.0, 0.25, 2.0)
+    mode = inv.Mode("mixed", 1.0, 0.0, 0.0, 0.0)
+    monkeypatch.setattr(inv, "draw_lead_times",
+                        lambda rng, mode, shape: np.array([[0, 1, 0, 1]]))
+    result = inv.simulate("base_stock", {"S": np.array([10.0])}, item, mode,
+                          n_days=4, warmup=0, reps=1, seed=0)
+    # End-of-day stock: 10, 0, 10, 0; pipeline: 0, 10, 0, 10.
+    assert result["fill_rate"][0, 0] == pytest.approx(0.75)
+    assert result["on_hand"][0, 0] == pytest.approx(5.0)
+    assert result["pipeline"][0, 0] == pytest.approx(5.0)
+    assert result["backorder"][0, 0] == pytest.approx(0.0)
+    assert result["final_balance_error"][0, 0] == pytest.approx(0.0)
+    assert result["pipeline_error"][0, 0] == pytest.approx(0.0)
+
+
+@pytest.mark.parametrize("mean,sd", [(-1, 0), (1, -1), (0, 1),
+                                     (np.nan, 0), (1, np.nan), (np.inf, 0), (1, np.inf)])
+def test_invalid_lead_time_distribution_is_rejected(mean, sd):
+    mode = inv.Mode("invalid", mean, sd, 0.0, 0.0)
+    with pytest.raises(ValueError, match="lead time"):
+        inv.draw_lead_times(np.random.default_rng(0), mode, (1, 3))
 
 
 def test_ss_orders_less_often_than_base_stock():

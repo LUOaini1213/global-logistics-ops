@@ -5,7 +5,9 @@ Daily periodic review, full backordering. Event order within a day t:
   2. replenishments due on day t are received (they clear backorders first);
   3. the inventory position IP = net inventory + on order is reviewed and the
      policy may place an order; it arrives at the END of day t + L (step 2 of
-     that day), where L is the lead time drawn for that order.
+     that day), where L is the lead time drawn for that order. For L = 0,
+     receipt occurs immediately after the order, before end-of-day accounting;
+     it clears backorders but does not retroactively fill today's demand.
 With this convention the protection interval of a base-stock policy is L + 1 days,
 which is what the analytic check in ``analytic_base_stock`` uses.
 
@@ -48,6 +50,11 @@ class Item:
 
 
 def draw_lead_times(rng, mode: Mode, shape) -> np.ndarray:
+    if (not np.isfinite(mode.lt_mean) or not np.isfinite(mode.lt_sd)
+            or mode.lt_mean < 0 or mode.lt_sd < 0
+            or (mode.lt_mean == 0 and mode.lt_sd > 0)):
+        raise ValueError("lead time mean and sd must be finite and nonnegative; "
+                         "a random lead time requires a positive mean")
     if mode.lt_sd <= 0:
         return np.full(shape, int(round(mode.lt_mean)), dtype=int)
     # lognormal with the requested mean / sd, rounded to whole days, >= 1
@@ -119,6 +126,11 @@ def simulate(policy: str, params: dict, item: Item, mode: Mode, n_days: int, war
             idx = rix[placed]
             np.add.at(arrivals, (idx, t + lts[idx, t]), q[placed])
             on_order = on_order + q
+            # Today's scheduled-receipt step has already run. Keep immediate
+            # receipts in arrivals for the balance check and apply them now.
+            immediate = placed & (lts[:, t] == 0)
+            ni[immediate] += q[immediate]
+            on_order[immediate] -= q[immediate]
         if t >= warmup:
             acc["demand"] += d
             acc["short"] += short
