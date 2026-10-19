@@ -80,6 +80,10 @@ base-stock S has exact fill rate `1 - (E[(D_{L+1}-S)^+] - E[(D_L-S)^+]) / mu`, o
 <!--n:inv_val_pass-->20/20<!--/n--> comparisons within 3 standard errors
 (<!--n:inv_val_ci-->19/20<!--/n--> inside the 95% CI), largest fill-rate gap <!--n:inv_val_maxdiff-->0.03 pp<!--/n-->.
 Inventory balance and pipeline identities are asserted in every test run.
+Deterministic zero-day replenishment is received immediately after the daily order,
+before end-of-day inventory and holding costs are measured. It can clear a backorder
+but cannot retroactively improve that day's immediate fill rate. Negative or non-finite
+lead-time parameters, and a zero-mean positive-variance lognormal lead time, are rejected.
 The textbook random-lead-time formula is *not* exact when orders cross: with ocean lead times a
 z = 1 target (84.1% CSL) actually delivered <!--n:inv_lt_ocean_csl-->99.3%<!--/n--> under daily ordering.
 This is reported as an approximation gap, not hidden.
