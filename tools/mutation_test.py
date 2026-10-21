@@ -16,6 +16,7 @@ import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+LF, CRLF = chr(10), chr(13) + chr(10)
 
 MUTANTS = [
     # ---- Incoterms configuration
@@ -84,6 +85,44 @@ MUTANTS = [
     ("glops/reverse.py", "cross-border recycling flag ignored",
      "            if cross and not allow_x:\n                continue\n            border = cb[\"waste_for_recycling_per_unit\"] if cross else 0.0\n            for g",
      "            border = cb[\"waste_for_recycling_per_unit\"] if cross else 0.0\n            for g"),
+    # ---- overseas rollout (Part 5)
+    ("glops/rollout.py", "quartile fit: sigma from one z instead of two",
+     'return Dist("lognorm", mu, math.log(q3 / q1) / (2 * Z75))', 'return Dist("lognorm", mu, math.log(q3 / q1) / Z75)'),
+    ("glops/rollout.py", "median-mean fit drops the factor 2",
+     "math.sqrt(2 * math.log(mean / md))", "math.sqrt(math.log(mean / md))"),
+    ("glops/rollout.py", "occurrence mixture variance loses the Bernoulli term",
+     "return self.p * (self.cond_var() + m * m) - (self.p * m) ** 2", "return self.p * self.cond_var()"),
+    ("glops/rollout.py", "ocean leg drops the port-call allowance",
+     'ocean_mean = nm / (24.0 * v) + sea["port_call_days_per_1000nm"] * nm / 1000.0', "ocean_mean = nm / (24.0 * v)"),
+    ("glops/rollout.py", "transshipment time not conditioned on occurrence",
+     "        cond = t_ts / p_ts\n", "        cond = t_ts\n"),
+    ("glops/rollout.py", "planning quantile rounds down",
+     'np.quantile(x, p, method="higher")', 'np.quantile(x, p, method="lower")'),
+    ("glops/rollout.py", "rollout shares one inland leg across a week's sites",
+     'inland = comps["inland"].sample(rng, (reps, weeks, sites))', 'inland = comps["inland"].sample(rng, (reps, weeks, 1))'),
+    ("glops/rollout.py", "checker ignores overlapping stacks",
+     "if min(r1[2], r2[2]) - max(r1[0], r2[0]) > 1e-9", "if min(r1[2], r2[2]) - max(r1[0], r2[0]) > 1e9"),
+    ("glops/rollout.py", "stacking ignores the top-load limit",
+     "return (same_fp and upper.top_ok and upper.kg <= lower.max_top_kg\n", "return (same_fp and upper.top_ok\n"),
+    ("glops/rollout.py", "packer ignores the payload",
+     "    if box.kg + kg > ct.payload + 1e-9:\n        return False\n", ""),
+    ("glops/rollout.py", "floor bound ignores what carriers can hold",
+     "floor = c_fp + max(0.0, t_fp - carriers) / max_tiers", "floor = c_fp + max(0.0, t_fp) / max_tiers"),
+    ("glops/rollout.py", "split policy plans each leg at p instead of sqrt(p)",
+     "        q = math.sqrt(p)\n", "        q = p\n"),
+    ("glops/rollout.py", "expedited air kit never arrives first",
+     "arrive = np.where(exp, np.minimum(t, decide + t2), t)", "arrive = t"),
+    ("glops/rollout.py", "holding on a 360-day year",
+     'rate = kit.value * c["holding_rate_per_year"] / 365.0', 'rate = kit.value * c["holding_rate_per_year"] / 360.0'),
+    ("glops/rollout.py", "air chargeable weight ignores volume",
+     "return max(kit.kg, kit.cbm * 1e6 / divisor_cm3_per_kg)", "return kit.kg"),
+    ("glops/rollout.py", "market rule picks the smallest eligible partner",
+     'picked.append(max(cands, key=lambda r: (r[share_key], r["iso3"]))["iso3"])',
+     'picked.append(min(cands, key=lambda r: (r[share_key], r["iso3"]))["iso3"])'),
+    ("glops/rollout.py", "consolidation forgets the later weeks' slack",
+     "slack = L + 7.0 * np.arange(k)[None, None, :, None]", "slack = L + 0.0 * np.arange(k)[None, None, :, None]"),
+    ("config/rollout.json", "container dwell fitted to median + mean instead of quartiles",
+     '"container": "quartiles",', '"container": "median_mean",'),
 ]
 
 
@@ -116,6 +155,8 @@ def main() -> int:
         path = ROOT / rel
         orig = path.read_bytes()
         text = orig.decode("utf-8")
+        if CRLF in text:         # Windows checkout with core.autocrlf: multi-line patterns must match too
+            old, new = old.replace(LF, CRLF), new.replace(LF, CRLF)
         if text.count(old) != 1:
             print(f"[{i:2d}] SKIP pattern not unique/missing: {name}")
             results.append({"id": i, "file": rel, "mutant": name, "status": "invalid"})
@@ -132,10 +173,11 @@ def main() -> int:
     assert tree_hash() == before, "source tree changed - restore failed!"
     valid = [r for r in results if r["status"] != "invalid"]
     caught = sum(r["status"] == "caught" for r in valid)
-    report = {"caught": caught, "total": len(valid), "mutants": results}
+    report = {"caught": caught, "total": len(valid), "invalid": len(results) - len(valid), "mutants": results}
     out = ROOT / "results" / "mutation_report.json"
     out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
-    print(f"caught {caught}/{len(valid)}")
+    print(f"caught {caught}/{len(valid)}" + (f"  WARNING: {len(results) - len(valid)} mutants invalid (not run)"
+                                              if len(results) > len(valid) else ""))
     # README carries the mutation score: re-render it from the new report
     subprocess.run([sys.executable, "run_all.py", "--readme-only"], cwd=ROOT, check=True)
     return 0

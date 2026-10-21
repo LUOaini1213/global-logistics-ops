@@ -188,6 +188,154 @@ def chart_season(pub) -> str:
     return _png(fig)
 
 
+# ------------------------------------------------------------------ Part 5 charts
+
+SEA_PARTS = [("origin_truck", "truck to port", "#b9b8b0"), ("export_dwell", "origin port", "#7fb2ea"),
+             ("ocean", "ocean", C1), ("transshipment", "transshipment", "#9d8fd6"),
+             ("import_dwell", "destination port + customs", C2), ("inland", "inland to site", C3)]
+
+
+def chart_rollout_lead(R) -> str:
+    comp = {(r["market"], r["mode"], r["component"]): float(r["mean_days"])
+            for r in _csv(RESULTS / "rollout" / "lead_time_components.csv")}
+    mk = R["markets"]
+    names = [R["market_names"][m] for m in mk]
+    fig, axes = plt.subplots(1, 2, figsize=(9.6, 3.4), gridspec_kw={"width_ratios": [3, 1.25]})
+    ax = axes[0]
+    y = np.arange(len(mk))[::-1]
+    left = np.zeros(len(mk))
+    for key, label, col in SEA_PARTS:
+        v = np.array([comp[m, "sea", key] for m in mk])
+        ax.barh(y, v, left=left, height=0.6, color=col, label=label)
+        left += v
+    p95 = [R["lead"][f"{m}|sea"]["p95"] for m in mk]
+    ax.plot(p95, y, marker="|", markersize=14, color=INK, linestyle="none", label="P95")
+    ax.set_yticks(y, names)
+    ax.set_xlabel("days, door to site (bars = mean by component, tick = P95)")
+    ax.set_title("Sea: where the lead time goes")
+    ax.grid(axis="y", visible=False)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.2), fontsize=7, ncol=4)
+    ax = axes[1]
+    am = [R["lead"][f"{m}|air"]["mean"] for m in mk]
+    ap = [R["lead"][f"{m}|air"]["p95"] for m in mk]
+    dw = [comp[m, "air", "import_dwell"] for m in mk]
+    ax.barh(y, am, height=0.6, color=C1, label="mean")
+    ax.barh(y, dw, height=0.6, color=C2, label="of which airport + customs")
+    ax.plot(ap, y, marker="|", markersize=14, color=INK, linestyle="none", label="P95")
+    ax.set_yticks(y, [""] * len(mk))
+    ax.set_xlabel("days")
+    ax.set_title("Air")
+    ax.grid(axis="y", visible=False)
+    ax.legend(loc="upper center", bbox_to_anchor=(0.5, -0.2), fontsize=7, ncol=1)
+    fig.tight_layout()
+    return _png(fig)
+
+
+def chart_rollout_policy(R) -> str:
+    mk = R["markets"]
+    pols = [("sea", "all sea", C1), ("split", "split: bulky sea, critical air", C3),
+            ("sea_expedite", "sea + air expedite", "#9d8fd6"), ("air", "all air", C2)]
+    fig, ax = plt.subplots(figsize=(8.4, 3.0))
+    x = np.arange(len(mk))
+    w = 0.2
+    for k, (pol, label, col) in enumerate(pols):
+        v = [R["policy"][f"{m}|{pol}"]["cost_per_site"] / 1000 for m in mk]
+        ax.bar(x + (k - 1.5) * w, v, width=w, color=col, label=label)
+    ax.set_xticks(x, [R["market_names"][m] for m in mk])
+    ax.set_ylabel("USD thousand per site (illustrative)")
+    ax.set_title("Logistics cost per site at >= 95% on-time arrival")
+    ax.grid(axis="x", visible=False)
+    ax.legend(fontsize=7, ncol=2, loc="upper left")
+    return _png(fig)
+
+
+def chart_rollout_customs(R) -> str:
+    rows = _csv(RESULTS / "rollout" / "customs_score_vs_dwell.csv")
+    fig, ax = plt.subplots(figsize=(5.2, 3.2))
+    sel = [r for r in rows if r["selected"] == "True"]
+    oth = [r for r in rows if r["selected"] != "True"]
+    ax.scatter([float(r["lpi2023_customs"]) for r in oth], [float(r["ct_import_dwell_median"]) for r in oth],
+               s=12, color=AXIS, label="other economies")
+    ax.scatter([float(r["lpi2023_customs"]) for r in sel], [float(r["ct_import_dwell_median"]) for r in sel],
+               s=22, color=C2, label="selected markets (Pakistan: no 2023 survey score)")
+    for r in sel:
+        ax.annotate(r["iso3"], (float(r["lpi2023_customs"]), float(r["ct_import_dwell_median"])),
+                    xytext=(4, 2), textcoords="offset points", fontsize=7, color=INK)
+    ax.set_yscale("log")
+    ax.set_yticks([1, 2, 5, 10, 20], ["1", "2", "5", "10", "20"])
+    ax.minorticks_off()
+    ax.set_xlabel("LPI 2023 customs score (survey, 1-5)")
+    ax.set_ylabel("container import dwell, median days (LPI 2.0, 2024)")
+    cs = R["customs_score_vs_dwell"]
+    ax.set_title(f"Survey score vs measured dwell (Spearman {cs['spearman_rho']:.2f}, n = {cs['n']})")
+    ax.legend(fontsize=7, loc="upper center", bbox_to_anchor=(0.5, -0.2), ncol=1)
+    return _png(fig)
+
+
+def rollout_section(R) -> str:
+    mk, nm = R["markets"], R["market_names"]
+    lead_rows = []
+    for m in mk:
+        s, a, ps, pa = R["lead"][f"{m}|sea"], R["lead"][f"{m}|air"], R["plan"][f"{m}|sea"], R["plan"][f"{m}|air"]
+        lead_rows.append([nm[m], f"{s['mean']:.1f}", f"{s['p95']:.1f}", f"{s['buffer_95']:.1f}",
+                          f"{100 * s['share_port_customs_mean']:.0f}% / {100 * s['share_port_customs_tail']:.0f}%",
+                          f"{100 * ps['on_time_oos_plan_mean']:.0f}%", f"{100 * ps['on_time_oos_plan_p95']:.1f}%",
+                          f"{a['mean']:.1f}", f"{a['p95']:.1f}", f"{100 * pa['on_time_oos_plan_mean']:.0f}%"])
+    sens = _csv(RESULTS / "rollout" / "sensitivity_sea_p95.csv")
+    variants = list(dict.fromkeys(r["variant"] for r in sens if r["variant"] != "base"))
+    sv = {(r["market"], r["variant"]): float(r["p95_change_days"]) for r in sens}
+    sens_rows = [[v] + [f"{sv[m, v]:+.1f}" for m in mk] for v in variants]
+    pol_rows = [[nm[m]] + [f"{R['policy'][f'{m}|{p}']['cost_per_site']:,.0f} ({100 * R['policy'][f'{m}|{p}']['plan_quantile']:.0f})"
+                          for p in ("sea", "split", "sea_expedite", "air")]
+                + [f"{100 * R['policy'][f'{m}|sea_expedite']['expedite_rate']:.0f}%"] for m in mk]
+    cons = R["consolidation"]
+    cons_rows = [[nm[m]] + [f"{cons[f'{m}|{k}']['containers']} / {100 * cons[f'{m}|{k}']['fill_volume']:.0f}% / "
+                            f"{cons[f'{m}|{k}']['early_days']:.0f} d / {cons[f'{m}|{k}']['cost_per_site']:,.0f}"
+                            for k in (1, 2, 4)] for m in mk]
+    load = R["loading"]
+    load_rows = [[r["container"], r["heuristic"], r["lb_volume"], r["lb_weight"], r["lb_floor"],
+                  f"{100 * r['fill_volume']:.0f}%", f"{100 * r['fill_weight']:.0f}%"] for r in load["weekly_batch"]]
+    fit_rows = [[r["iso3"], r["dwell"], r["q1"], r["median"], r["q3"], f"{r['published_mean']:.1f}",
+                 f"{r['fitted_mean']:.1f}", f"{r['sigma']:.2f}", f"{r['fitted_p95']:.1f}"] for r in R["dwell_fit"]["rows"]]
+    rc = load["random_40hc"]
+    return f"""
+<h2>5. Overseas rollout logistics</h2>
+<p class="note">Seven markets chosen by a documented rule from UN Comtrade (China's exports of HS 851761 base stations,
+2024-2025; the markets cover {R['selection']['cover_share_pct']:.1f}% of that trade). Port and customs dwell times are
+<b>real</b> (World Bank LPI 2.0, 2024); sea distances come from the searoute package; airport coordinates from OurAirports.
+The site kit is <b>synthetic</b>; freight rates, handling times, speeds and costs are <b>ILLUSTRATIVE</b>
+(<code>config/rollout.json</code>). Not a quote, not company data.</p>
+<div class="fig"><img alt="Stacked bars of sea lead time components and air lead time by market" src="{chart_rollout_lead(R)}"></div>
+{_table(["market", "sea mean d", "sea P95 d", "buffer d", "port+customs share (mean / slowest 5%)",
+         "on time if planned on mean", "on time, P95 plan (out of sample)", "air mean d", "air P95 d",
+         "air on time if planned on mean"], lead_rows)}
+<p>Ship-date rule: ship each week's kits P95 days before the need date. Checked out of sample on
+{R['config']['reps_rollout']:,} simulated {R['config']['weeks']}-week rollouts ({R['config']['sites_per_week']} sites per week,
+one shared container shipment per week). Planning on the average transit time is on time only about half the time.</p>
+<h3>How the LPI numbers become distributions (and how much that matters)</h3>
+<p>Each dwell time is a lognormal fitted to the published quartiles. The fit reproduces the published mean within
+{R['dwell_fit']['max_abs_mean_rel_err_pct']:.0f}%:</p>
+{_table(["economy", "dwell", "Q1", "median", "Q3", "published mean", "fitted mean", "sigma", "fitted P95"], fit_rows)}
+<p>Change in the sea P95 (days) under alternative assumptions:</p>
+{_table(["variant"] + mk, sens_rows)}
+<div class="fig"><img alt="Scatter of LPI customs score against container dwell" src="{chart_rollout_customs(R)}"></div>
+<h3>Mode policy</h3>
+<div class="fig"><img alt="Grouped bars of cost per site by policy and market" src="{chart_rollout_policy(R)}"></div>
+{_table(["market", "all sea (plan pct)", "split", "sea + expedite", "all air", "expedite rate"], pol_rows)}
+<p>Cost per site = freight + handling + inland delivery + holding in transit and while waiting early (25%/yr of value)
++ storage + expedites. Each policy uses its cheapest plan that is on time at least 95% of the time (in sample).</p>
+<h3>Container loading</h3>
+<p>One weekly batch ({R['config']['sites_per_week']} sites, {R['config']['sites_per_week'] * 7} packed units): heuristic
+container count vs lower bounds.</p>
+{_table(["container", "heuristic", "LB volume", "LB weight", "LB floor", "volume fill", "weight fill"], load_rows)}
+<p>On {rc['n']} random instances (40HC) the heuristic equals the lower bound in {rc['equal_lb']} and is never more than
+{rc['max_gap_boxes']} box(es) above it. The bound ignores the floor width a pair of 1.0 m pallets leaves unused, so part of
+any gap may be the bound's looseness rather than the heuristic's.</p>
+<h3>Consolidation frequency (sea)</h3>
+{_table(["market", "weekly: boxes / fill / early / USD per site", "fortnightly", "monthly"], cons_rows)}
+"""
+
+
 # ------------------------------------------------------------------ page
 
 CSS = """
@@ -206,8 +354,8 @@ h3{font-size:15px;margin:18px 0 6px}p,li{color:var(--ink2)}.lead{color:var(--ink
 
 
 def build(summary: dict) -> str:
-    s, inv, val, land, rev, pub = (summary[k] for k in ("slotting", "inventory", "inventory_validation",
-                                                         "landed", "reverse", "public"))
+    s, inv, val, land, rev, pub, ro_ = (summary[k] for k in ("slotting", "inventory", "inventory_validation",
+                                                              "landed", "reverse", "public", "rollout"))
     L = s["large"]
     sm = s["small"]
     tiles = [
@@ -217,6 +365,8 @@ def build(summary: dict) -> str:
         (f"USD {inv['breakeven_unit_value']:.0f}", "unit value where air beats ocean (illustrative)"),
         (f"{land['fcl_sg']['ddp_premium_pct']:.1f}%", "DDP vs FCA when import GST is unrecoverable"),
         (f"{rev['lp_vs_greedy_gain_pct']:.1f}%", "returns-network value: LP vs nearest-first rule"),
+        (f"{100 * ro_['plan_range']['sea']['on_time_oos_plan_mean']['min']:.0f}-{100 * ro_['plan_range']['sea']['on_time_oos_plan_mean']['max']:.0f}%",
+         "sea kits on time if ship dates use the average transit time"),
     ]
     tiles_html = "".join(f'<div class="tile"><b>{a}</b><span>{html.escape(b)}</span></div>' for a, b in tiles)
 
@@ -271,10 +421,12 @@ def build(summary: dict) -> str:
     body = f"""
 <main>
 <h1>Global logistics operations analytics</h1>
-<p class="lead">Personal portfolio project, October 2026, built with AI assistance. Four models for a
-network-equipment supply chain: warehouse slotting, inventory policy, landed cost by Incoterms 2020, and a
-returns network. <b>All operational data is synthetic and all rates are illustrative</b>; the only real data is
-a public port-throughput series used as a seasonality proxy. Not tax, customs or legal advice.</p>
+<p class="lead">Personal portfolio project, October 2026, built with AI assistance. Five models for a
+network-equipment supply chain: warehouse slotting, inventory policy, landed cost by Incoterms 2020, a
+returns network, and overseas rollout logistics (transport options, ship dates, container loading, transport cost).
+<b>All operational data is synthetic and all rates are illustrative</b>; the real data are a public port-throughput
+series (seasonality proxy) and, in Part 5, public trade shares, World Bank port/customs dwell times, airport
+coordinates and computed sea distances. Not tax, customs or legal advice.</p>
 <div class="tiles">{tiles_html}</div>
 
 <h2>1. Warehouse slotting</h2>
@@ -349,8 +501,14 @@ USD {rev['shadow_price_penang_capacity']:.2f}/unit-month; finite-difference chec
 Forbidding cross-border recycling costs {rev['no_cross_border']['loss_pct']:.1f}% of value.</p>
 {_table(["sweep", "value", "net value USD/month", "A refurbished", "B refurbished", "overflow units"], sens_rows)}
 
+{rollout_section(ro_)}
+
 <h2>Data and licences</h2>
 <p>{html.escape(meta['attribution'])}</p>
+<p>Part 5: World Bank Logistics Performance Indicators 2.0 (2023-2024) and Logistics Performance Index 2023 (survey),
+CC BY 4.0, https://lpi.worldbank.org/ (Data360 files, accessed 2026-10-21). Shares of China's HS 851761 exports derived
+from UN Comtrade (accessed 2026-10-21; only partner shares are published here). Airports: OurAirports (public domain).
+Sea distances computed with searoute 1.6.0 (Apache-2.0; network from Eurostat SeaRoute, EUPL-1.2).</p>
 <p>Unit: {html.escape(meta['unit_note'])}</p>
 <p>Everything else is synthetic (generators and seeds in the source) or an illustrative assumption in <code>config/</code>.</p>
 </main>"""

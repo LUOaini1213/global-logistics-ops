@@ -446,6 +446,1154 @@
       }
     }
   },
+  "rollout": {
+    "config": {
+      "n_lead": 200000,
+      "reps_rollout": 2000,
+      "sites_per_week": 6,
+      "speed_kn": 16.0,
+      "target": 0.95,
+      "weeks": 12
+    },
+    "consolidation": {
+      "DZA|1": {
+        "containers": 24,
+        "cost_per_site": 5011.638467967291,
+        "early_days": 30.177671014570592,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 1463.3333333333333,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9487013888888889,
+        "sailings": 12
+      },
+      "DZA|2": {
+        "containers": 18,
+        "cost_per_site": 4895.848829729197,
+        "early_days": 33.66988340669385,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 1231.0,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9593611111111111,
+        "sailings": 6
+      },
+      "DZA|4": {
+        "containers": 18,
+        "cost_per_site": 5085.655260846259,
+        "early_days": 40.503096828969795,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 1182.5,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9731458333333334,
+        "sailings": 3
+      },
+      "IDN|1": {
+        "containers": 24,
+        "cost_per_site": 2299.2617267402566,
+        "early_days": 16.997603082413825,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 555.8333333333334,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9491944444444445,
+        "sailings": 12
+      },
+      "IDN|2": {
+        "containers": 18,
+        "cost_per_site": 2293.7571869382136,
+        "early_days": 20.371661807500235,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 430.75,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9639583333333334,
+        "sailings": 6
+      },
+      "IDN|4": {
+        "containers": 18,
+        "cost_per_site": 2508.6446357028008,
+        "early_days": 27.31936921496483,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 405.625,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9803125,
+        "sailings": 3
+      },
+      "IRQ|1": {
+        "containers": 24,
+        "cost_per_site": 3536.444920001056,
+        "early_days": 21.96125162210237,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 1023.3333333333334,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9491319444444445,
+        "sailings": 12
+      },
+      "IRQ|2": {
+        "containers": 18,
+        "cost_per_site": 3475.419565066525,
+        "early_days": 25.40169863946482,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 843.0,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9606736111111112,
+        "sailings": 6
+      },
+      "IRQ|4": {
+        "containers": 18,
+        "cost_per_site": 3674.2590952735754,
+        "early_days": 32.08566063167808,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 805.8333333333334,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9718055555555556,
+        "sailings": 3
+      },
+      "ITA|1": {
+        "containers": 24,
+        "cost_per_site": 3767.77144986697,
+        "early_days": 15.745961927813283,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 1408.3333333333333,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9500208333333333,
+        "sailings": 12
+      },
+      "ITA|2": {
+        "containers": 18,
+        "cost_per_site": 3659.7818643836554,
+        "early_days": 18.977206208892017,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 1182.5,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9667986111111111,
+        "sailings": 6
+      },
+      "ITA|4": {
+        "containers": 18,
+        "cost_per_site": 3854.780360994825,
+        "early_days": 25.967892015313762,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 1135.4166666666667,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9820555555555556,
+        "sailings": 3
+      },
+      "NGA|1": {
+        "containers": 24,
+        "cost_per_site": 4851.086779113517,
+        "early_days": 27.70559823715603,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 1573.3333333333333,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.948625,
+        "sailings": 12
+      },
+      "NGA|2": {
+        "containers": 18,
+        "cost_per_site": 4725.165246535321,
+        "early_days": 30.867797742660358,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 1328.0,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.95675,
+        "sailings": 6
+      },
+      "NGA|4": {
+        "containers": 18,
+        "cost_per_site": 4910.28374966135,
+        "early_days": 37.69369727356504,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 1276.6666666666667,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9716180555555556,
+        "sailings": 3
+      },
+      "PAK|1": {
+        "containers": 24,
+        "cost_per_site": 3022.572983744016,
+        "early_days": 19.964971959314443,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 803.3333333333334,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9503888888888888,
+        "sailings": 12
+      },
+      "PAK|2": {
+        "containers": 18,
+        "cost_per_site": 2985.645236278303,
+        "early_days": 23.261677676053658,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 649.0,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9645763888888889,
+        "sailings": 6
+      },
+      "PAK|4": {
+        "containers": 18,
+        "cost_per_site": 3195.3824847616033,
+        "early_days": 29.93869361993201,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 617.5,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9770277777777778,
+        "sailings": 3
+      },
+      "PER|1": {
+        "containers": 24,
+        "cost_per_site": 3598.432769034689,
+        "early_days": 13.722899636279774,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 1243.3333333333333,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9497638888888889,
+        "sailings": 12
+      },
+      "PER|2": {
+        "containers": 18,
+        "cost_per_site": 3511.6851920927047,
+        "early_days": 17.15807134344664,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 1037.0,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9662708333333333,
+        "sailings": 6
+      },
+      "PER|4": {
+        "containers": 18,
+        "cost_per_site": 3711.0160799967293,
+        "early_days": 24.198012048304836,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 994.1666666666666,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.984125,
+        "sailings": 3
+      }
+    },
+    "customs_score_vs_dwell": {
+      "n": 108,
+      "p_value": 8.298587838252489e-07,
+      "spearman_rho": -0.4534483424185757
+    },
+    "data_checks": {
+      "air_mean_below_fifth_of_range": 16,
+      "air_rows": 121,
+      "ct_mean_ge_median": 162,
+      "ct_rows": 163
+    },
+    "dwell_fit": {
+      "max_abs_mean_rel_err_pct": 14.795657834657362,
+      "rows": [
+        {
+          "dwell": "import",
+          "fitted_mean": 3.5586653928743783,
+          "fitted_p95": 11.903699828209238,
+          "iso3": "IDN",
+          "mean_rel_err_pct": 14.795657834657362,
+          "median": 2.0,
+          "mu": 0.6580270086740032,
+          "published_mean": 3.1,
+          "q1": 0.9,
+          "q3": 4.0,
+          "sigma": 1.1057654147776717
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 8.539263871079019,
+          "fitted_p95": 23.53367954239219,
+          "iso3": "PAK",
+          "mean_rel_err_pct": -8.17995837549443,
+          "median": 6.1,
+          "mu": 1.8073019135975514,
+          "published_mean": 9.3,
+          "q1": 3.5,
+          "q3": 10.6,
+          "sigma": 0.8214291116362546
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 7.571544756388909,
+          "fitted_p95": 25.107093860783948,
+          "iso3": "IRQ",
+          "mean_rel_err_pct": 8.164925091270131,
+          "median": 4.2,
+          "mu": 1.4305182438366018,
+          "published_mean": 7.0,
+          "q1": 2.0,
+          "q3": 8.7,
+          "sigma": 1.0898429847697435
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 20.5018324842655,
+          "fitted_p95": 46.65815312207883,
+          "iso3": "DZA",
+          "mean_rel_err_pct": -10.472347230281658,
+          "median": 16.7,
+          "mu": 2.831484804615499,
+          "published_mean": 22.9,
+          "q1": 11.3,
+          "q3": 25.9,
+          "sigma": 0.614864972185322
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 16.114711811024684,
+          "fitted_p95": 40.81764730176726,
+          "iso3": "NGA",
+          "mean_rel_err_pct": -6.309815052182068,
+          "median": 12.4,
+          "mu": 2.5171757747701453,
+          "published_mean": 17.2,
+          "q1": 7.6,
+          "q3": 20.2,
+          "sigma": 0.7246473032619796
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 2.557840768108007,
+          "fitted_p95": 7.590625293163974,
+          "iso3": "PER",
+          "mean_rel_err_pct": -14.73864106306643,
+          "median": 1.7,
+          "mu": 0.5188899489651483,
+          "published_mean": 3.0,
+          "q1": 0.9,
+          "q3": 3.1,
+          "sigma": 0.9168135073879078
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 5.319204853498676,
+          "fitted_p95": 14.437198491625399,
+          "iso3": "ITA",
+          "mean_rel_err_pct": -3.2871844818422504,
+          "median": 4.0,
+          "mu": 1.3488512994619175,
+          "published_mean": 5.5,
+          "q1": 2.2,
+          "q3": 6.5,
+          "sigma": 0.8030847142023884
+        },
+        {
+          "dwell": "export",
+          "fitted_mean": 4.6402515984581125,
+          "fitted_p95": 11.330740709797777,
+          "iso3": "CHN",
+          "mean_rel_err_pct": -1.2712425859976095,
+          "median": 3.7,
+          "mu": 1.2996999533792188,
+          "published_mean": 4.7,
+          "q1": 2.3,
+          "q3": 5.8,
+          "sigma": 0.6856655674518232
+        }
+      ]
+    },
+    "lead": {
+      "DZA|air": {
+        "analytic_mean": 19.251680037394543,
+        "analytic_sd": 3.27134692677369,
+        "buffer_95": 5.775449593575598,
+        "mean": 19.260912339754444,
+        "mean_z": 1.2621135041725002,
+        "on_time_if_plan_on_mean": 0.53419,
+        "p50": 18.98721821940289,
+        "p95": 25.036361933330042,
+        "sd": 3.2665237172050006,
+        "share_dest_port_customs_mean": 0.6286474508791527,
+        "share_port_customs_mean": 0.6286474508791527,
+        "share_port_customs_tail": 0.6590239743694446,
+        "var_z": -0.8373091414740489
+      },
+      "DZA|sea": {
+        "analytic_mean": 68.13372991605695,
+        "analytic_sd": 16.236610841611895,
+        "buffer_95": 29.461811244201783,
+        "mean": 68.10631894811692,
+        "mean_z": -0.7549948476425486,
+        "on_time_if_plan_on_mean": 0.577285,
+        "p50": 65.33846852873089,
+        "p95": 97.5681301923187,
+        "sd": 16.21357518908502,
+        "share_dest_port_customs_mean": 0.30103967642281015,
+        "share_port_customs_mean": 0.3692380474816746,
+        "share_port_customs_tail": 0.5708054641227629,
+        "var_z": -0.45817909962237324
+      },
+      "IDN|air": {
+        "analytic_mean": 8.910303434192219,
+        "analytic_sd": 4.20505648000119,
+        "buffer_95": 6.0650491654466165,
+        "mean": 8.906432508095577,
+        "mean_z": -0.41167836527927737,
+        "on_time_if_plan_on_mean": 0.620855,
+        "p50": 8.107776187005058,
+        "p95": 14.971481673542193,
+        "sd": 4.201329760612656,
+        "share_dest_port_customs_mean": 0.24631652708071736,
+        "share_port_customs_mean": 0.24631652708071736,
+        "share_port_customs_tail": 0.6341435561478947,
+        "var_z": -0.0660155473371192
+      },
+      "IDN|sea": {
+        "analytic_mean": 24.329875324665824,
+        "analytic_sd": 9.576010175216814,
+        "buffer_95": 16.634652099976535,
+        "mean": 24.340107903639115,
+        "mean_z": 0.4778763128015447,
+        "on_time_if_plan_on_mean": 0.556,
+        "p50": 23.01858003376769,
+        "p95": 40.97476000361565,
+        "sd": 9.573027821509655,
+        "share_dest_port_customs_mean": 0.14624662588683748,
+        "share_port_customs_mean": 0.3370179791579454,
+        "share_port_customs_tail": 0.4682151110707797,
+        "var_z": -0.06620973646299301
+      },
+      "IRQ|air": {
+        "analytic_mean": 9.235342653274449,
+        "analytic_sd": 3.485699648681212,
+        "buffer_95": 5.696339012068352,
+        "mean": 9.227692366927966,
+        "mean_z": -0.9815280742588034,
+        "on_time_if_plan_on_mean": 0.59846,
+        "p50": 8.584463922403167,
+        "p95": 14.924031378996318,
+        "sd": 3.4498275232731097,
+        "share_dest_port_customs_mean": 0.24831911278984117,
+        "share_port_customs_mean": 0.24831911278984117,
+        "share_port_customs_tail": 0.5692671727794774,
+        "var_z": -1.0552262259386833
+      },
+      "IRQ|sea": {
+        "analytic_mean": 43.75256718818036,
+        "analytic_sd": 13.338616429234305,
+        "buffer_95": 21.14149872472896,
+        "mean": 43.77486407150057,
+        "mean_z": 0.7475639929357519,
+        "on_time_if_plan_on_mean": 0.60506,
+        "p50": 41.24974179729371,
+        "p95": 64.91636279622954,
+        "sd": 13.337705725397583,
+        "share_dest_port_customs_mean": 0.17321654648516072,
+        "share_port_customs_mean": 0.27913435721973645,
+        "share_port_customs_tail": 0.5725285525658853,
+        "var_z": -0.007371098031523011
+      },
+      "ITA|air": {
+        "analytic_mean": 9.595609373281224,
+        "analytic_sd": 2.9948000201171743,
+        "buffer_95": 5.222393622995849,
+        "mean": 9.596270949054668,
+        "mean_z": 0.09879313421602223,
+        "on_time_if_plan_on_mean": 0.579525,
+        "p50": 9.098417506376023,
+        "p95": 14.818664572050517,
+        "sd": 2.9786439776821294,
+        "share_dest_port_customs_mean": 0.26082105918832676,
+        "share_port_customs_mean": 0.26082105918832676,
+        "share_port_customs_tail": 0.5078004732592836,
+        "var_z": -1.382289136614605
+      },
+      "ITA|sea": {
+        "analytic_mean": 45.987248118623455,
+        "analytic_sd": 8.77411005271783,
+        "buffer_95": 15.33605193005338,
+        "mean": 45.974247410724594,
+        "mean_z": -0.6626419418677654,
+        "on_time_if_plan_on_mean": 0.544635,
+        "p50": 45.063723416250554,
+        "p95": 61.31029934077797,
+        "sd": 8.788557198033574,
+        "share_dest_port_customs_mean": 0.11564012683914764,
+        "share_port_customs_mean": 0.21678214094072856,
+        "share_port_customs_tail": 0.35881003303679576,
+        "var_z": 0.48205361860214285
+      },
+      "NGA|air": {
+        "analytic_mean": 13.153502356624163,
+        "analytic_sd": 6.6397293807805156,
+        "buffer_95": 11.46185450976086,
+        "mean": 13.175653514783123,
+        "mean_z": 1.4919733194897926,
+        "on_time_if_plan_on_mean": 0.64181,
+        "p50": 11.533479779681551,
+        "p95": 24.637508024543983,
+        "sd": 6.6973008785158985,
+        "share_dest_port_customs_mean": 0.4497648743286759,
+        "share_port_customs_mean": 0.4497648743286759,
+        "share_port_customs_tail": 0.7717068960018372,
+        "var_z": 1.1991856760511161
+      },
+      "NGA|sea": {
+        "analytic_mean": 62.361171742816126,
+        "analytic_sd": 15.071790186597589,
+        "buffer_95": 26.786801251430113,
+        "mean": 62.33708805918152,
+        "mean_z": -0.7146165530285828,
+        "on_time_if_plan_on_mean": 0.592925,
+        "p50": 59.517685938422616,
+        "p95": 89.12388931061163,
+        "sd": 15.045643105011525,
+        "share_dest_port_customs_mean": 0.25798402067959314,
+        "share_port_customs_mean": 0.3326775165914779,
+        "share_port_customs_tail": 0.5798619193481043,
+        "var_z": -0.41467568244135133
+      },
+      "PAK|air": {
+        "analytic_mean": 11.70219821679892,
+        "analytic_sd": 6.906480998740901,
+        "buffer_95": 11.042602707953511,
+        "mean": 11.69674871487623,
+        "mean_z": -0.35287020249152684,
+        "on_time_if_plan_on_mean": 0.6585,
+        "p50": 10.024026920998507,
+        "p95": 22.739351422829742,
+        "sd": 6.746057286658892,
+        "share_dest_port_customs_mean": 0.418456243482016,
+        "share_port_customs_mean": 0.418456243482016,
+        "share_port_customs_tail": 0.7799597409844669,
+        "var_z": -3.0075468034297628
+      },
+      "PAK|sea": {
+        "analytic_mean": 36.602369636203804,
+        "analytic_sd": 11.018518769667333,
+        "buffer_95": 19.36486137403604,
+        "mean": 36.602190732280356,
+        "mean_z": -0.007261254305299996,
+        "on_time_if_plan_on_mean": 0.569365,
+        "p50": 34.91126612422923,
+        "p95": 55.967052106316395,
+        "sd": 10.99329841852847,
+        "share_dest_port_customs_mean": 0.233397666327389,
+        "share_port_customs_mean": 0.3599400937616021,
+        "share_port_customs_tail": 0.5669516482104419,
+        "var_z": -0.6214754353699192
+      },
+      "PER|air": {
+        "analytic_mean": 9.97315230583025,
+        "analytic_sd": 4.160036391400654,
+        "buffer_95": 6.158667099222333,
+        "mean": 9.953701839441804,
+        "mean_z": -2.090970412112119,
+        "on_time_if_plan_on_mean": 0.61787,
+        "p50": 9.170029640165515,
+        "p95": 16.112368938664137,
+        "sd": 4.049300834950008,
+        "share_dest_port_customs_mean": 0.22886957948646858,
+        "share_port_customs_mean": 0.22886957948646858,
+        "share_port_customs_tail": 0.6028779417678275,
+        "var_z": -2.711669823872428
+      },
+      "PER|sea": {
+        "analytic_mean": 48.06459236656612,
+        "analytic_sd": 7.7438463456512805,
+        "buffer_95": 13.470768152430367,
+        "mean": 48.0572128392644,
+        "mean_z": -0.4261738663685611,
+        "on_time_if_plan_on_mean": 0.53527,
+        "p50": 47.40138360259581,
+        "p95": 61.52798099169477,
+        "sd": 7.734668282600211,
+        "share_dest_port_customs_mean": 0.05313749125834355,
+        "share_port_customs_mean": 0.14951788478097983,
+        "share_port_customs_tail": 0.24386945682911432,
+        "var_z": -0.5179762352008658
+      }
+    },
+    "lead_check": {
+      "max_abs_mean_z": 2.090970412112119,
+      "max_abs_var_z": 3.0075468034297628
+    },
+    "loading": {
+      "random_40hc": {
+        "equal_lb": 105,
+        "max_gap_boxes": 1,
+        "mean_ratio": 1.1865833333333333,
+        "n": 200
+      },
+      "weekly_batch": [
+        {
+          "container": "20GP",
+          "fill_volume": 0.5358483862221098,
+          "fill_weight": 0.13613861386138615,
+          "heuristic": 3,
+          "lb_floor": 3,
+          "lb_volume": 2,
+          "lb_weight": 1,
+          "lower_bound": 3
+        },
+        {
+          "container": "40GP",
+          "fill_volume": 0.3930433174652174,
+          "fill_weight": 0.21645427286356822,
+          "heuristic": 2,
+          "lb_floor": 2,
+          "lb_volume": 1,
+          "lb_weight": 1,
+          "lower_bound": 2
+        },
+        {
+          "container": "40HC",
+          "fill_volume": 0.3480225305362701,
+          "fill_weight": 0.2175550951214918,
+          "heuristic": 2,
+          "lb_floor": 2,
+          "lb_volume": 1,
+          "lb_weight": 1,
+          "lower_bound": 2
+        }
+      ],
+      "weekly_fill_volume": 0.48573043007085287,
+      "weekly_mix": "1 x 40HC + 1 x 20GP"
+    },
+    "market_names": {
+      "DZA": "Algeria",
+      "IDN": "Indonesia",
+      "IRQ": "Iraq",
+      "ITA": "Italy",
+      "NGA": "Nigeria",
+      "PAK": "Pakistan",
+      "PER": "Peru"
+    },
+    "markets": [
+      "IDN",
+      "PAK",
+      "IRQ",
+      "DZA",
+      "NGA",
+      "PER",
+      "ITA"
+    ],
+    "plan": {
+      "DZA|air": {
+        "buffer_days": 5.775449593575598,
+        "on_time_oos_hi": 0.9530066314916533,
+        "on_time_oos_lo": 0.9487989240639022,
+        "on_time_oos_plan_mean": 0.5364652777777777,
+        "on_time_oos_plan_p95": 0.9509027777777778,
+        "ship_days_before_need_mean": 19.260912339754444,
+        "ship_days_before_need_p95": 25.036361933330042,
+        "week_all_sites_on_time_p95": 0.8737083333333333,
+        "worst_week_on_time_plan_mean": 0.0036666666666666666
+      },
+      "DZA|sea": {
+        "buffer_days": 29.461811244201783,
+        "on_time_oos_hi": 0.9530132233079716,
+        "on_time_oos_lo": 0.9477506655809174,
+        "on_time_oos_plan_mean": 0.5751944444444445,
+        "on_time_oos_plan_p95": 0.9503819444444445,
+        "ship_days_before_need_mean": 68.10631894811692,
+        "ship_days_before_need_p95": 97.5681301923187,
+        "week_all_sites_on_time_p95": 0.9415,
+        "worst_week_on_time_plan_mean": 0.00225
+      },
+      "IDN|air": {
+        "buffer_days": 6.0650491654466165,
+        "on_time_oos_hi": 0.9524686611160225,
+        "on_time_oos_lo": 0.9476146722173109,
+        "on_time_oos_plan_mean": 0.6196597222222222,
+        "on_time_oos_plan_p95": 0.9500416666666667,
+        "ship_days_before_need_mean": 8.906432508095577,
+        "ship_days_before_need_p95": 14.971481673542193,
+        "week_all_sites_on_time_p95": 0.911875,
+        "worst_week_on_time_plan_mean": 0.02708333333333333
+      },
+      "IDN|sea": {
+        "buffer_days": 16.634652099976535,
+        "on_time_oos_hi": 0.9517201250593563,
+        "on_time_oos_lo": 0.9463770971628658,
+        "on_time_oos_plan_mean": 0.5564027777777778,
+        "on_time_oos_plan_p95": 0.9490486111111112,
+        "ship_days_before_need_mean": 24.340107903639115,
+        "ship_days_before_need_p95": 40.97476000361565,
+        "week_all_sites_on_time_p95": 0.9317916666666667,
+        "worst_week_on_time_plan_mean": 0.0016666666666666666
+      },
+      "IRQ|air": {
+        "buffer_days": 5.696339012068352,
+        "on_time_oos_hi": 0.9521277931981407,
+        "on_time_oos_lo": 0.9472472068018594,
+        "on_time_oos_plan_mean": 0.601625,
+        "on_time_oos_plan_p95": 0.9496875,
+        "ship_days_before_need_mean": 9.227692366927966,
+        "ship_days_before_need_p95": 14.924031378996318,
+        "week_all_sites_on_time_p95": 0.9012083333333333,
+        "worst_week_on_time_plan_mean": 0.02858333333333333
+      },
+      "IRQ|sea": {
+        "buffer_days": 21.14149872472896,
+        "on_time_oos_hi": 0.9539251455245991,
+        "on_time_oos_lo": 0.948658187808734,
+        "on_time_oos_plan_mean": 0.6074583333333333,
+        "on_time_oos_plan_p95": 0.9512916666666666,
+        "ship_days_before_need_mean": 43.77486407150057,
+        "ship_days_before_need_p95": 64.91636279622954,
+        "week_all_sites_on_time_p95": 0.9420416666666667,
+        "worst_week_on_time_plan_mean": 0.00425
+      },
+      "ITA|air": {
+        "buffer_days": 5.222393622995849,
+        "on_time_oos_hi": 0.951431454683882,
+        "on_time_oos_lo": 0.9466241008716736,
+        "on_time_oos_plan_mean": 0.5776527777777778,
+        "on_time_oos_plan_p95": 0.9490277777777778,
+        "ship_days_before_need_mean": 9.596270949054668,
+        "ship_days_before_need_p95": 14.818664572050517,
+        "week_all_sites_on_time_p95": 0.8867916666666666,
+        "worst_week_on_time_plan_mean": 0.019666666666666666
+      },
+      "ITA|sea": {
+        "buffer_days": 15.33605193005338,
+        "on_time_oos_hi": 0.9530595705538568,
+        "on_time_oos_lo": 0.9477876516683653,
+        "on_time_oos_plan_mean": 0.5492013888888889,
+        "on_time_oos_plan_p95": 0.9504236111111111,
+        "ship_days_before_need_mean": 45.974247410724594,
+        "ship_days_before_need_p95": 61.31029934077797,
+        "week_all_sites_on_time_p95": 0.9312916666666666,
+        "worst_week_on_time_plan_mean": 0.0011666666666666665
+      },
+      "NGA|air": {
+        "buffer_days": 11.46185450976086,
+        "on_time_oos_hi": 0.952596208469586,
+        "on_time_oos_lo": 0.9473204581970804,
+        "on_time_oos_plan_mean": 0.6397986111111111,
+        "on_time_oos_plan_p95": 0.9499583333333333,
+        "ship_days_before_need_mean": 13.175653514783123,
+        "ship_days_before_need_p95": 24.637508024543983,
+        "week_all_sites_on_time_p95": 0.9331666666666667,
+        "worst_week_on_time_plan_mean": 0.011916666666666666
+      },
+      "NGA|sea": {
+        "buffer_days": 26.786801251430113,
+        "on_time_oos_hi": 0.952797735634509,
+        "on_time_oos_lo": 0.9473967088099353,
+        "on_time_oos_plan_mean": 0.5911041666666667,
+        "on_time_oos_plan_p95": 0.9500972222222223,
+        "ship_days_before_need_mean": 62.33708805918152,
+        "ship_days_before_need_p95": 89.12388931061163,
+        "week_all_sites_on_time_p95": 0.9417916666666667,
+        "worst_week_on_time_plan_mean": 0.0029166666666666664
+      },
+      "PAK|air": {
+        "buffer_days": 11.042602707953511,
+        "on_time_oos_hi": 0.9531385535404271,
+        "on_time_oos_lo": 0.9479447797929059,
+        "on_time_oos_plan_mean": 0.6577291666666667,
+        "on_time_oos_plan_p95": 0.9505416666666666,
+        "ship_days_before_need_mean": 11.69674871487623,
+        "ship_days_before_need_p95": 22.739351422829742,
+        "week_all_sites_on_time_p95": 0.9336666666666666,
+        "worst_week_on_time_plan_mean": 0.014583333333333332
+      },
+      "PAK|sea": {
+        "buffer_days": 19.36486137403604,
+        "on_time_oos_hi": 0.9543768484916663,
+        "on_time_oos_lo": 0.9491648181750002,
+        "on_time_oos_plan_mean": 0.5668125,
+        "on_time_oos_plan_p95": 0.9517708333333333,
+        "ship_days_before_need_mean": 36.602190732280356,
+        "ship_days_before_need_p95": 55.967052106316395,
+        "week_all_sites_on_time_p95": 0.9387083333333334,
+        "worst_week_on_time_plan_mean": 0.0018333333333333333
+      },
+      "PER|air": {
+        "buffer_days": 6.158667099222333,
+        "on_time_oos_hi": 0.9512599772444243,
+        "on_time_oos_lo": 0.9464205783111308,
+        "on_time_oos_plan_mean": 0.6197361111111112,
+        "on_time_oos_plan_p95": 0.9488402777777778,
+        "ship_days_before_need_mean": 9.953701839441804,
+        "ship_days_before_need_p95": 16.112368938664137,
+        "week_all_sites_on_time_p95": 0.9104583333333334,
+        "worst_week_on_time_plan_mean": 0.028999999999999998
+      },
+      "PER|sea": {
+        "buffer_days": 13.470768152430367,
+        "on_time_oos_hi": 0.9500148705276881,
+        "on_time_oos_lo": 0.9448462405834228,
+        "on_time_oos_plan_mean": 0.5379861111111112,
+        "on_time_oos_plan_p95": 0.9474305555555556,
+        "ship_days_before_need_mean": 48.0572128392644,
+        "ship_days_before_need_p95": 61.52798099169477,
+        "week_all_sites_on_time_p95": 0.922875,
+        "worst_week_on_time_plan_mean": 0.00041666666666666664
+      }
+    },
+    "plan_range": {
+      "air": {
+        "buffer_days": {
+          "max": 11.46185450976086,
+          "min": 5.222393622995849
+        },
+        "on_time_oos_plan_mean": {
+          "max": 0.6577291666666667,
+          "min": 0.5364652777777777
+        },
+        "on_time_oos_plan_p95": {
+          "max": 0.9509027777777778,
+          "min": 0.9488402777777778
+        }
+      },
+      "sea": {
+        "buffer_days": {
+          "max": 29.461811244201783,
+          "min": 13.470768152430367
+        },
+        "on_time_oos_plan_mean": {
+          "max": 0.6074583333333333,
+          "min": 0.5379861111111112
+        },
+        "on_time_oos_plan_p95": {
+          "max": 0.9517708333333333,
+          "min": 0.9474305555555556
+        }
+      }
+    },
+    "policy": {
+      "DZA|air": {
+        "cost_per_site": 9925.207896781705,
+        "expedite_rate": 0.0,
+        "lead_days": 25.023904226759324,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "DZA|sea": {
+        "cost_per_site": 5012.17286423746,
+        "expedite_rate": 0.0,
+        "lead_days": 97.60970563599317,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "DZA|sea_expedite": {
+        "cost_per_site": 6387.682901480007,
+        "expedite_rate": 0.042405,
+        "lead_days": 121.80624397210296,
+        "on_time": 0.99956,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "DZA|split": {
+        "cost_per_site": 5127.995877895365,
+        "expedite_rate": 0.0,
+        "lead_days": 107.35997823091675,
+        "on_time": 0.95004,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "IDN|air": {
+        "cost_per_site": 5776.92485153224,
+        "expedite_rate": 0.0,
+        "lead_days": 15.008739105807582,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "IDN|sea": {
+        "cost_per_site": 2295.4470899368757,
+        "expedite_rate": 0.0,
+        "lead_days": 40.854446911031296,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "IDN|sea_expedite": {
+        "cost_per_site": 3072.740293607772,
+        "expedite_rate": 0.04639,
+        "lead_days": 53.21922625230502,
+        "on_time": 0.999535,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "IDN|split": {
+        "cost_per_site": 3073.321185076795,
+        "expedite_rate": 0.0,
+        "lead_days": 47.342560451527575,
+        "on_time": 0.95991,
+        "plan_quantile": 0.96,
+        "target_missed": false
+      },
+      "IRQ|air": {
+        "cost_per_site": 8657.693652711489,
+        "expedite_rate": 0.0,
+        "lead_days": 14.943206529301879,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "IRQ|sea": {
+        "cost_per_site": 3534.6304759762907,
+        "expedite_rate": 0.0,
+        "lead_days": 64.84979726136834,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "IRQ|sea_expedite": {
+        "cost_per_site": 4497.150097302707,
+        "expedite_rate": 0.045705,
+        "lead_days": 77.81090160737547,
+        "on_time": 0.99908,
+        "plan_quantile": 0.98,
+        "target_missed": false
+      },
+      "IRQ|split": {
+        "cost_per_site": 4212.004986039875,
+        "expedite_rate": 0.0,
+        "lead_days": 77.63718863422018,
+        "on_time": 0.95996,
+        "plan_quantile": 0.96,
+        "target_missed": false
+      },
+      "ITA|air": {
+        "cost_per_site": 8649.155540140317,
+        "expedite_rate": 0.0,
+        "lead_days": 14.815117879181216,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "ITA|sea": {
+        "cost_per_site": 3770.28189452755,
+        "expedite_rate": 0.0,
+        "lead_days": 61.388394910422186,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "ITA|sea_expedite": {
+        "cost_per_site": 4797.962102030266,
+        "expedite_rate": 0.05837,
+        "lead_days": 71.99008807423434,
+        "on_time": 0.99956,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "ITA|split": {
+        "cost_per_site": 4262.748172507236,
+        "expedite_rate": 0.0,
+        "lead_days": 67.21484770524924,
+        "on_time": 0.959965,
+        "plan_quantile": 0.96,
+        "target_missed": false
+      },
+      "NGA|air": {
+        "cost_per_site": 10911.820703179199,
+        "expedite_rate": 0.0,
+        "lead_days": 24.601669145243775,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "NGA|sea": {
+        "cost_per_site": 4864.545397989092,
+        "expedite_rate": 0.0,
+        "lead_days": 89.49839492822741,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "NGA|sea_expedite": {
+        "cost_per_site": 6269.140525859966,
+        "expedite_rate": 0.03883,
+        "lead_days": 114.56914682982332,
+        "on_time": 0.999525,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "NGA|split": {
+        "cost_per_site": 5373.952562735126,
+        "expedite_rate": 0.0,
+        "lead_days": 99.39978614378256,
+        "on_time": 0.9501,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PAK|air": {
+        "cost_per_site": 7965.79362355351,
+        "expedite_rate": 0.0,
+        "lead_days": 22.68799779729079,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PAK|sea": {
+        "cost_per_site": 3023.6061359995474,
+        "expedite_rate": 0.0,
+        "lead_days": 55.98181362216061,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PAK|sea_expedite": {
+        "cost_per_site": 4291.809242176211,
+        "expedite_rate": 0.067515,
+        "lead_days": 72.79420454778398,
+        "on_time": 0.99957,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "PAK|split": {
+        "cost_per_site": 3939.967501594793,
+        "expedite_rate": 0.0,
+        "lead_days": 62.44794212779241,
+        "on_time": 0.950075,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PER|air": {
+        "cost_per_site": 11582.89271130181,
+        "expedite_rate": 0.0,
+        "lead_days": 16.035084294459786,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PER|sea": {
+        "cost_per_site": 3601.9980730110337,
+        "expedite_rate": 0.0,
+        "lead_days": 61.63064036913426,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PER|sea_expedite": {
+        "cost_per_site": 5722.889358193368,
+        "expedite_rate": 0.12148,
+        "lead_days": 69.8293855424729,
+        "on_time": 0.99951,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "PER|split": {
+        "cost_per_site": 4751.308338605248,
+        "expedite_rate": 0.0,
+        "lead_days": 66.1857770008887,
+        "on_time": 0.95998,
+        "plan_quantile": 0.96,
+        "target_missed": false
+      }
+    },
+    "policy_best": {
+      "DZA": "sea",
+      "IDN": "sea",
+      "IRQ": "sea",
+      "ITA": "sea",
+      "NGA": "sea",
+      "PAK": "sea",
+      "PER": "sea"
+    },
+    "sea_port_share": {
+      "share_dest_port_customs_mean": {
+        "max": 0.30103967642281015,
+        "min": 0.05313749125834355
+      },
+      "share_port_customs_mean": {
+        "max": 0.3692380474816746,
+        "min": 0.14951788478097983
+      },
+      "share_port_customs_tail": {
+        "max": 0.5798619193481043,
+        "min": 0.24386945682911432
+      }
+    },
+    "selection": {
+      "cover_share_pct": 33.83,
+      "rule_2024_2025": [
+        "IDN",
+        "PAK",
+        "IRQ",
+        "DZA",
+        "NGA",
+        "PER",
+        "ITA"
+      ],
+      "rule_2025_only": [
+        "IDN",
+        "PAK",
+        "LBN",
+        "DZA",
+        "NGA",
+        "ARG",
+        "ITA"
+      ],
+      "shares": {
+        "DZA": 5.43,
+        "IDN": 15.87,
+        "IRQ": 1.49,
+        "ITA": 2.07,
+        "NGA": 3.38,
+        "PAK": 3.06,
+        "PER": 2.53
+      }
+    },
+    "sensitivity": {
+      "DZA|Cape route (avoid Red Sea)": 14.108193830210325,
+      "DZA|LPI 2.0 year 2023": -5.471636960523469,
+      "DZA|base": 0.0,
+      "DZA|destination dwell x 0.75": -10.716121386510252,
+      "DZA|destination dwell x 1.25": 10.636754814477968,
+      "DZA|dwell fit: median + mean": 13.45755725356095,
+      "DZA|no transshipment": -16.4835180314805,
+      "DZA|sea speed 14 kn": 2.8312323012052616,
+      "DZA|sea speed 18 kn": -2.671673664685983,
+      "IDN|Cape route (avoid Red Sea)": 0.15528576099657698,
+      "IDN|LPI 2.0 year 2023": -3.4085039705601616,
+      "IDN|base": 0.0,
+      "IDN|destination dwell x 0.75": -1.5039662101362552,
+      "IDN|destination dwell x 1.25": 1.9213573808702549,
+      "IDN|dwell fit: median + mean": -1.1077529642857584,
+      "IDN|no transshipment": -11.516888002672506,
+      "IDN|sea speed 14 kn": 1.0208064765823934,
+      "IDN|sea speed 18 kn": -0.26283553392369186,
+      "IRQ|Cape route (avoid Red Sea)": -0.20572582601283784,
+      "IRQ|LPI 2.0 year 2023": -2.182882949361286,
+      "IRQ|base": 0.0,
+      "IRQ|destination dwell x 0.75": -4.9873803375710395,
+      "IRQ|destination dwell x 1.25": 5.0544162906775085,
+      "IRQ|dwell fit: median + mean": -2.6600868149268067,
+      "IRQ|no transshipment": -13.222141198330775,
+      "IRQ|sea speed 14 kn": 1.8221601065984459,
+      "IRQ|sea speed 18 kn": -1.631284456656502,
+      "ITA|Cape route (avoid Red Sea)": 16.37827169394381,
+      "ITA|LPI 2.0 year 2023": -1.781561080500694,
+      "ITA|base": 0.0,
+      "ITA|destination dwell x 0.75": -2.3772808409708617,
+      "ITA|destination dwell x 1.25": 2.732228905571155,
+      "ITA|dwell fit: median + mean": 0.448442207151281,
+      "ITA|no transshipment": -10.395382918827295,
+      "ITA|sea speed 14 kn": 3.1363845136701727,
+      "ITA|sea speed 18 kn": -2.224393033863471,
+      "NGA|Cape route (avoid Red Sea)": -0.7990208019706557,
+      "NGA|LPI 2.0 year 2023": -1.012674574451239,
+      "NGA|base": 0.0,
+      "NGA|destination dwell x 0.75": -9.703599884305504,
+      "NGA|destination dwell x 1.25": 9.218419573640531,
+      "NGA|dwell fit: median + mean": 5.508705432344286,
+      "NGA|no transshipment": -9.247280937017791,
+      "NGA|sea speed 14 kn": 3.328601339785749,
+      "NGA|sea speed 18 kn": -3.4963285185548045,
+      "PAK|Cape route (avoid Red Sea)": 0.0056514927105482116,
+      "PAK|LPI 2.0 year 2023": 4.639770384013161,
+      "PAK|base": 0.0,
+      "PAK|destination dwell x 0.75": -4.669137396921748,
+      "PAK|destination dwell x 1.25": 5.057784570259656,
+      "PAK|dwell fit: median + mean": 3.304376413470308,
+      "PAK|no transshipment": -8.343156819129241,
+      "PAK|sea speed 14 kn": 1.7711355822603423,
+      "PAK|sea speed 18 kn": -1.085064313578826,
+      "PER|Cape route (avoid Red Sea)": -0.11649940523955848,
+      "PER|LPI 2.0 year 2023": -3.793637589577294,
+      "PER|base": 0.0,
+      "PER|destination dwell x 0.75": -1.1536845939428417,
+      "PER|destination dwell x 1.25": 0.9799989173857,
+      "PER|dwell fit: median + mean": 1.3973465517194938,
+      "PER|no transshipment": -9.220645112401087,
+      "PER|sea speed 14 kn": 3.9663263811943352,
+      "PER|sea speed 18 kn": -3.135892142449997
+    }
+  },
   "slotting": {
     "lambda_star": 0.5,
     "lambda_tuning": [
@@ -655,7 +1803,7 @@
         },
         "max_heuristic_gap_pct": 2.3686512084301854,
         "max_mip_gap": 2.755555932226223e-07,
-        "mean_runtime_s": 4.635959458351135,
+        "mean_runtime_s": 2.039043736457825,
         "n": 10,
         "n_binaries": 954,
         "n_optimal": 10,

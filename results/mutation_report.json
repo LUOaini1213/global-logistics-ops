@@ -1,6 +1,7 @@
 {
-  "caught": 25,
-  "total": 25,
+  "caught": 43,
+  "total": 43,
+  "invalid": 0,
   "mutants": [
     {
       "id": 1,
@@ -105,7 +106,7 @@
       "file": "glops/inventory.py",
       "mutant": "lead time off by one day",
       "status": "caught",
-      "detail": "FAILED tests/test_inventory.py::test_deterministic_demand_timing_is_exact[1]"
+      "detail": "FAILED tests/test_inventory.py::test_deterministic_demand_timing_is_exact[0]"
     },
     {
       "id": 16,
@@ -154,7 +155,7 @@
       "file": "glops/reverse.py",
       "mutant": "failures use yield instead of 1 - yield",
       "status": "caught",
-      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - Assertion..."
+      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - ValueErro..."
     },
     {
       "id": 23,
@@ -168,14 +169,140 @@
       "file": "glops/reverse.py",
       "mutant": "market cap row dropped",
       "status": "caught",
-      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - Assertion..."
+      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - ValueErro..."
     },
     {
       "id": 25,
       "file": "glops/reverse.py",
       "mutant": "cross-border recycling flag ignored",
       "status": "caught",
-      "detail": "FAILED tests/test_reverse.py::test_cross_border_flag_respected - assert np.fl..."
+      "detail": "FAILED tests/test_reverse.py::test_cross_border_flag_respected - ValueError: ..."
+    },
+    {
+      "id": 26,
+      "file": "glops/rollout.py",
+      "mutant": "quartile fit: sigma from one z instead of two",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_quartile_fit_recovers_lognormal - assert (..."
+    },
+    {
+      "id": 27,
+      "file": "glops/rollout.py",
+      "mutant": "median-mean fit drops the factor 2",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_median_mean_fit_recovers_lognormal - asser..."
+    },
+    {
+      "id": 28,
+      "file": "glops/rollout.py",
+      "mutant": "occurrence mixture variance loses the Bernoulli term",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_dist_sample_moments_match_analytic[d3] - A..."
+    },
+    {
+      "id": 29,
+      "file": "glops/rollout.py",
+      "mutant": "ocean leg drops the port-call allowance",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_sea_component_inputs[IDN] - assert 4.72395..."
+    },
+    {
+      "id": 30,
+      "file": "glops/rollout.py",
+      "mutant": "transshipment time not conditioned on occurrence",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_sea_component_inputs[IDN] - assert 3.9 == ..."
+    },
+    {
+      "id": 31,
+      "file": "glops/rollout.py",
+      "mutant": "planning quantile rounds down",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_quantile_guarantees_coverage - assert 3.0 ..."
+    },
+    {
+      "id": 32,
+      "file": "glops/rollout.py",
+      "mutant": "rollout shares one inland leg across a week's sites",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_rollout_plan_at_p95_is_on_time_out_of_sample"
+    },
+    {
+      "id": 33,
+      "file": "glops/rollout.py",
+      "mutant": "checker ignores overlapping stacks",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_checker_rejects_bad_plans - assert False"
+    },
+    {
+      "id": 34,
+      "file": "glops/rollout.py",
+      "mutant": "stacking ignores the top-load limit",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_checker_rejects_bad_plans - assert False"
+    },
+    {
+      "id": 35,
+      "file": "glops/rollout.py",
+      "mutant": "packer ignores the payload",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_pack_is_feasible_and_above_lower_bound[20GP-0]"
+    },
+    {
+      "id": 36,
+      "file": "glops/rollout.py",
+      "mutant": "floor bound ignores what carriers can hold",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_lower_bound_floor_argument_by_hand - asser..."
+    },
+    {
+      "id": 37,
+      "file": "glops/rollout.py",
+      "mutant": "split policy plans each leg at p instead of sqrt(p)",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_split_policy_joint_on_time_and_cost - asse..."
+    },
+    {
+      "id": 38,
+      "file": "glops/rollout.py",
+      "mutant": "expedited air kit never arrives first",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_expedite_pays_the_full_single_shipment_fee"
+    },
+    {
+      "id": 39,
+      "file": "glops/rollout.py",
+      "mutant": "holding on a 360-day year",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_holding_arithmetic - assert 311.1111111111..."
+    },
+    {
+      "id": 40,
+      "file": "glops/rollout.py",
+      "mutant": "air chargeable weight ignores volume",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_air_chargeable_weight - assert 100.0 == 16..."
+    },
+    {
+      "id": 41,
+      "file": "glops/rollout.py",
+      "mutant": "market rule picks the smallest eligible partner",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_market_rule_reproduces_config - AssertionE..."
+    },
+    {
+      "id": 42,
+      "file": "glops/rollout.py",
+      "mutant": "consolidation forgets the later weeks' slack",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_consolidation_trade_off - assert 16.004944..."
+    },
+    {
+      "id": 43,
+      "file": "config/rollout.json",
+      "mutant": "container dwell fitted to median + mean instead of quartiles",
+      "status": "caught",
+      "detail": "FAILED tests/test_rollout.py::test_sea_component_inputs[IDN] - assert 3.53581..."
     }
   ]
 }
