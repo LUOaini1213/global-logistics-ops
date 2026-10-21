@@ -321,7 +321,7 @@ hand-worked case.
 `tools/mutation_test.py` breaks the code or configuration on purpose (wrong payer cells, dropped
 insurance from customs value, receipts before demand, off-by-one lead time, one-sided MILP
 linearisation, LP rows removed, ...) and checks that the suite fails:
-**<!--n:mut_caught-->25/25<!--/n--> mutants caught** (details in `results/mutation_report.json`).
+**<!--n:mut_caught-->42/42<!--/n--> mutants caught** (details in `results/mutation_report.json`).
 The first run caught 20/25 (`results/mutation_report_round1.json`): one mutant was equivalent
 (it re-ordered two additions; replaced by a real timing change) and four were genuine test gaps -
 VAT base without duty (Singapore duty is 0, so only an EU-style test can see it), the (r,Q) "+1 batch",
@@ -329,6 +329,9 @@ the 365-day holding convention, and the size-L floor-level rule. Tests were adde
 the full set was re-run. The real-order check added mutants for its own code (cleaning rules,
 training/held-out leakage, an unpaired bootstrap, the vectorised router, the replay window, ...);
 the mutation run hides the raw file, as CI does, so only checks that run in CI can catch them.
+The tool now matches its patterns on LF-normalised text: on a Windows checkout with CRLF line
+endings its multi-line patterns used to match nothing and those mutants were silently left out of
+the score (9 of 42 on the first run here). It now exits with an error if any pattern fails to match.
 
 ## Limitations
 

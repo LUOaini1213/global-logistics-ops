@@ -163,7 +163,9 @@ def main() -> int:
     for i, (rel, name, old, new) in enumerate(MUTANTS, 1):
         path = ROOT / rel
         orig = path.read_bytes()
-        text = orig.decode("utf-8")
+        # match on LF text: a Windows checkout (core.autocrlf) has CRLF files, and multi-line
+        # patterns would silently never match; the original bytes are restored afterwards
+        text = orig.decode("utf-8").replace("\r\n", "\n")
         if text.count(old) != 1:
             print(f"[{i:2d}] SKIP pattern not unique/missing: {name}")
             results.append({"id": i, "file": rel, "mutant": name, "status": "invalid"})
@@ -186,7 +188,10 @@ def main() -> int:
     print(f"caught {caught}/{len(valid)}")
     # README carries the mutation score: re-render it from the new report
     subprocess.run([sys.executable, "run_all.py", "--readme-only"], cwd=ROOT, check=True)
-    return 0
+    invalid = len(results) - len(valid)
+    if invalid:
+        print(f"{invalid} mutant pattern(s) did not match - the score above leaves them out")
+    return 1 if invalid else 0
 
 
 if __name__ == "__main__":

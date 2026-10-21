@@ -1,6 +1,6 @@
 {
-  "caught": 25,
-  "total": 25,
+  "caught": 42,
+  "total": 42,
   "mutants": [
     {
       "id": 1,
@@ -105,7 +105,7 @@
       "file": "glops/inventory.py",
       "mutant": "lead time off by one day",
       "status": "caught",
-      "detail": "FAILED tests/test_inventory.py::test_deterministic_demand_timing_is_exact[1]"
+      "detail": "FAILED tests/test_inventory.py::test_deterministic_demand_timing_is_exact[0]"
     },
     {
       "id": 16,
@@ -154,7 +154,7 @@
       "file": "glops/reverse.py",
       "mutant": "failures use yield instead of 1 - yield",
       "status": "caught",
-      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - Assertion..."
+      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - ValueErro..."
     },
     {
       "id": 23,
@@ -168,14 +168,133 @@
       "file": "glops/reverse.py",
       "mutant": "market cap row dropped",
       "status": "caught",
-      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - Assertion..."
+      "detail": "FAILED tests/test_reverse.py::test_base_case_feasible_and_optimal - ValueErro..."
     },
     {
       "id": 25,
       "file": "glops/reverse.py",
       "mutant": "cross-border recycling flag ignored",
       "status": "caught",
-      "detail": "FAILED tests/test_reverse.py::test_cross_border_flag_respected - assert np.fl..."
+      "detail": "FAILED tests/test_reverse.py::test_cross_border_flag_respected - ValueError: ..."
+    },
+    {
+      "id": 26,
+      "file": "glops/online_retail.py",
+      "mutant": "cancellations kept",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_cleaning_rules_count_each_row_once - A..."
+    },
+    {
+      "id": 27,
+      "file": "glops/online_retail.py",
+      "mutant": "duplicated sheet-overlap invoices kept",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_cleaning_rules_count_each_row_once - A..."
+    },
+    {
+      "id": 28,
+      "file": "glops/online_retail.py",
+      "mutant": "stock codes not upper-cased",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_cleaning_rules_count_each_row_once - A..."
+    },
+    {
+      "id": 29,
+      "file": "glops/online_retail.py",
+      "mutant": "zero-price lines kept",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_cleaning_rules_count_each_row_once - A..."
+    },
+    {
+      "id": 30,
+      "file": "glops/online_retail.py",
+      "mutant": "'Next Day Carriage' counted as a product",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_cleaning_rules_count_each_row_once - A..."
+    },
+    {
+      "id": 31,
+      "file": "glops/online_retail.py",
+      "mutant": "repeat lines overwrite instead of adding quantities",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_cleaning_rules_count_each_row_once - A..."
+    },
+    {
+      "id": 32,
+      "file": "glops/online_retail.py",
+      "mutant": "top SKUs ranked on training + held-out lines (leakage)",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_top_skus_use_training_lines_only_and_break_ties_by_code"
+    },
+    {
+      "id": 33,
+      "file": "glops/online_retail.py",
+      "mutant": "demand interval counts closed days",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_demand_stats_use_trading_days_for_the_interval"
+    },
+    {
+      "id": 34,
+      "file": "glops/online_retail.py",
+      "mutant": "inventory SKUs: least-ordered instead of most-ordered",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_inventory_selection_rule - AssertionEr..."
+    },
+    {
+      "id": 35,
+      "file": "glops/real_orders.py",
+      "mutant": "velocity / affinity estimated on held-out orders (leakage)",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_real_instance_is_estimated_on_training_orders_only"
+    },
+    {
+      "id": 36,
+      "file": "glops/real_orders.py",
+      "mutant": "bootstrap not paired (methods resampled independently)",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_reduction_ci_is_paired - assert (20.00..."
+    },
+    {
+      "id": 37,
+      "file": "glops/real_orders.py",
+      "mutant": "Gini off by one rank",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_gini_and_top_share - assert 0.25 == 0...."
+    },
+    {
+      "id": 38,
+      "file": "glops/real_orders.py",
+      "mutant": "replay also scores the warm-up days",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_replay_measures_only_after_the_warmup"
+    },
+    {
+      "id": 39,
+      "file": "glops/real_orders.py",
+      "mutant": "bootstrap resamples single days, not weeks",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_week_block_paths_keep_whole_weeks - as..."
+    },
+    {
+      "id": 40,
+      "file": "glops/real_orders.py",
+      "mutant": "r search skips the fine step (not the smallest r)",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_tune_r_returns_the_smallest_r_meeting_the_target"
+    },
+    {
+      "id": 41,
+      "file": "glops/slotting.py",
+      "mutant": "vectorised router uses the nearest pick aisle as the farthest",
+      "status": "caught",
+      "detail": "FAILED tests/test_slotting.py::test_vectorised_tour_lengths_match_tour_length[s_shape]"
+    },
+    {
+      "id": 42,
+      "file": "glops/inventory.py",
+      "mutant": "given (real) demand ignored",
+      "status": "caught",
+      "detail": "FAILED tests/test_real_orders.py::test_given_demand_is_used_and_validated - a..."
     }
   ]
 }
