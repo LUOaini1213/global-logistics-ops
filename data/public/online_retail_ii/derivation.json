@@ -1,0 +1,157 @@
+{
+  "accessed": "2026-10-21",
+  "calendar": {
+    "closed_days": [
+      "2009-12-24",
+      "2009-12-25",
+      "2009-12-27",
+      "2009-12-28",
+      "2009-12-29",
+      "2009-12-30",
+      "2009-12-31",
+      "2010-01-01",
+      "2010-01-03",
+      "2010-04-02",
+      "2010-04-04",
+      "2010-04-05",
+      "2010-05-03",
+      "2010-05-31",
+      "2010-08-30",
+      "2010-12-24",
+      "2010-12-26",
+      "2010-12-27",
+      "2010-12-28",
+      "2010-12-29",
+      "2010-12-30",
+      "2010-12-31",
+      "2011-01-02",
+      "2011-01-03",
+      "2011-04-22",
+      "2011-04-24",
+      "2011-04-25",
+      "2011-04-29",
+      "2011-05-02",
+      "2011-05-30",
+      "2011-08-29"
+    ],
+    "days": 739,
+    "saturdays_traded": [
+      "2009-12-05"
+    ],
+    "trading_days": 604
+  },
+  "changes": "Cleaned, filtered to the top 1,000 products of the training year, aggregated to orders and daily units; see glops/online_retail.py.",
+  "citation": "Chen, D. (2012). Online Retail II [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D",
+  "cleaning": {
+    "codes_normalised": 3240,
+    "invoices_spanning_dates": 0,
+    "non_product_rows_by_code": {
+      "22016": 3,
+      "23444": 80,
+      "23574": 15,
+      "ADJUST": 36,
+      "ADJUST2": 3,
+      "AMAZONFEE": 3,
+      "B": 6,
+      "BANK CHARGES": 34,
+      "C2": 270,
+      "C3": 1,
+      "D": 5,
+      "DOT": 1422,
+      "GIFT": 1,
+      "GIFT_0001_10": 16,
+      "GIFT_0001_20": 29,
+      "GIFT_0001_30": 29,
+      "GIFT_0001_40": 7,
+      "GIFT_0001_50": 8,
+      "GIFT_0001_60": 2,
+      "GIFT_0001_70": 3,
+      "GIFT_0001_80": 3,
+      "GIFT_0001_90": 2,
+      "M": 868,
+      "POST": 1858,
+      "S": 3,
+      "TEST001": 11,
+      "TEST002": 2
+    },
+    "overlap_invoices": 1088,
+    "removed": {
+      "cancellation": 19165,
+      "duplicate_sheet_overlap": 22523,
+      "missing_stock_code": 0,
+      "non_positive_price": 2578,
+      "non_positive_quantity": 3391,
+      "non_product_code": 4720
+    },
+    "repeat_lines_merged": 23035,
+    "rows_in": 1067371,
+    "rows_kept": 1014994
+  },
+  "coverage": {
+    "test": {
+      "lines": 517196,
+      "lines_on_top_skus": 296200,
+      "share": 0.5727035785272895
+    },
+    "train": {
+      "lines": 474763,
+      "lines_on_top_skus": 348028,
+      "share": 0.7330562828190066
+    }
+  },
+  "dataset": "Online Retail II",
+  "download": "https://archive.ics.uci.edu/static/public/502/online+retail+ii.zip",
+  "inventory_selection": {
+    "intermittent": [
+      "22086",
+      "22910",
+      "22865",
+      "22666",
+      "22866",
+      "22952",
+      "22867",
+      "22630",
+      "22909",
+      "22629"
+    ],
+    "steady": [
+      "85123A",
+      "85099B",
+      "21212",
+      "21232",
+      "20725",
+      "84879",
+      "84991",
+      "21754",
+      "20914",
+      "21931"
+    ]
+  },
+  "licence": "CC BY 4.0, https://creativecommons.org/licenses/by/4.0/",
+  "orders": {
+    "first_excluded_train_lines": 142,
+    "invoices": 39516,
+    "products": 4722,
+    "test_invoices": 19773,
+    "test_orders_kept": 18451,
+    "test_orders_without_top_sku": 1322,
+    "top_sku_min_train_lines": 142,
+    "train_invoices": 19743,
+    "train_orders_kept": 18975,
+    "train_orders_without_top_sku": 768,
+    "train_products": 4073
+  },
+  "page": "https://archive.ics.uci.edu/dataset/502/online+retail+ii",
+  "periods": {
+    "_note": "train = [first, split), test = [split, last]",
+    "test": [
+      "2010-12-01",
+      "2011-12-09"
+    ],
+    "train": [
+      "2009-12-01",
+      "2010-12-01"
+    ]
+  },
+  "uci_id": 502
+}

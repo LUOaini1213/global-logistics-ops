@@ -104,6 +104,26 @@ def test_tour_length_geometry():
     assert sl.tour_length(lay, slots, np.array([], dtype=int), "s_shape") == 0.0
 
 
+@pytest.mark.parametrize("policy", ["s_shape", "return"])
+def test_vectorised_tour_lengths_match_tour_length(policy):
+    """The batch evaluator used for the real-order check equals tour_length order by order,
+    on orders of 1 to 60 lines (odd and even numbers of pick aisles)."""
+    inst = sl.generate(5)
+    slots = inst.layout.slots()
+    rng = np.random.default_rng(9)
+    a = sl.assign_random(inst, slots, rng)
+    orders = [np.sort(rng.choice(inst.n_sku, size=k, replace=False)) for k in rng.integers(1, 61, 400)]
+    orders += inst.test_orders[:200]
+    got = sl.tour_lengths(inst.layout, slots, a, orders, policy)
+    want = np.array([sl.tour_length(inst.layout, slots, a[o], policy) for o in orders])
+    assert got.shape == want.shape
+    assert np.allclose(got, want, rtol=1e-12, atol=1e-9)
+    m = np.array([len(np.unique(slots["aisle"][a[o]])) for o in orders])
+    assert (m % 2 == 1).any() and (m % 2 == 0).any() and m.max() >= 8
+    with pytest.raises(ValueError):
+        sl.tour_lengths(inst.layout, slots, a, [np.array([], dtype=int)], policy)
+
+
 def test_tour_lower_bound_holds():
     inst = sl.generate(2, SMALL_LAYOUT, SMALL_PARAMS)
     slots = SMALL_LAYOUT.slots()

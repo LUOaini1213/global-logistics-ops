@@ -336,6 +336,85 @@ any gap may be the bound's looseness rather than the heuristic's.</p>
 """
 
 
+def chart_real_slotting(s, R) -> str:
+    """Same comparison, three data sources; real orders emphasised, synthetic in greys."""
+    comps = [("swap vs random", ("red_vs_random", "heuristic")), ("swap vs ABC", ("red_vs_abc", "heuristic")),
+             ("full turnover vs ABC", ("red_vs_abc", "turnover")), ("ABC vs random", ("red_vs_random", "abc"))]
+    srcs = [("synthetic (Part 1)", s["large"], MUTED), ("synthetic, level rules relaxed", R["synthetic_relaxed"], AXIS),
+            ("real orders (Online Retail II)", R["slotting"], C1)]
+    fig, ax = plt.subplots(figsize=(6.8, 3.6))
+    h = 0.26
+    for j, (lab, src, col) in enumerate(srcs):
+        y = np.arange(len(comps))[::-1] + (1 - j) * h
+        c = [src[k][m]["s_shape"] for _, (k, m) in comps]
+        v = np.array([x["mean"] for x in c])
+        err = np.array([[x["mean"] - x["lo"] for x in c], [x["hi"] - x["mean"] for x in c]])
+        ax.barh(y, v, height=h - 0.03, color=col, label=lab, xerr=err,
+                error_kw={"ecolor": INK2, "elinewidth": 0.8})
+        for yi, vi, e in zip(y, v, err[1]):
+            ax.text(vi + e + 0.8, yi, f"{vi:.1f}%", va="center", color=INK, fontsize=7)
+    ax.set_yticks(np.arange(len(comps))[::-1], [c for c, _ in comps])
+    ax.set_xlim(0, 62)
+    ax.set_xlabel("pick-travel reduction, S-shape routing (%), 95% CI")
+    ax.set_title("Same methods on real orders: about half the synthetic gain")
+    ax.grid(axis="y", visible=False)
+    ax.legend(loc="lower right", fontsize=7)
+    return _png(fig)
+
+
+def _size_label(b) -> str:
+    lo, hi = b["lines"]
+    return f"{lo}" if lo == hi else (f"{lo}-{hi}" if hi else f"{lo}+")
+
+
+def chart_real_by_size(R) -> str:
+    real, syn = R["slotting"]["by_size"], R["synthetic_relaxed"]["by_size"]
+    x = np.arange(len(real))
+    c = [b["red_heur_vs_random"] for b in real]
+    v = np.array([q["mean"] for q in c])
+    err = np.array([[q["mean"] - q["lo"] for q in c], [q["hi"] - q["mean"] for q in c]])
+    fig, ax = plt.subplots(figsize=(6.0, 3.0))
+    ax.bar(x, v, width=0.55, color=C1, yerr=err, error_kw={"ecolor": INK2, "elinewidth": 0.8},
+           label="real orders (95% CI)")
+    for xi, vi, b in zip(x, v, real):
+        ax.text(xi, 1.5, f"{100 * b['share_orders']:.0f}% of\norders", ha="center", color="white", fontsize=7)
+        ax.text(xi + 0.3, vi + 1.0, f"{vi:.0f}%", ha="left", color=INK, fontsize=7)
+    sx = [i for i, b in enumerate(syn) if b["orders"] >= 100]
+    ax.plot(sx, [syn[i]["red_heur_vs_random_pooled"] for i in sx], "D", color=INK2, markersize=6,
+            label="synthetic, level rules relaxed (no larger orders)")
+    ax.set_xticks(x, [_size_label(b) for b in real])
+    ax.set_xlabel("lines in the held-out order")
+    ax.set_ylabel("swap vs random: travel reduction (%)")
+    ax.set_title("Bigger orders gain less: S-shape walks most aisles anyway")
+    ax.set_ylim(0, 78)
+    ax.legend(loc="upper right", fontsize=7)
+    ax.grid(axis="x", visible=False)
+    return _png(fig)
+
+
+def chart_real_inventory(R) -> str:
+    iv = R["inventory"]
+    cfgs = [("ocean_normal", "ocean\nnormal"), ("ocean_bootstrap", "ocean\nbootstrap"),
+            ("air_normal", "air\nnormal"), ("air_bootstrap", "air\nbootstrap")]
+    fig, ax = plt.subplots(figsize=(6.4, 3.2))
+    for grp, col, off in (("steady", C1, -0.14), ("intermittent", C2, 0.14)):
+        rows = [r for r in iv["skus"] if r["group"] == grp]
+        for k, (key, _) in enumerate(cfgs):
+            yv = [100 * r[f"{key}_heldout_fill"] for r in rows]
+            ax.plot(np.full(len(yv), k + off), yv, "o", color=col, alpha=0.8, markersize=5,
+                    markeredgecolor=SURF, markeredgewidth=0.8, label=grp if k == 0 else None)
+            ax.plot([k + off - 0.09, k + off + 0.09], [np.mean(yv)] * 2, color=INK, lw=1.6)
+    ax.axhline(100 * iv["target"], color=MUTED, lw=1, ls="--")
+    ax.text(0.5, 100 * iv["target"] + 1.2, "target", color=INK2, fontsize=7, ha="center")
+    ax.set_xticks(range(len(cfgs)), [c for _, c in cfgs])
+    ax.set_ylabel("achieved fill rate on held-out demand (%)")
+    ax.set_title("(r,Q) tuned on 2010 demand, replayed on real 2011 demand (bar = mean)")
+    ax.set_ylim(0, 104)
+    ax.legend(loc="lower right", fontsize=7)
+    ax.grid(axis="x", visible=False)
+    return _png(fig)
+
+
 # ------------------------------------------------------------------ page
 
 CSS = """
@@ -354,13 +433,16 @@ h3{font-size:15px;margin:18px 0 6px}p,li{color:var(--ink2)}.lead{color:var(--ink
 
 
 def build(summary: dict) -> str:
-    s, inv, val, land, rev, pub, ro_ = (summary[k] for k in ("slotting", "inventory", "inventory_validation",
-                                                              "landed", "reverse", "public", "rollout"))
+    s, inv, val, land, rev, pub, ro_, R = (summary[k] for k in ("slotting", "inventory", "inventory_validation",
+                                                                 "landed", "reverse", "public", "rollout",
+                                                                 "real_orders"))
     L = s["large"]
     sm = s["small"]
     tiles = [
         (f"{L['red_vs_random']['heuristic']['s_shape']['mean']:.1f}%", "pick travel cut vs random slotting (20 seeds)"),
         (f"{L['red_vs_abc']['heuristic']['s_shape']['mean']:.1f}%", "pick travel cut vs ABC class-based"),
+        (f"{R['slotting']['red_vs_random']['heuristic']['s_shape']['mean']:.1f}%",
+         "the same cut on REAL held-out orders (Online Retail II)"),
         (f"{val['n_pass_3se']}/{val['n_checks']}", "simulator checks within 3 SE of exact formula"),
         (f"USD {inv['breakeven_unit_value']:.0f}", "unit value where air beats ocean (illustrative)"),
         (f"{land['fcl_sg']['ddp_premium_pct']:.1f}%", "DDP vs FCA when import GST is unrecoverable"),
@@ -417,6 +499,7 @@ def build(summary: dict) -> str:
                  for r in sens if r["sweep"] in ("volume_mult", "transport_mult", "no_cross_border_recycling")]
     seas = inv["seasonality"]
     meta = pub["meta"]
+    real_section, real_inv_section = _real_sections(s, R)
 
     body = f"""
 <main>
@@ -424,9 +507,10 @@ def build(summary: dict) -> str:
 <p class="lead">Personal portfolio project, October 2026, built with AI assistance. Five models for a
 network-equipment supply chain: warehouse slotting, inventory policy, landed cost by Incoterms 2020, a
 returns network, and overseas rollout logistics (transport options, ship dates, container loading, transport cost).
-<b>All operational data is synthetic and all rates are illustrative</b>; the real data are a public port-throughput
-series (seasonality proxy) and, in Part 5, public trade shares, World Bank port/customs dwell times, airport
-coordinates and computed sea distances. Not tax, customs or legal advice.</p>
+<b>The warehouse and demand data of Parts 1, 2 and 4 are synthetic and all rates are illustrative</b>; Parts 1b and 2b
+re-run the slotting and inventory analyses on a <b>real</b> public order dataset (UCI Online Retail II, CC BY 4.0);
+Part 5 uses public trade shares, World Bank port/customs dwell times, airport coordinates and computed sea distances;
+a public port-throughput series is used as a seasonality proxy. Not tax, customs or legal advice.</p>
 <div class="tiles">{tiles_html}</div>
 
 <h2>1. Warehouse slotting</h2>
@@ -445,6 +529,7 @@ On the proxy objective the swap heuristic is {sm['milp']['heuristic_gap_pct']['m
 rectilinear pair distance), not the routed tour length, so "optimal" here means optimal for the proxy.</p>
 {_table(["method", "S-shape m/order [95% CI]", "reduction vs random"], small_rows)}
 
+{real_section}
 <h2>2. Inventory policy: ocean vs air</h2>
 <p>Daily-review simulation with full backordering, stochastic demand and lognormal lead times (ocean 32 +/- 6 d,
 air 6 +/- 1.5 d). Costs: holding (25%/yr of value) on stock on hand <i>and in transit</i>, backorders, per-order cost,
@@ -474,6 +559,7 @@ The ocean (r,Q) policy tuned for flat demand delivers {100*seas['flat_fill_rate'
 {100*seas['worst_month_fill']:.1f}%. The index ranges from {100*(min(pub['seasonal_index'])-1):+.0f}% to {100*(max(pub['seasonal_index'])-1):+.0f}% around the mean month, so the effect is small.</p>
 <div class="fig"><img alt="Monthly seasonal index bar chart" src="{chart_season(pub)}"></div>
 
+{real_inv_section}
 <h2>3. Landed cost by Incoterms 2020</h2>
 <p class="note">Rates are ILLUSTRATIVE round numbers, not quotes. Singapore GST 9% and its valuation basis were checked
 against IRAS / Singapore Customs pages (2026-10-13); the EU-style and US-style duty and VAT rates are placeholders.
@@ -510,11 +596,68 @@ CC BY 4.0, https://lpi.worldbank.org/ (Data360 files, accessed 2026-10-21). Shar
 from UN Comtrade (accessed 2026-10-21; only partner shares are published here). Airports: OurAirports (public domain).
 Sea distances computed with searoute 1.6.0 (Apache-2.0; network from Eurostat SeaRoute, EUPL-1.2).</p>
 <p>Unit: {html.escape(meta['unit_note'])}</p>
+<p>{html.escape(R['data']['citation'])} Accessed {R['data']['accessed']} from
+<a href="{R['data']['page']}">{R['data']['page']}</a>; licensed {html.escape(R['data']['licence'])}.
+The tables in <code>data/public/online_retail_ii/</code> are derived from it (cleaned, filtered, aggregated; the changes
+are documented in <code>glops/online_retail.py</code>). Use here does not imply endorsement by the data provider.</p>
 <p>Everything else is synthetic (generators and seeds in the source) or an illustrative assumption in <code>config/</code>.</p>
 </main>"""
     return ("<!doctype html><html lang='en'><head><meta charset='utf-8'><meta name='viewport' "
             "content='width=device-width,initial-scale=1'><title>Global Logistics Ops</title>"
             f"<style>{CSS}</style></head><body>{body}</body></html>")
+
+
+def _real_sections(s, R) -> tuple[str, str]:
+    d, rs, x, iv = R["data"], R["slotting"], R["synthetic_relaxed"], R["inventory"]
+    cl = d["cleaning"]
+    clean_rows = [[k.replace("_", " "), f"{v:,}"] for k, v in cl["removed"].items()]
+    clean_rows.append(["kept", f"{cl['rows_kept']:,}"])
+    names = {"random": "Random", "abc": "ABC class-based", "turnover": "Full turnover",
+             "heuristic": "Turnover + affinity swaps"}
+    trav = [[names[m], _ci(rs["travel"][m]["s_shape"]), _ci(rs["travel"][m]["return"]),
+             "-" if m == "random" else _ci(rs["red_vs_random"][m]["s_shape"], 1, "%")] for m in names]
+    lab = {"lines_per_order_mean": ("lines per held-out order (mean)", "{:.1f}"),
+           "single_line_share": ("single-line held-out orders", "{:.1%}"),
+           "pick_aisles_random": ("pick aisles per order, random slotting", "{:.1f}"),
+           "top20_pick_share": ("picks on the top 20% of SKUs", "{:.1%}"), "gini": ("Gini of SKU velocity", "{:.2f}"),
+           "affinity_order_share": ("training orders with 2-8 lines (feed the affinity estimate)", "{:.1%}"),
+           "affinity_weight_per_pick": ("co-pick weight per pick", "{:.2f}"),
+           "best_partner_rate": ("picks accompanied by the strongest partner", "{:.1%}")}
+    struct = [[v[0], v[1].format(x["structure"][k]), v[1].format(rs["structure"][k])] for k, v in lab.items()]
+    a = f"""<h2>1b. Real-order check (Online Retail II)</h2>
+<p class="note">REAL data: every invoice line of a UK online giftware retailer (many customers are wholesalers),
+{d['periods']['train'][0]} to {d['periods']['test'][1]}. Training = before {d['periods']['test'][0]},
+held out = from {d['periods']['test'][0]}. Same layout, methods, routing and lambda = {R['lambda']} as Part 1 (not retuned);
+velocity and co-pick affinity from training orders only. Level rules relaxed (no sizes or weights in the data; small giftware).</p>
+<p>{cl['rows_in']:,} rows in; each removed row is counted under the first rule it fails:</p>
+{_table(["rule", "rows removed"], clean_rows)}
+<p>The {rs['n_sku']:,} SKUs on most training order lines carry {100 * d['coverage']['test']['share']:.1f}% of held-out order lines
+({100 * d['coverage']['train']['share']:.1f}% of training lines). {rs['n_test_orders']:,} held-out orders on {rs['n_test_days']} trading days.
+95% CIs: paired bootstrap over days ({R['n_boot']:,} resamples); method randomness averaged over {R['method_seeds']} seeds.</p>
+<div class="fig"><img alt="Travel reduction by comparison for synthetic, relaxed synthetic and real orders" src="{chart_real_slotting(s, R)}"></div>
+{_table(["method (real orders)", "S-shape m/order [95% CI]", "return m/order [95% CI]", "reduction vs random"], trav)}
+<div class="fig"><img alt="Travel reduction of the swap heuristic versus random by order size" src="{chart_real_by_size(R)}"></div>
+<h3>Why the gain is smaller</h3>
+{_table(["statistic", "synthetic (level rules relaxed)", "real"], struct)}
+"""
+    inv_rows = []
+    for r in iv["skus"]:
+        inv_rows.append([r["group"], r["stock_code"], r["description"][:30], f"{r['adi']:.2f}",
+                         f"{100 * r['season_share']:.0f}%", f"{r['mean_train']:.1f}", f"{r['mean_test']:.1f}"] +
+                        [f"{100 * r[f'{k}_heldout_fill']:.1f}%" for k in
+                         ("ocean_normal", "ocean_bootstrap", "air_normal", "air_bootstrap")])
+    g = iv["groups"]
+    b = f"""<h2>2b. Inventory policy on real demand (Online Retail II)</h2>
+<p>{g['steady']['ocean_normal']['n']} steady SKUs (average demand interval below {iv['adi_steady_max']} trading days) and
+{g['intermittent']['ocean_normal']['n']} intermittent ones (at least {iv['adi_intermittent_min']}), the most-ordered of each group in
+training. (r,Q) with Q = {iv['q_days']['ocean']:.1f} (ocean) / {iv['q_days']['air']:.1f} (air) days of mean demand (Part 2's EOQ cycle)
+and the smallest r reaching {100 * iv['target']:.0f}% fill in a simulation of training demand (normal, or weekly-block bootstrap),
+then replayed on the real held-out daily demand ({iv['replay_reps']} lead-time draws). Closed days count as zero demand.</p>
+<div class="fig"><img alt="Achieved held-out fill rate per SKU for four tuning settings" src="{chart_real_inventory(R)}"></div>
+{_table(["group", "SKU", "description", "ADI", "Sep-Dec share", "units/day 2010", "units/day 2011",
+         "ocean normal", "ocean bootstrap", "air normal", "air bootstrap"], inv_rows)}
+"""
+    return a, b
 
 
 def write(summary: dict) -> None:

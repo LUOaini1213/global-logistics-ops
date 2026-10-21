@@ -12,7 +12,9 @@ from scipy import stats
 
 from . import inventory as inv
 from . import landed as lc
+from . import online_retail as orr
 from . import public_data as pdata
+from . import real_orders as rlo
 from . import reverse as rv
 from . import rollout as ro
 from . import slotting as sl
@@ -672,3 +674,25 @@ def run_rollout(log=print) -> dict:
     write_json(out_dir / "summary.json", res)
     log(f"  rollout: cheapest policy at >= {target:.0%} on time: {res['policy_best']}")
     return res
+
+
+# =========================================================================== real orders (Part 1b)
+
+def run_real_orders(log=print) -> dict:
+    """Parts 1 and 2 re-checked on real orders (UCI Online Retail II, committed derived tables)."""
+    out_dir = RESULTS / "real_orders"
+    meta = orr.load_meta()
+    real, real_rows = rlo.slotting_real(log)
+    syn, syn_rows = rlo.slotting_synthetic_relaxed(log)
+    _write_csv(out_dir / "slotting_real_by_seed.csv", real_rows)
+    _write_csv(out_dir / "slotting_synthetic_relaxed_by_seed.csv", syn_rows)
+    sc, item, modes = _scenario()
+    inv_res = rlo.inventory_real(item, modes, sc["simulation"], log)
+    _write_csv(out_dir / "inventory_replay.csv", inv_res["skus"])
+    res = {"data": {k: meta[k] for k in ("dataset", "uci_id", "page", "accessed", "licence", "citation",
+                                         "periods", "cleaning", "orders", "coverage", "calendar")},
+           "lambda": rlo.LAMBDA, "method_seeds": len(rlo.SEEDS), "n_boot": rlo.N_BOOT,
+           "slotting": real, "synthetic_relaxed": syn, "inventory": inv_res}
+    write_json(out_dir / "summary.json", res)
+    return res
+

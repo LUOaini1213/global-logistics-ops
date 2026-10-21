@@ -10,6 +10,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import time
@@ -123,6 +124,50 @@ MUTANTS = [
      "slack = L + 7.0 * np.arange(k)[None, None, :, None]", "slack = L + 0.0 * np.arange(k)[None, None, :, None]"),
     ("config/rollout.json", "container dwell fitted to median + mean instead of quartiles",
      '"container": "quartiles",', '"container": "median_mean",'),
+    # ---- real orders (Online Retail II): cleaning and derived tables
+    ("glops/online_retail.py", "cancellations kept",
+     '    if row["Invoice"].startswith("C"):\n        return "cancellation"',
+     '    if row["Invoice"].startswith("c"):\n        return "cancellation"'),
+    ("glops/online_retail.py", "duplicated sheet-overlap invoices kept",
+     '    if row["sheet"] == "1" and row["Invoice"] in first_sheet_invoices:', "    if False:"),
+    ("glops/online_retail.py", "stock codes not upper-cased",
+     "    return code.strip().upper()", "    return code.strip()"),
+    ("glops/online_retail.py", "zero-price lines kept",
+     '    if float(row["Price"]) <= 0:', '    if float(row["Price"]) < 0:'),
+    ("glops/online_retail.py", "'Next Day Carriage' counted as a product",
+     '    "23444": "next day carriage", "23574": "packing charge",', '    "23574": "packing charge",'),
+    ("glops/online_retail.py", "repeat lines overwrite instead of adding quantities",
+     '        o["lines"][code] = o["lines"].get(code, 0) + int(r["Quantity"])',
+     '        o["lines"][code] = int(r["Quantity"])'),
+    ("glops/online_retail.py", "top SKUs ranked on training + held-out lines (leakage)",
+     '    lines = Counter(c for o in orders.values() if o["date"] < SPLIT_DAY for c in o["lines"])',
+     '    lines = Counter(c for o in orders.values() for c in o["lines"])'),
+    ("glops/online_retail.py", "demand interval counts closed days",
+     "    x = units[train & trading]", "    x = units[train]"),
+    ("glops/online_retail.py", "inventory SKUs: least-ordered instead of most-ordered",
+     '    key = lambda s: (-s["train_lines"], s["stock_code"])', '    key = lambda s: (s["train_lines"], s["stock_code"])'),
+    # ---- real orders: experiments
+    ("glops/real_orders.py", "velocity / affinity estimated on held-out orders (leakage)",
+     "    sl.estimate_stats(inst, inst.train_orders)          # training orders only",
+     "    sl.estimate_stats(inst, inst.test_orders)          # training orders only"),
+    ("glops/real_orders.py", "bootstrap not paired (methods resampled independently)",
+     "    rb = 100.0 * (1.0 - other_day[idx].sum(axis=1) / base_day[idx].sum(axis=1))",
+     "    rb = 100.0 * (1.0 - other_day[idx].sum(axis=1) / base_day[idx[::-1]].sum(axis=1))"),
+    ("glops/real_orders.py", "Gini off by one rank",
+     "    return float(((2 * i - n - 1) * v).sum() / (n * v.sum()))",
+     "    return float(((2 * i - n) * v).sum() / (n * v.sum()))"),
+    ("glops/real_orders.py", "replay also scores the warm-up days",
+     "                       len(path) - warmup, warmup, reps, seed, demand=path)",
+     "                       len(path), 0, reps, seed, demand=path)"),
+    ("glops/real_orders.py", "bootstrap resamples single days, not weeks",
+     "BLOCK_DAYS = 7", "BLOCK_DAYS = 1"),
+    ("glops/real_orders.py", "r search skips the fine step (not the smallest r)",
+     "    if ok[0] > 0:", "    if ok[0] < 0:"),
+    ("glops/slotting.py", "vectorised router uses the nearest pick aisle as the farthest",
+     "    last = np.cumsum(m) - 1                          # farthest pick aisle of each order",
+     "    last = np.cumsum(m) - m                          # farthest pick aisle of each order"),
+    ("glops/inventory.py", "given (real) demand ignored",
+     "    if demand is None:\n        base = draw_demand(", "    if True:\n        base = draw_demand("),
 ]
 
 
@@ -135,9 +180,12 @@ def tree_hash() -> str:
 
 
 def run_tests(timeout=600) -> tuple[bool, str]:
+    # GLOPS_NO_RAW: behave like CI, which has no raw Online Retail II download, so a mutant
+    # only counts as caught if a check that also runs in CI catches it
+    env = {**os.environ, "GLOPS_NO_RAW": "1"}
     try:
         r = subprocess.run([sys.executable, "-m", "pytest", "-x", "-q", "-p", "no:cacheprovider"],
-                           cwd=ROOT, capture_output=True, text=True, timeout=timeout)
+                           cwd=ROOT, capture_output=True, text=True, timeout=timeout, env=env)
     except subprocess.TimeoutExpired:
         return True, "timeout"
     tail = [l for l in r.stdout.splitlines() if l.startswith("FAILED") or l.startswith("ERROR")]
@@ -154,9 +202,9 @@ def main() -> int:
     for i, (rel, name, old, new) in enumerate(MUTANTS, 1):
         path = ROOT / rel
         orig = path.read_bytes()
-        text = orig.decode("utf-8")
-        if CRLF in text:         # Windows checkout with core.autocrlf: multi-line patterns must match too
-            old, new = old.replace(LF, CRLF), new.replace(LF, CRLF)
+        # match on LF text: a Windows checkout (core.autocrlf) has CRLF files, and multi-line
+        # patterns would silently never match; the original bytes are restored afterwards
+        text = orig.decode("utf-8").replace("\r\n", "\n")
         if text.count(old) != 1:
             print(f"[{i:2d}] SKIP pattern not unique/missing: {name}")
             results.append({"id": i, "file": rel, "mutant": name, "status": "invalid"})
@@ -180,7 +228,10 @@ def main() -> int:
                                               if len(results) > len(valid) else ""))
     # README carries the mutation score: re-render it from the new report
     subprocess.run([sys.executable, "run_all.py", "--readme-only"], cwd=ROOT, check=True)
-    return 0
+    invalid = len(results) - len(valid)
+    if invalid:
+        print(f"{invalid} mutant pattern(s) did not match - the score above leaves them out")
+    return 1 if invalid else 0
 
 
 if __name__ == "__main__":
