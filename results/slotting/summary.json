@@ -207,7 +207,6 @@
       },
       "max_heuristic_gap_pct": 2.3686512084301854,
       "max_mip_gap": 2.755555932226223e-07,
-      "mean_runtime_s": 2.039043736457825,
       "n": 10,
       "n_binaries": 954,
       "n_optimal": 10,

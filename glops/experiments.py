@@ -115,7 +115,8 @@ def run_slotting(log=print) -> dict:
         "max_mip_gap": max(r["gap"] for r in milp_rows),
         "heuristic_gap_pct": _ci_round(mean_ci([r["heuristic_gap_pct"] for r in milp_rows]), 3),
         "max_heuristic_gap_pct": max(r["heuristic_gap_pct"] for r in milp_rows),
-        "mean_runtime_s": float(np.mean([r["runtime_s"] for r in milp_rows])),
+        # wall-clock runtimes stay in small_instance_milp.csv, not in the summary: summary.json must
+        # be identical between runs
         "n_binaries": milp_rows[0]["n_binaries"], "n_pairs": milp_rows[0]["n_pairs"],
     }
     res = {"lambda_tuning": tune, "lambda_star": lam_star, "large": large, "small": small,
