@@ -72,13 +72,16 @@ def draw_demand(rng, item: Item, shape, allow_negative: bool = False, season=Non
 
 def simulate(policy: str, params: dict, item: Item, mode: Mode, n_days: int, warmup: int,
              reps: int, seed: int, allow_negative: bool = False, season=None,
-             continuous: bool = True, bucket=None) -> dict:
+             continuous: bool = True, bucket=None, demand=None) -> dict:
     """Simulate len(param arrays) configurations x reps replications.
 
     params: {"S": array} | {"s": array, "S": array} | {"r": array, "Q": array}
     Returns per-configuration arrays of shape (n_cfg, reps) for each metric.
     bucket: optional int array (length warmup + n_days) mapping each day to a group
     (e.g. calendar month); adds "bucket_fill_rate" of shape (n_cfg, n_buckets).
+    demand: optional given demand instead of normal draws (e.g. a replayed real series):
+    shape (warmup + n_days,) shared by all replications, or (reps, warmup + n_days).
+    Only the lead times are then random; item.demand_mean / demand_sd are not used.
     """
     key = next(iter(params))
     n_cfg = len(np.atleast_1d(params[key]))
@@ -86,7 +89,13 @@ def simulate(policy: str, params: dict, item: Item, mode: Mode, n_days: int, war
     rng = np.random.default_rng(seed)
     T = n_days + warmup
     # common random numbers: every configuration sees the same demand / lead-time paths
-    dem = np.tile(draw_demand(rng, item, (reps, T), allow_negative, season), (n_cfg, 1))
+    if demand is None:
+        base = draw_demand(rng, item, (reps, T), allow_negative, season)
+    else:
+        base = np.broadcast_to(np.asarray(demand, dtype=float), (reps, T)).copy()
+        if not np.all(np.isfinite(base)) or (base.min() < 0 and not allow_negative):
+            raise ValueError("given demand must be finite and non-negative")
+    dem = np.tile(base, (n_cfg, 1))
     lts = np.tile(draw_lead_times(rng, mode, (reps, T)), (n_cfg, 1))
     if not continuous:
         dem = np.rint(dem)

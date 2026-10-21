@@ -10,7 +10,9 @@ import numpy as np
 
 from . import inventory as inv
 from . import landed as lc
+from . import online_retail as orr
 from . import public_data as pdata
+from . import real_orders as ro
 from . import reverse as rv
 from . import slotting as sl
 from .common import CONFIG, RESULTS, mean_ci, read_json, write_json
@@ -429,3 +431,25 @@ def run_public(log=print) -> dict:
            "meta": meta, "feb_index": float(idx[1])}
     write_json(RESULTS / "public" / "summary.json", res)
     return res
+
+
+# =========================================================================== real orders (Part 1b)
+
+def run_real_orders(log=print) -> dict:
+    """Parts 1 and 2 re-checked on real orders (UCI Online Retail II, committed derived tables)."""
+    out_dir = RESULTS / "real_orders"
+    meta = orr.load_meta()
+    real, real_rows = ro.slotting_real(log)
+    syn, syn_rows = ro.slotting_synthetic_relaxed(log)
+    _write_csv(out_dir / "slotting_real_by_seed.csv", real_rows)
+    _write_csv(out_dir / "slotting_synthetic_relaxed_by_seed.csv", syn_rows)
+    sc, item, modes = _scenario()
+    inv_res = ro.inventory_real(item, modes, sc["simulation"], log)
+    _write_csv(out_dir / "inventory_replay.csv", inv_res["skus"])
+    res = {"data": {k: meta[k] for k in ("dataset", "uci_id", "page", "accessed", "licence", "citation",
+                                         "periods", "cleaning", "orders", "coverage", "calendar")},
+           "lambda": ro.LAMBDA, "method_seeds": len(ro.SEEDS), "n_boot": ro.N_BOOT,
+           "slotting": real, "synthetic_relaxed": syn, "inventory": inv_res}
+    write_json(out_dir / "summary.json", res)
+    return res
+
