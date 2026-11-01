@@ -4,14 +4,19 @@ results/summary.json (the single source for the README numbers)."""
 from __future__ import annotations
 
 import csv
+import math
 import time
 
 import numpy as np
+from scipy import stats
 
 from . import inventory as inv
 from . import landed as lc
+from . import online_retail as orr
 from . import public_data as pdata
+from . import real_orders as rlo
 from . import reverse as rv
+from . import rollout as ro
 from . import slotting as sl
 from .common import CONFIG, RESULTS, mean_ci, read_json, write_json
 
@@ -112,7 +117,8 @@ def run_slotting(log=print) -> dict:
         "max_mip_gap": max(r["gap"] for r in milp_rows),
         "heuristic_gap_pct": _ci_round(mean_ci([r["heuristic_gap_pct"] for r in milp_rows]), 3),
         "max_heuristic_gap_pct": max(r["heuristic_gap_pct"] for r in milp_rows),
-        "mean_runtime_s": float(np.mean([r["runtime_s"] for r in milp_rows])),
+        # wall-clock runtimes stay in small_instance_milp.csv, not in the summary: summary.json must
+        # be identical between runs
         "n_binaries": milp_rows[0]["n_binaries"], "n_pairs": milp_rows[0]["n_pairs"],
     }
     res = {"lambda_tuning": tune, "lambda_star": lam_star, "large": large, "small": small,
@@ -429,3 +435,264 @@ def run_public(log=print) -> dict:
            "meta": meta, "feb_index": float(idx[1])}
     write_json(RESULTS / "public" / "summary.json", res)
     return res
+
+
+# =========================================================================== overseas rollout (Part 5)
+
+SENS_VARIANTS = [
+    ("base", {}),
+    ("dwell fit: median + mean", {"fit": "median_mean"}),
+    ("destination dwell x 0.75", {"dwell_scale": 0.75}),
+    ("destination dwell x 1.25", {"dwell_scale": 1.25}),
+    ("LPI 2.0 year 2023", {"year": 2023}),
+    ("sea speed 14 kn", {"speed_kn": 14.0}),
+    ("sea speed 18 kn", {"speed_kn": 18.0}),
+    ("no transshipment", {"transship": False}),
+    ("Cape route (avoid Red Sea)", {"route": "avoid_red_sea"}),
+]
+POLICIES = ["sea", "split", "sea_expedite", "air"]
+
+
+def _rng(cfg: dict, *key: int) -> np.random.Generator:
+    return np.random.default_rng([cfg["mc"]["seed"], *key])
+
+
+def run_rollout(log=print) -> dict:
+    cfg, lpi, routes, ap, shares = (ro.load_config(), ro.load_lpi(), ro.load_sea_routes(),
+                                    ro.load_airports(), ro.load_shares())
+    mc, out_dir = cfg["mc"], RESULTS / "rollout"
+    target, markets = mc["on_time_target"], cfg["markets"]
+    sites, weeks = cfg["schedule"]["sites_per_week"], cfg["schedule"]["weeks"]
+    year = cfg["selection"]["lpi_year"]
+
+    # ---- 0. market selection (UN Comtrade shares + LPI 2.0 data availability) and data checks
+    sel = ro.select_markets(shares, lpi, cfg["selection"]["regions"], year)
+    if sel != [m["iso3"] for m in markets]:
+        raise ValueError(f"config markets {[m['iso3'] for m in markets]} != selection rule {sel}")
+    sel25 = ro.select_markets(shares, lpi, cfg["selection"]["regions"], year, "share_2025_pct")
+    share = {r["iso3"]: r for r in shares}
+    fit_rows = []
+    for iso, kind in [(m["iso3"], "import") for m in markets] + [(cfg["origin"]["lpi_iso3"], "export")]:
+        row = lpi[iso]
+        d = ro.container_dwell(row, kind, year, "quartiles")
+        pub = row[f"ct_{kind}_dwell_mean_{year}"]
+        fit_rows.append({"iso3": iso, "dwell": kind, "q1": row[f"ct_{kind}_dwell_q1_{year}"],
+                         "median": row[f"ct_{kind}_dwell_median_{year}"], "q3": row[f"ct_{kind}_dwell_q3_{year}"],
+                         "published_mean": pub, "fitted_mean": d.mean(), "mu": d.a, "sigma": d.b,
+                         "fitted_p95": math.exp(d.a + ro.Z95 * d.b),
+                         "mean_rel_err_pct": 100 * (d.mean() - pub) / pub})
+    _write_csv(out_dir / "dwell_fit_check.csv", fit_rows)
+    ct = [r for r in lpi.values() if r.get(f"ct_import_dwell_mean_{year}") is not None
+          and r.get(f"ct_import_dwell_median_{year}") is not None]
+    av = [r for r in lpi.values() if r.get(f"air_import_dwell_mean_{year}") is not None
+          and r.get(f"air_import_dwell_p80_minus_p20_{year}") is not None]
+    data_checks = {"ct_mean_ge_median": sum(r[f"ct_import_dwell_mean_{year}"] >= r[f"ct_import_dwell_median_{year}"]
+                                            for r in ct), "ct_rows": len(ct),
+                   "air_mean_below_fifth_of_range": sum(r[f"air_import_dwell_mean_{year}"]
+                                                        < 0.2 * r[f"air_import_dwell_p80_minus_p20_{year}"] for r in av),
+                   "air_rows": len(av)}
+    key = f"ct_import_dwell_median_{year}"
+    both = sorted((k, r["lpi2023_customs"], r[key]) for k, r in lpi.items()
+                  if r.get("lpi2023_customs") is not None and r.get(key) is not None)
+    rho = stats.spearmanr([b[1] for b in both], [b[2] for b in both])
+    _write_csv(out_dir / "customs_score_vs_dwell.csv",
+               [{"iso3": k, "lpi2023_customs": c, "ct_import_dwell_median": d, "selected": k in sel}
+                for k, c, d in both])
+
+    # ---- a + b. lead time per market and mode; ship-date planning checked out of sample
+    lead_rows, comp_rows, plan_rows, comps_of, T_of = [], [], [], {}, {}
+    for i, m in enumerate(markets):
+        for j, mode in enumerate(("sea", "air")):
+            comps = (ro.sea_components(m, cfg, lpi, routes) if mode == "sea"
+                     else ro.air_components(m, cfg, lpi, ap))
+            S = ro.sample_components(comps, _rng(cfg, 1, i, j), mc["n_lead"])
+            T = np.sum(list(S.values()), axis=0)
+            comps_of[m["iso3"], mode], T_of[m["iso3"], mode] = comps, T
+            s = ro.lead_time_summary(S, mode, target)
+            am, av = ro.analytic_moments(comps)
+            m4 = float(np.mean((T - T.mean()) ** 4))
+            lead_rows.append({"market": m["iso3"], "mode": mode, "mean": s["mean"], "analytic_mean": am,
+                              "mean_z": (s["mean"] - am) / math.sqrt(av / T.size),
+                              "sd": s["sd"], "analytic_sd": math.sqrt(av),
+                              "var_z": (s["sd"] ** 2 - av) / math.sqrt((m4 - s["sd"] ** 4) / T.size),
+                              "p50": s["p50"], "p95": s["p95"], "buffer_95": s["buffer_95"],
+                              "on_time_if_plan_on_mean": s["on_time_if_plan_on_mean"],
+                              "share_port_customs_mean": s["share_port_customs_mean"],
+                              "share_dest_port_customs_mean": s["share_dest_port_customs_mean"],
+                              "share_port_customs_tail": s["share_port_customs_tail"]})
+            comp_rows += [{"market": m["iso3"], "mode": mode, "component": k, "mean_days": v,
+                           "analytic_mean_days": comps[k].mean()} for k, v in s["component_means"].items()]
+            oos = {tag: ro.simulate_rollout(comps, _rng(cfg, 2, i, j, t), weeks, sites, mc["reps_rollout"], lead)
+                   for t, (tag, lead) in enumerate((("p95", s["p95"]), ("mean", s["mean"])))}
+            c95 = mean_ci(oos["p95"]["per_rep"])
+            plan_rows.append({"market": m["iso3"], "mode": mode, "ship_days_before_need_p95": s["p95"],
+                              "ship_days_before_need_mean": s["mean"], "buffer_days": s["buffer_95"],
+                              "on_time_oos_plan_p95": oos["p95"]["on_time"], "on_time_oos_lo": c95["lo"],
+                              "on_time_oos_hi": c95["hi"],
+                              "week_all_sites_on_time_p95": oos["p95"]["week_all_on_time"],
+                              "on_time_oos_plan_mean": oos["mean"]["on_time"],
+                              "worst_week_on_time_plan_mean": oos["mean"]["worst_week_mean"]})
+    _write_csv(out_dir / "lead_time.csv", lead_rows)
+    _write_csv(out_dir / "lead_time_components.csv", comp_rows)
+    _write_csv(out_dir / "ship_date_plan.csv", plan_rows)
+    log("  rollout: lead times and ship-date plans done")
+
+    # ---- sensitivity of the sea P95 to the LPI mapping and other assumptions
+    sens_rows = []
+    for i, m in enumerate(markets):
+        for v, (name, kw) in enumerate(SENS_VARIANTS):
+            comps = ro.sea_components(m, cfg, lpi, routes, **kw)
+            T = np.sum(list(ro.sample_components(comps, _rng(cfg, 3, i, v), mc["n_sens"]).values()), axis=0)
+            q = ro.quantile(T, target)
+            sens_rows.append({"market": m["iso3"], "variant": name, "mean": float(T.mean()), "p95": q,
+                              "buffer_95": q - float(T.mean())})
+    base_p95 = {r["market"]: r["p95"] for r in sens_rows if r["variant"] == "base"}
+    for r in sens_rows:
+        r["p95_change_days"] = r["p95"] - base_p95[r["market"]]
+    _write_csv(out_dir / "sensitivity_sea_p95.csv", sens_rows)
+
+    # ---- d. container loading: one weekly batch, plus random instances against the lower bound
+    cts = ro.container_types(cfg)
+    clr, tiers = cfg["containers"]["clearance_m"], cfg["containers"]["max_tiers"]
+    week_units = ro.kit_units(cfg, sites)
+    load_rows = []
+    for name, ct in cts.items():
+        boxes = ro.pack(week_units, ct, clr, tiers)
+        if ro.check_plan(boxes, week_units, clr, tiers):
+            raise AssertionError(f"weekly batch {name}: infeasible load plan")
+        lb = ro.lower_bound(week_units, ct, tiers)
+        load_rows.append({"container": name, "heuristic": len(boxes), "lb_volume": lb["volume"],
+                          "lb_weight": lb["weight"], "lb_floor": lb["floor"], "lower_bound": lb["best"],
+                          "fill_volume": sum(u.volume for u in week_units) / (len(boxes) * ct.volume),
+                          "fill_weight": sum(u.kg for u in week_units) / (len(boxes) * ct.payload)})
+    _write_csv(out_dir / "loading_weekly_batch.csv", load_rows)
+    rng = _rng(cfg, 4)
+    kinds = [u["id"] for u in cfg["site_kit"]["units"]]
+    inst_rows = []
+    for k in range(mc["loading_random_instances"]):
+        n_s = int(rng.integers(1, 31))
+        keep = {kd for kd in kinds if rng.random() < 0.8} or {kinds[0]}
+        us = ro.kit_units(cfg, n_s, keep)
+        for name in ("20GP", "40HC"):
+            boxes = ro.pack(us, cts[name], clr, tiers)
+            errs = ro.check_plan(boxes, us, clr, tiers)
+            if errs:
+                raise AssertionError(f"instance {k} {name}: {errs[:3]}")
+            lb = ro.lower_bound(us, cts[name], tiers)["best"]
+            inst_rows.append({"instance": k, "container": name, "sites": n_s, "units": len(us),
+                              "heuristic": len(boxes), "lower_bound": lb, "ratio": len(boxes) / lb})
+    _write_csv(out_dir / "loading_random_instances.csv", inst_rows)
+    hc = [r for r in inst_rows if r["container"] == "40HC"]
+
+    # ---- c. mode policy: cost per site vs on-time rate
+    crit = {u["id"] for u in cfg["site_kit"]["units"] if u["critical"]}
+    bulky = set(kinds) - crit
+    kits = {"full": ro.Kit.of(ro.kit_units(cfg, 1)), "bulky": ro.Kit.of(ro.kit_units(cfg, 1, bulky)),
+            "critical": ro.Kit.of(ro.kit_units(cfg, 1, crit))}
+    fine = [round(float(x), 2) for x in np.arange(0.50, 0.995, 0.01)]
+    pol_rows, best_rows, batches = [], [], {}
+    for i, m in enumerate(markets):
+        iso = m["iso3"]
+        rs, ra = _rng(cfg, 5, i, 0), _rng(cfg, 5, i, 1)
+        Ss = ro.sample_components(comps_of[iso, "sea"], rs, mc["n_lead"])
+        Ts = np.sum(list(Ss.values()), axis=0)
+        Ta = np.sum(list(ro.sample_components(comps_of[iso, "air"], ra, mc["n_lead"]).values()), axis=0)
+        Ta2 = np.sum(list(ro.sample_components(comps_of[iso, "air"], ra, mc["n_lead"]).values()), axis=0)
+        T = {"sea": Ts, "sea_gate": Ts - Ss["inland"], "air": Ta, "air2": Ta2}
+        sf, sb = ro.sea_freight_per_site(cfg, iso, sites), ro.sea_freight_per_site(cfg, iso, sites, bulky)
+        batches[iso] = sf["batch"]
+        fr = {"market": iso, "sea_full": sf["per_site"], "sea_bulky": sb["per_site"], "sites": sites}
+        for pol in POLICIES:
+            for p in mc["plan_quantiles"]:
+                r = ro.evaluate_policy(pol, p, T, kits, fr, cfg)
+                pol_rows.append({"market": iso, "policy": pol, "plan_quantile": p, "on_time": r["on_time"],
+                                 "cost_per_site": r["cost"], "lead_days": r["lead_days"],
+                                 "expedite_rate": r.get("expedite_rate", 0.0)})
+            b = ro.cheapest_at_target(pol, T, kits, fr, cfg, target, fine)
+            best_rows.append({"market": iso, "policy": pol, "plan_quantile": b["plan_quantile"],
+                              "on_time": b["on_time"], "cost_per_site": b["cost"], "lead_days": b["lead_days"],
+                              "expedite_rate": b.get("expedite_rate", 0.0),
+                              "target_missed": b.get("target_missed", False)})
+    _write_csv(out_dir / "policy_frontier.csv", pol_rows)
+    _write_csv(out_dir / "policy_at_target.csv", best_rows)
+    log("  rollout: mode policies done")
+
+    # ---- e. consolidation frequency (sea)
+    cons_rows = []
+    for i, m in enumerate(markets):
+        for k in mc["consolidation_weeks"]:
+            r = ro.consolidation(k, comps_of[m["iso3"], "sea"], _rng(cfg, 6, i, k), T_of[m["iso3"], "sea"],
+                                 kits["full"], cfg, m["iso3"], sites, weeks, mc["reps_rollout"], target)
+            cons_rows.append({"market": m["iso3"], **r})
+    _write_csv(out_dir / "consolidation.csv", cons_rows)
+
+    # ---- summary (source of the README numbers)
+    def cheapest(iso):
+        ok = [r for r in best_rows if r["market"] == iso and not r["target_missed"]]
+        return min(ok, key=lambda r: r["cost_per_site"])["policy"]
+
+    def rng_of(rows, k):
+        return {"min": min(r[k] for r in rows), "max": max(r[k] for r in rows)}
+
+    sea_rows = [r for r in lead_rows if r["mode"] == "sea"]
+    res = {
+        "markets": [m["iso3"] for m in markets], "market_names": {m["iso3"]: m["name"] for m in markets},
+        "selection": {"rule_2024_2025": sel, "rule_2025_only": sel25,
+                      "cover_share_pct": sum(share[k]["share_2024_2025_pct"] for k in sel),
+                      "shares": {k: share[k]["share_2024_2025_pct"] for k in sel}},
+        "dwell_fit": {"max_abs_mean_rel_err_pct": max(abs(r["mean_rel_err_pct"]) for r in fit_rows),
+                      "rows": fit_rows},
+        "data_checks": data_checks,
+        "customs_score_vs_dwell": {"spearman_rho": float(rho.statistic), "p_value": float(rho.pvalue),
+                                   "n": len(both)},
+        "lead": {f"{r['market']}|{r['mode']}": {k: v for k, v in r.items() if k not in ("market", "mode")}
+                 for r in lead_rows},
+        "lead_check": {"max_abs_mean_z": max(abs(r["mean_z"]) for r in lead_rows),
+                       "max_abs_var_z": max(abs(r["var_z"]) for r in lead_rows)},
+        "plan": {f"{r['market']}|{r['mode']}": {k: v for k, v in r.items() if k not in ("market", "mode")}
+                 for r in plan_rows},
+        "plan_range": {mode: {k: rng_of([r for r in plan_rows if r["mode"] == mode], k)
+                              for k in ("on_time_oos_plan_mean", "on_time_oos_plan_p95", "buffer_days")}
+                       for mode in ("sea", "air")},
+        "sea_port_share": {k: rng_of(sea_rows, k) for k in ("share_port_customs_mean", "share_port_customs_tail",
+                                                           "share_dest_port_customs_mean")},
+        "sensitivity": {f"{r['market']}|{r['variant']}": r["p95_change_days"] for r in sens_rows},
+        "loading": {"weekly_batch": load_rows, "weekly_mix": batches[markets[0]["iso3"]]["mix"],
+                    "weekly_fill_volume": batches[markets[0]["iso3"]]["fill_volume"],
+                    "random_40hc": {"n": len(hc), "equal_lb": sum(r["heuristic"] == r["lower_bound"] for r in hc),
+                                    "max_gap_boxes": max(r["heuristic"] - r["lower_bound"] for r in hc),
+                                    "mean_ratio": float(np.mean([r["ratio"] for r in hc]))}},
+        "policy": {f"{r['market']}|{r['policy']}": {k: v for k, v in r.items() if k not in ("market", "policy")}
+                   for r in best_rows},
+        "policy_best": {m["iso3"]: cheapest(m["iso3"]) for m in markets},
+        "consolidation": {f"{r['market']}|{r['k_weeks']}": {k: v for k, v in r.items()
+                                                            if k not in ("market", "k_weeks")}
+                          for r in cons_rows},
+        "config": {"sites_per_week": sites, "weeks": weeks, "n_lead": mc["n_lead"],
+                   "reps_rollout": mc["reps_rollout"], "speed_kn": cfg["sea"]["speed_kn"], "target": target},
+    }
+    write_json(out_dir / "summary.json", res)
+    log(f"  rollout: cheapest policy at >= {target:.0%} on time: {res['policy_best']}")
+    return res
+
+
+# =========================================================================== real orders (Part 1b)
+
+def run_real_orders(log=print) -> dict:
+    """Parts 1 and 2 re-checked on real orders (UCI Online Retail II, committed derived tables)."""
+    out_dir = RESULTS / "real_orders"
+    meta = orr.load_meta()
+    real, real_rows = rlo.slotting_real(log)
+    syn, syn_rows = rlo.slotting_synthetic_relaxed(log)
+    _write_csv(out_dir / "slotting_real_by_seed.csv", real_rows)
+    _write_csv(out_dir / "slotting_synthetic_relaxed_by_seed.csv", syn_rows)
+    sc, item, modes = _scenario()
+    inv_res = rlo.inventory_real(item, modes, sc["simulation"], log)
+    _write_csv(out_dir / "inventory_replay.csv", inv_res["skus"])
+    res = {"data": {k: meta[k] for k in ("dataset", "uci_id", "page", "accessed", "licence", "citation",
+                                         "periods", "cleaning", "orders", "coverage", "calendar")},
+           "lambda": rlo.LAMBDA, "method_seeds": len(rlo.SEEDS), "n_boot": rlo.N_BOOT,
+           "slotting": real, "synthetic_relaxed": syn, "inventory": inv_res}
+    write_json(out_dir / "summary.json", res)
+    return res
+

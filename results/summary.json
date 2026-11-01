@@ -408,6 +408,1679 @@
       1.0237768403932954
     ]
   },
+  "real_orders": {
+    "data": {
+      "accessed": "2026-10-21",
+      "calendar": {
+        "closed_days": [
+          "2009-12-24",
+          "2009-12-25",
+          "2009-12-27",
+          "2009-12-28",
+          "2009-12-29",
+          "2009-12-30",
+          "2009-12-31",
+          "2010-01-01",
+          "2010-01-03",
+          "2010-04-02",
+          "2010-04-04",
+          "2010-04-05",
+          "2010-05-03",
+          "2010-05-31",
+          "2010-08-30",
+          "2010-12-24",
+          "2010-12-26",
+          "2010-12-27",
+          "2010-12-28",
+          "2010-12-29",
+          "2010-12-30",
+          "2010-12-31",
+          "2011-01-02",
+          "2011-01-03",
+          "2011-04-22",
+          "2011-04-24",
+          "2011-04-25",
+          "2011-04-29",
+          "2011-05-02",
+          "2011-05-30",
+          "2011-08-29"
+        ],
+        "days": 739,
+        "saturdays_traded": [
+          "2009-12-05"
+        ],
+        "trading_days": 604
+      },
+      "citation": "Chen, D. (2012). Online Retail II [Dataset]. UCI Machine Learning Repository. https://doi.org/10.24432/C5CG6D",
+      "cleaning": {
+        "codes_normalised": 3240,
+        "invoices_spanning_dates": 0,
+        "non_product_rows_by_code": {
+          "22016": 3,
+          "23444": 80,
+          "23574": 15,
+          "ADJUST": 36,
+          "ADJUST2": 3,
+          "AMAZONFEE": 3,
+          "B": 6,
+          "BANK CHARGES": 34,
+          "C2": 270,
+          "C3": 1,
+          "D": 5,
+          "DOT": 1422,
+          "GIFT": 1,
+          "GIFT_0001_10": 16,
+          "GIFT_0001_20": 29,
+          "GIFT_0001_30": 29,
+          "GIFT_0001_40": 7,
+          "GIFT_0001_50": 8,
+          "GIFT_0001_60": 2,
+          "GIFT_0001_70": 3,
+          "GIFT_0001_80": 3,
+          "GIFT_0001_90": 2,
+          "M": 868,
+          "POST": 1858,
+          "S": 3,
+          "TEST001": 11,
+          "TEST002": 2
+        },
+        "overlap_invoices": 1088,
+        "removed": {
+          "cancellation": 19165,
+          "duplicate_sheet_overlap": 22523,
+          "missing_stock_code": 0,
+          "non_positive_price": 2578,
+          "non_positive_quantity": 3391,
+          "non_product_code": 4720
+        },
+        "repeat_lines_merged": 23035,
+        "rows_in": 1067371,
+        "rows_kept": 1014994
+      },
+      "coverage": {
+        "test": {
+          "lines": 517196,
+          "lines_on_top_skus": 296200,
+          "share": 0.5727035785272895
+        },
+        "train": {
+          "lines": 474763,
+          "lines_on_top_skus": 348028,
+          "share": 0.7330562828190066
+        }
+      },
+      "dataset": "Online Retail II",
+      "licence": "CC BY 4.0, https://creativecommons.org/licenses/by/4.0/",
+      "orders": {
+        "first_excluded_train_lines": 142,
+        "invoices": 39516,
+        "products": 4722,
+        "test_invoices": 19773,
+        "test_orders_kept": 18451,
+        "test_orders_without_top_sku": 1322,
+        "top_sku_min_train_lines": 142,
+        "train_invoices": 19743,
+        "train_orders_kept": 18975,
+        "train_orders_without_top_sku": 768,
+        "train_products": 4073
+      },
+      "page": "https://archive.ics.uci.edu/dataset/502/online+retail+ii",
+      "periods": {
+        "_note": "train = [first, split), test = [split, last]",
+        "test": [
+          "2010-12-01",
+          "2011-12-09"
+        ],
+        "train": [
+          "2009-12-01",
+          "2010-12-01"
+        ]
+      },
+      "uci_id": 502
+    },
+    "inventory": {
+      "adi_intermittent_min": 2.0,
+      "adi_steady_max": 1.32,
+      "groups": {
+        "intermittent": {
+          "air_bootstrap": {
+            "heldout_mean": 0.9003916809287013,
+            "heldout_min": 0.6737058482102829,
+            "insample_mean": 0.8688919580322916,
+            "n": 10,
+            "n_meet": 3,
+            "z_mean": 4.79
+          },
+          "air_normal": {
+            "heldout_mean": 0.5323842128888059,
+            "heldout_min": 0.306797752886071,
+            "insample_mean": 0.3932598244583854,
+            "n": 10,
+            "n_meet": 0,
+            "z_mean": 1.4449999999999998
+          },
+          "demand_change_pct": [
+            19.77197367265513,
+            28.620724949189214,
+            35.42623569230554,
+            229.39824305816052,
+            4.579195623078047,
+            -7.552302388869037,
+            15.233779537979686,
+            82.86004496260762,
+            7.234812252324829,
+            111.59867598884135
+          ],
+          "mean_adi": 3.6151551000000004,
+          "mean_season_share": 0.9182174319472154,
+          "median_demand_change_pct": 24.196349310922173,
+          "ocean_bootstrap": {
+            "heldout_mean": 0.6453945207757081,
+            "heldout_min": 0.2651755232380404,
+            "insample_mean": 0.5203677515865914,
+            "n": 10,
+            "n_meet": 0,
+            "z_mean": 3.665
+          },
+          "ocean_normal": {
+            "heldout_mean": 0.2832069749159566,
+            "heldout_min": 0.07255392117797818,
+            "insample_mean": 0.27374710940889646,
+            "n": 10,
+            "n_meet": 0,
+            "z_mean": 1.4949999999999999
+          }
+        },
+        "steady": {
+          "air_bootstrap": {
+            "heldout_mean": 0.9709341118341914,
+            "heldout_min": 0.9099514691768757,
+            "insample_mean": 0.9487209092981603,
+            "n": 10,
+            "n_meet": 8,
+            "z_mean": 1.6600000000000001
+          },
+          "air_normal": {
+            "heldout_mean": 0.9538009611972982,
+            "heldout_min": 0.8910705512221159,
+            "insample_mean": 0.9228391316832903,
+            "n": 10,
+            "n_meet": 6,
+            "z_mean": 1.0799999999999998
+          },
+          "demand_change_pct": [
+            -34.89071918445321,
+            -3.209114148080927,
+            -39.29840153045676,
+            -55.88321963349723,
+            -8.92725021699954,
+            -18.818223542880798,
+            -50.61209383428047,
+            -44.24369904895037,
+            -49.5443156056448,
+            -14.261820824304273
+          ],
+          "mean_adi": 1.0263692,
+          "mean_season_share": 0.3791648630309145,
+          "median_demand_change_pct": -37.09456035745498,
+          "ocean_bootstrap": {
+            "heldout_mean": 0.9738441096933853,
+            "heldout_min": 0.9057728017509146,
+            "insample_mean": 0.9359336509092302,
+            "n": 10,
+            "n_meet": 9,
+            "z_mean": 1.2700000000000002
+          },
+          "ocean_normal": {
+            "heldout_mean": 0.9695466394506823,
+            "heldout_min": 0.9122994513787062,
+            "insample_mean": 0.9279277663829418,
+            "n": 10,
+            "n_meet": 8,
+            "z_mean": 1.145
+          }
+        }
+      },
+      "q_days": {
+        "air": 5.731491952362839,
+        "ocean": 12.816005617976296
+      },
+      "replay_reps": 200,
+      "selection": {
+        "intermittent": [
+          "22086",
+          "22910",
+          "22865",
+          "22666",
+          "22866",
+          "22952",
+          "22867",
+          "22630",
+          "22909",
+          "22629"
+        ],
+        "steady": [
+          "85123A",
+          "85099B",
+          "21212",
+          "21232",
+          "20725",
+          "84879",
+          "84991",
+          "21754",
+          "20914",
+          "21931"
+        ]
+      },
+      "skus": [
+        {
+          "adi": 1.003356,
+          "air_bootstrap_Q": 893.2805005316845,
+          "air_bootstrap_heldout_fill": 0.9233922210756114,
+          "air_bootstrap_heldout_p05": 0.8970051799138704,
+          "air_bootstrap_heldout_p95": 0.9475542171455943,
+          "air_bootstrap_insample_fill": 0.9854368588866856,
+          "air_bootstrap_model_fill": 0.9505197699578612,
+          "air_bootstrap_r": 1793.892056743365,
+          "air_bootstrap_z": 1.35,
+          "air_normal_Q": 893.2805005316845,
+          "air_normal_heldout_fill": 0.9084385256680088,
+          "air_normal_heldout_p05": 0.879486199292517,
+          "air_normal_heldout_p95": 0.933651299279363,
+          "air_normal_insample_fill": 0.9720838990086601,
+          "air_normal_model_fill": 0.9517390836947219,
+          "air_normal_r": 1611.6565209768203,
+          "air_normal_z": 1.0,
+          "cv2": 0.852877,
+          "description": "WHITE HANGING HEART T-LIGHT HOLDER",
+          "group": "steady",
+          "mean_test": 101.475935828877,
+          "mean_train": 155.85479452054796,
+          "ocean_bootstrap_Q": 1997.4359221638838,
+          "ocean_bootstrap_heldout_fill": 0.9737481519974587,
+          "ocean_bootstrap_heldout_p05": 0.9196134045327757,
+          "ocean_bootstrap_heldout_p95": 1.0,
+          "ocean_bootstrap_insample_fill": 0.9896906725921675,
+          "ocean_bootstrap_model_fill": 0.9538326942887945,
+          "ocean_bootstrap_r": 6795.053059094973,
+          "ocean_bootstrap_z": 1.2,
+          "ocean_normal_Q": 1997.4359221638838,
+          "ocean_normal_heldout_fill": 0.9698451315841382,
+          "ocean_normal_heldout_p05": 0.9146862503607349,
+          "ocean_normal_heldout_p95": 1.0,
+          "ocean_normal_insample_fill": 0.9857597850724019,
+          "ocean_normal_model_fill": 0.954291166922359,
+          "ocean_normal_r": 6657.3993224352325,
+          "ocean_normal_z": 1.1,
+          "sd_train": 175.8433626785591,
+          "season_share": 0.38915745249353983,
+          "stock_code": "85123A",
+          "units_test": 37952.0,
+          "units_train": 56887.0
+        },
+        {
+          "adi": 1.034602,
+          "air_bootstrap_Q": 767.4860292155784,
+          "air_bootstrap_heldout_fill": 0.9099514691768757,
+          "air_bootstrap_heldout_p05": 0.8823529659680517,
+          "air_bootstrap_heldout_p95": 0.9340966850752241,
+          "air_bootstrap_insample_fill": 0.9397656620119929,
+          "air_bootstrap_model_fill": 0.9508952823781058,
+          "air_bootstrap_r": 1611.716135485906,
+          "air_bootstrap_z": 1.35,
+          "air_normal_Q": 767.4860292155784,
+          "air_normal_heldout_fill": 0.8910705512221159,
+          "air_normal_heldout_p05": 0.8593560723039927,
+          "air_normal_heldout_p95": 0.9192388485522999,
+          "air_normal_insample_fill": 0.916489366198669,
+          "air_normal_model_fill": 0.9531938350280165,
+          "air_normal_r": 1486.833137285827,
+          "air_normal_z": 1.1,
+          "cv2": 1.107749,
+          "description": "JUMBO BAG RED RETROSPOT",
+          "group": "steady",
+          "mean_test": 129.6096256684492,
+          "mean_train": 133.90684931506848,
+          "ocean_bootstrap_Q": 1716.150933107423,
+          "ocean_bootstrap_heldout_fill": 0.9057728017509146,
+          "ocean_bootstrap_heldout_p05": 0.8420722306615902,
+          "ocean_bootstrap_heldout_p95": 0.9545087464147332,
+          "ocean_bootstrap_insample_fill": 0.8870439930241153,
+          "ocean_bootstrap_model_fill": 0.9504439836829176,
+          "ocean_bootstrap_r": 5824.038396947762,
+          "ocean_bootstrap_z": 1.1,
+          "ocean_normal_Q": 1716.150933107423,
+          "ocean_normal_heldout_fill": 0.9122994513787062,
+          "ocean_normal_heldout_p05": 0.8501751332247092,
+          "ocean_normal_heldout_p95": 0.960326562321989,
+          "ocean_normal_insample_fill": 0.8944695167042542,
+          "ocean_normal_model_fill": 0.9507317464978111,
+          "ocean_normal_r": 5887.907141018239,
+          "ocean_normal_z": 1.15,
+          "sd_train": 172.8696297257833,
+          "season_share": 0.44903429085849905,
+          "stock_code": "85099B",
+          "units_test": 48474.0,
+          "units_train": 48876.0
+        },
+        {
+          "adi": 1.010135,
+          "air_bootstrap_Q": 919.4412281827434,
+          "air_bootstrap_heldout_fill": 0.9899737005683843,
+          "air_bootstrap_heldout_p05": 0.9745360628098796,
+          "air_bootstrap_heldout_p95": 1.0,
+          "air_bootstrap_insample_fill": 0.9426616907134939,
+          "air_bootstrap_model_fill": 0.9512152479919294,
+          "air_bootstrap_r": 1758.8545211090945,
+          "air_bootstrap_z": 1.15,
+          "air_normal_Q": 919.4412281827434,
+          "air_normal_heldout_fill": 0.9857231050000336,
+          "air_normal_heldout_p05": 0.9680701034380199,
+          "air_normal_heldout_p95": 0.9991681269569012,
+          "air_normal_insample_fill": 0.9321093769611227,
+          "air_normal_model_fill": 0.9505488690971424,
+          "air_normal_r": 1675.9083983438227,
+          "air_normal_z": 1.0,
+          "cv2": 0.923805,
+          "description": "PACK OF 72 RETRO SPOT CAKE CASES",
+          "group": "steady",
+          "mean_test": 97.37700534759358,
+          "mean_train": 160.4191780821918,
+          "ocean_bootstrap_Q": 2055.93308753251,
+          "ocean_bootstrap_heldout_fill": 0.9907845298290932,
+          "ocean_bootstrap_heldout_p05": 0.9659544530354566,
+          "ocean_bootstrap_heldout_p95": 1.0,
+          "ocean_bootstrap_insample_fill": 0.9562275588629829,
+          "ocean_bootstrap_model_fill": 0.9515691657128136,
+          "ocean_bootstrap_r": 6813.616368522809,
+          "ocean_bootstrap_z": 1.05,
+          "ocean_normal_Q": 2055.93308753251,
+          "ocean_normal_heldout_fill": 0.992007569565844,
+          "ocean_normal_heldout_p05": 0.969928787447009,
+          "ocean_normal_heldout_p95": 1.0,
+          "ocean_normal_insample_fill": 0.9602388491057725,
+          "ocean_normal_model_fill": 0.9509665004063604,
+          "ocean_normal_r": 6885.987010989975,
+          "ocean_normal_z": 1.1,
+          "sd_train": 188.17856601673265,
+          "season_share": 0.37731627756050073,
+          "stock_code": "21212",
+          "units_test": 36419.0,
+          "units_train": 58553.0
+        },
+        {
+          "adi": 1.013559,
+          "air_bootstrap_Q": 411.7723656624952,
+          "air_bootstrap_heldout_fill": 0.9802013235547414,
+          "air_bootstrap_heldout_p05": 0.9620060341723448,
+          "air_bootstrap_heldout_p95": 0.9983319227845396,
+          "air_bootstrap_insample_fill": 0.9728112484070625,
+          "air_bootstrap_model_fill": 0.9525168232904984,
+          "air_bootstrap_r": 885.006933775534,
+          "air_bootstrap_z": 1.55,
+          "air_normal_Q": 411.7723656624952,
+          "air_normal_heldout_fill": 0.962081425087157,
+          "air_normal_heldout_p05": 0.9403342499916132,
+          "air_normal_heldout_p95": 0.9868941042475408,
+          "air_normal_insample_fill": 0.9435595947068595,
+          "air_normal_model_fill": 0.951614166913059,
+          "air_normal_r": 749.4230328379494,
+          "air_normal_z": 1.0,
+          "cv2": 0.904808,
+          "description": "STRAWBERRY CERAMIC TRINKET BOX",
+          "group": "steady",
+          "mean_test": 31.6951871657754,
+          "mean_train": 71.84383561643835,
+          "ocean_bootstrap_Q": 920.7510008772394,
+          "ocean_bootstrap_heldout_fill": 0.9843346994067581,
+          "ocean_bootstrap_heldout_p05": 0.9318628845209113,
+          "ocean_bootstrap_heldout_p95": 1.0,
+          "ocean_bootstrap_insample_fill": 0.9875580605904117,
+          "ocean_bootstrap_model_fill": 0.9524603234068195,
+          "ocean_bootstrap_r": 3243.195626970206,
+          "ocean_bootstrap_z": 1.35,
+          "ocean_normal_Q": 920.7510008772394,
+          "ocean_normal_heldout_fill": 0.9783906949729874,
+          "ocean_normal_heldout_p05": 0.9233714632716344,
+          "ocean_normal_heldout_p95": 1.0,
+          "ocean_normal_insample_fill": 0.9778131715174939,
+          "ocean_normal_model_fill": 0.9530531713326965,
+          "ocean_normal_r": 3081.6495062984022,
+          "ocean_normal_z": 1.1,
+          "sd_train": 83.79973672606329,
+          "season_share": 0.4034626091598978,
+          "stock_code": "21232",
+          "units_test": 11854.0,
+          "units_train": 26223.0
+        },
+        {
+          "adi": 1.010135,
+          "air_bootstrap_Q": 329.0190435009824,
+          "air_bootstrap_heldout_fill": 0.956827186154838,
+          "air_bootstrap_heldout_p05": 0.9298657023040542,
+          "air_bootstrap_heldout_p95": 0.9817597920936725,
+          "air_bootstrap_insample_fill": 0.9223642966008961,
+          "air_bootstrap_model_fill": 0.9503738455488389,
+          "air_bootstrap_r": 623.4959947629998,
+          "air_bootstrap_z": 1.15,
+          "air_normal_Q": 329.0190435009824,
+          "air_normal_heldout_fill": 0.9474490122231382,
+          "air_normal_heldout_p05": 0.9180862388493871,
+          "air_normal_heldout_p95": 0.9748203244016631,
+          "air_normal_insample_fill": 0.9076935101402498,
+          "air_normal_model_fill": 0.9522342208072008,
+          "air_normal_r": 594.5841288588324,
+          "air_normal_z": 1.0,
+          "cv2": 0.853492,
+          "description": "LUNCH BAG RED SPOTTY",
+          "group": "steady",
+          "mean_test": 52.280748663101605,
+          "mean_train": 57.40547945205479,
+          "ocean_bootstrap_Q": 735.7089471601571,
+          "ocean_bootstrap_heldout_fill": 0.9699730899207677,
+          "ocean_bootstrap_heldout_p05": 0.9301430281292645,
+          "ocean_bootstrap_heldout_p95": 1.0,
+          "ocean_bootstrap_insample_fill": 0.8808586344572125,
+          "ocean_bootstrap_model_fill": 0.9502691150226508,
+          "ocean_bootstrap_r": 2403.123837708938,
+          "ocean_bootstrap_z": 1.0,
+          "ocean_normal_Q": 735.7089471601571,
+          "ocean_normal_heldout_fill": 0.972897536623774,
+          "ocean_normal_heldout_p05": 0.9359795272455254,
+          "ocean_normal_heldout_p95": 1.0,
+          "ocean_normal_insample_fill": 0.8881387985021709,
+          "ocean_normal_model_fill": 0.9502955383207266,
+          "ocean_normal_r": 2428.560988498494,
+          "ocean_normal_z": 1.05,
+          "sd_train": 65.17701992218635,
+          "season_share": 0.28735741898534817,
+          "stock_code": "20725",
+          "units_test": 19553.0,
+          "units_train": 20953.0
+        },
+        {
+          "adi": 1.060284,
+          "air_bootstrap_Q": 688.2815212492274,
+          "air_bootstrap_heldout_fill": 0.9863315649880442,
+          "air_bootstrap_heldout_p05": 0.9638630674139356,
+          "air_bootstrap_heldout_p95": 1.0,
+          "air_bootstrap_insample_fill": 0.9167484006583746,
+          "air_bootstrap_model_fill": 0.9505289194585262,
+          "air_bootstrap_r": 3553.0366574099526,
+          "air_bootstrap_z": 4.25,
+          "air_normal_Q": 688.2815212492274,
+          "air_normal_heldout_fill": 0.9194356967436451,
+          "air_normal_heldout_p05": 0.8864342426362872,
+          "air_normal_heldout_p95": 0.94764182284582,
+          "air_normal_insample_fill": 0.8220053615669743,
+          "air_normal_model_fill": 0.9546905553060572,
+          "air_normal_r": 1670.2960154333746,
+          "air_normal_z": 1.3,
+          "cv2": 2.633847,
+          "description": "ASSORTED COLOUR BIRD ORNAMENT",
+          "group": "steady",
+          "mean_test": 97.48930481283422,
+          "mean_train": 120.08767123287672,
+          "ocean_bootstrap_Q": 1539.0442691702385,
+          "ocean_bootstrap_heldout_fill": 0.9584156470400359,
+          "ocean_bootstrap_heldout_p05": 0.9362880886426592,
+          "ocean_bootstrap_heldout_p95": 0.9827789917837754,
+          "ocean_bootstrap_insample_fill": 0.8358587032859265,
+          "ocean_bootstrap_model_fill": 0.9525507844822438,
+          "ocean_bootstrap_r": 7591.912127725853,
+          "ocean_bootstrap_z": 2.4,
+          "ocean_normal_Q": 1539.0442691702385,
+          "ocean_normal_heldout_fill": 0.915278183439311,
+          "ocean_normal_heldout_p05": 0.8739746922271312,
+          "ocean_normal_heldout_p95": 0.950227408426211,
+          "ocean_normal_insample_fill": 0.7424833164350627,
+          "ocean_normal_model_fill": 0.9546644977876404,
+          "ocean_normal_r": 5928.611763248764,
+          "ocean_normal_z": 1.3,
+          "sd_train": 231.41607309356337,
+          "season_share": 0.5520167913852893,
+          "stock_code": "84879",
+          "units_test": 36461.0,
+          "units_train": 43832.0
+        },
+        {
+          "adi": 1.023973,
+          "air_bootstrap_Q": 565.1722146560091,
+          "air_bootstrap_heldout_fill": 0.9994143656358492,
+          "air_bootstrap_heldout_p05": 0.999891520130353,
+          "air_bootstrap_heldout_p95": 1.0,
+          "air_bootstrap_insample_fill": 0.9422051695192576,
+          "air_bootstrap_model_fill": 0.9519135471823985,
+          "air_bootstrap_r": 1282.799869436663,
+          "air_bootstrap_z": 1.45,
+          "air_normal_Q": 565.1722146560091,
+          "air_normal_heldout_fill": 0.9987625599712114,
+          "air_normal_heldout_p05": 0.997721248604725,
+          "air_normal_heldout_p95": 1.0,
+          "air_normal_insample_fill": 0.9227891215315224,
+          "air_normal_model_fill": 0.9529180546635054,
+          "air_normal_r": 1160.2049035352654,
+          "air_normal_z": 1.15,
+          "cv2": 1.50095,
+          "description": "60 TEATIME FAIRY CAKE CASES",
+          "group": "steady",
+          "mean_test": 48.70053475935829,
+          "mean_train": 98.6082191780822,
+          "ocean_bootstrap_Q": 1263.7634909649394,
+          "ocean_bootstrap_heldout_fill": 1.0,
+          "ocean_bootstrap_heldout_p05": 1.0,
+          "ocean_bootstrap_heldout_p95": 1.0,
+          "ocean_bootstrap_insample_fill": 0.9891401051555989,
+          "ocean_bootstrap_model_fill": 0.9522555492688426,
+          "ocean_bootstrap_r": 4423.554158123081,
+          "ocean_bootstrap_z": 1.15,
+          "ocean_normal_Q": 1263.7634909649394,
+          "ocean_normal_heldout_fill": 1.0,
+          "ocean_normal_heldout_p05": 1.0,
+          "ocean_normal_heldout_p95": 1.0,
+          "ocean_normal_insample_fill": 0.9911216519613357,
+          "ocean_normal_model_fill": 0.9512753556726296,
+          "ocean_normal_r": 4474.401241829445,
+          "ocean_normal_z": 1.2,
+          "sd_train": 143.9824754230973,
+          "season_share": 0.29273171815959104,
+          "stock_code": "84991",
+          "units_test": 18214.0,
+          "units_train": 35992.0
+        },
+        {
+          "adi": 1.027491,
+          "air_bootstrap_Q": 76.40942421971938,
+          "air_bootstrap_heldout_fill": 0.9822828775891541,
+          "air_bootstrap_heldout_p05": 0.9629167489742118,
+          "air_bootstrap_heldout_p95": 0.9940967360407769,
+          "air_bootstrap_insample_fill": 0.9679809089363306,
+          "air_bootstrap_model_fill": 0.9517781101030314,
+          "air_bootstrap_r": 141.26356971355503,
+          "air_bootstrap_z": 1.25,
+          "air_normal_Q": 76.40942421971938,
+          "air_normal_heldout_fill": 0.9710777983474295,
+          "air_normal_heldout_p05": 0.9465344910188885,
+          "air_normal_heldout_p95": 0.9892356579537416,
+          "air_normal_insample_fill": 0.9430791491847775,
+          "air_normal_model_fill": 0.9510912446291181,
+          "air_normal_r": 127.83952361841716,
+          "air_normal_z": 0.9,
+          "cv2": 0.481819,
+          "description": "HOME BUILDING BLOCK WORD",
+          "group": "steady",
+          "mean_test": 7.433155080213904,
+          "mean_train": 13.331506849315069,
+          "ocean_bootstrap_Q": 170.8566666769114,
+          "ocean_bootstrap_heldout_fill": 0.9671263087626909,
+          "ocean_bootstrap_heldout_p05": 0.9157672820683023,
+          "ocean_bootstrap_heldout_p95": 1.0,
+          "ocean_bootstrap_insample_fill": 0.957913520861576,
+          "ocean_bootstrap_model_fill": 0.9520523735535426,
+          "ocean_bootstrap_r": 557.6348553211933,
+          "ocean_bootstrap_z": 1.1,
+          "ocean_normal_Q": 170.8566666769114,
+          "ocean_normal_heldout_fill": 0.9633705582948928,
+          "ocean_normal_heldout_p05": 0.9114347595424308,
+          "ocean_normal_heldout_p95": 1.0,
+          "ocean_normal_insample_fill": 0.9492221338911684,
+          "ocean_normal_model_fill": 0.9512094762479648,
+          "ocean_normal_r": 546.9352981126664,
+          "ocean_normal_z": 1.0,
+          "sd_train": 12.370303823237778,
+          "season_share": 0.37258528565556925,
+          "stock_code": "21754",
+          "units_test": 2780.0,
+          "units_train": 4866.0
+        },
+        {
+          "adi": 1.049123,
+          "air_bootstrap_Q": 193.5359953777315,
+          "air_bootstrap_heldout_fill": 0.9968694657595245,
+          "air_bootstrap_heldout_p05": 0.9830727521354568,
+          "air_bootstrap_heldout_p95": 1.0,
+          "air_bootstrap_insample_fill": 0.978668851141111,
+          "air_bootstrap_model_fill": 0.95064929018512,
+          "air_bootstrap_r": 563.9556644302312,
+          "air_bootstrap_z": 1.95,
+          "air_normal_Q": 193.5359953777315,
+          "air_normal_heldout_fill": 0.9719467658295935,
+          "air_normal_heldout_p05": 0.9536724068529332,
+          "air_normal_heldout_p95": 0.9802073517544179,
+          "air_normal_insample_fill": 0.9562725069706401,
+          "air_normal_model_fill": 0.9524350855173997,
+          "air_normal_r": 446.3607613576298,
+          "air_normal_z": 1.25,
+          "cv2": 2.283842,
+          "description": "SET/5 RED SPOTTY LID GLASS BOWLS",
+          "group": "steady",
+          "mean_test": 17.037433155080215,
+          "mean_train": 33.76712328767123,
+          "ocean_bootstrap_Q": 432.75964175769275,
+          "ocean_bootstrap_heldout_fill": 1.0,
+          "ocean_bootstrap_heldout_p05": 1.0,
+          "ocean_bootstrap_heldout_p95": 1.0,
+          "ocean_bootstrap_insample_fill": 0.9680166966151629,
+          "ocean_bootstrap_model_fill": 0.9504683584674959,
+          "ocean_bootstrap_r": 1637.5515435331595,
+          "ocean_bootstrap_z": 1.3,
+          "ocean_normal_Q": 432.75964175769275,
+          "ocean_normal_heldout_fill": 1.0,
+          "ocean_normal_heldout_p05": 1.0,
+          "ocean_normal_heldout_p95": 1.0,
+          "ocean_normal_insample_fill": 0.9680166966151629,
+          "ocean_normal_model_fill": 0.9529749796170883,
+          "ocean_normal_r": 1637.5515435331595,
+          "ocean_normal_z": 1.3,
+          "sd_train": 60.54049606176916,
+          "season_share": 0.3064503042596349,
+          "stock_code": "20914",
+          "units_test": 6372.0,
+          "units_train": 12325.0
+        },
+        {
+          "adi": 1.031034,
+          "air_bootstrap_Q": 244.05163814691304,
+          "air_bootstrap_heldout_fill": 0.9840969438388933,
+          "air_bootstrap_heldout_p05": 0.9682168959969883,
+          "air_bootstrap_heldout_p95": 0.9980488224871523,
+          "air_bootstrap_insample_fill": 0.9185660061063998,
+          "air_bootstrap_model_fill": 0.950187887708221,
+          "air_bootstrap_r": 494.4898562512271,
+          "air_bootstrap_z": 1.15,
+          "air_normal_Q": 244.05163814691304,
+          "air_normal_heldout_fill": 0.9820241718806488,
+          "air_normal_heldout_p05": 0.9654790111067926,
+          "air_normal_heldout_p95": 0.9971932292151762,
+          "air_normal_insample_fill": 0.9123094305634267,
+          "air_normal_model_fill": 0.9506924162633,
+          "air_normal_r": 485.9496778674632,
+          "air_normal_z": 1.1,
+          "cv2": 1.361138,
+          "description": "JUMBO STORAGE BAG SUKI",
+          "group": "steady",
+          "mean_test": 36.50802139037433,
+          "mean_train": 42.58082191780822,
+          "ocean_bootstrap_Q": 545.7160529166784,
+          "ocean_bootstrap_heldout_fill": 0.9882858682261347,
+          "ocean_bootstrap_heldout_p05": 0.9648554222050167,
+          "ocean_bootstrap_heldout_p95": 1.0,
+          "ocean_bootstrap_insample_fill": 0.9070285636471468,
+          "ocean_bootstrap_model_fill": 0.9509562894745803,
+          "ocean_bootstrap_r": 1855.0457040067604,
+          "ocean_bootstrap_z": 1.05,
+          "ocean_normal_Q": 545.7160529166784,
+          "ocean_normal_heldout_fill": 0.9913772686471706,
+          "ocean_normal_heldout_p05": 0.972508573474826,
+          "ocean_normal_heldout_p95": 1.0,
+          "ocean_normal_insample_fill": 0.9220137440245937,
+          "ocean_normal_model_fill": 0.9536294249805737,
+          "ocean_normal_r": 1897.891283122864,
+          "ocean_normal_z": 1.15,
+          "sd_train": 59.87406347780792,
+          "season_share": 0.36153648179127523,
+          "stock_code": "21931",
+          "units_test": 13654.0,
+          "units_train": 15542.0
+        },
+        {
+          "adi": 2.062069,
+          "air_bootstrap_Q": 247.64756049510777,
+          "air_bootstrap_heldout_fill": 0.9284686861659469,
+          "air_bootstrap_heldout_p05": 0.876822164343511,
+          "air_bootstrap_heldout_p95": 0.9728937488294952,
+          "air_bootstrap_insample_fill": 0.9053352568161606,
+          "air_bootstrap_model_fill": 0.9517753130437834,
+          "air_bootstrap_r": 1874.5799343180674,
+          "air_bootstrap_z": 4.4,
+          "air_normal_Q": 247.64756049510777,
+          "air_normal_heldout_fill": 0.4229955532578032,
+          "air_normal_heldout_p05": 0.3747536504758996,
+          "air_normal_heldout_p95": 0.4693444879444551,
+          "air_normal_insample_fill": 0.43098922137970375,
+          "air_normal_model_fill": 0.9509443783437421,
+          "air_normal_r": 820.543325179226,
+          "air_normal_z": 1.45,
+          "cv2": 3.140002,
+          "description": "PAPER CHAIN KIT 50'S CHRISTMAS",
+          "group": "intermittent",
+          "mean_test": 51.75133689839572,
+          "mean_train": 43.20821917808219,
+          "ocean_bootstrap_Q": 553.7567797290525,
+          "ocean_bootstrap_heldout_fill": 0.4334187375796967,
+          "ocean_bootstrap_heldout_p05": 0.375883968104194,
+          "ocean_bootstrap_heldout_p95": 0.48514660526721437,
+          "ocean_bootstrap_insample_fill": 0.6148604311049298,
+          "ocean_bootstrap_model_fill": 0.9520740603195937,
+          "ocean_bootstrap_r": 4165.4575201653615,
+          "ocean_bootstrap_z": 3.4,
+          "ocean_normal_Q": 553.7567797290525,
+          "ocean_normal_heldout_fill": 0.2491106331544493,
+          "ocean_normal_heldout_p05": 0.2093878622778671,
+          "ocean_normal_heldout_p95": 0.29853427241966796,
+          "ocean_normal_insample_fill": 0.3441467630622271,
+          "ocean_normal_model_fill": 0.9517317571335477,
+          "ocean_normal_r": 2634.512241974646,
+          "ocean_normal_z": 1.5,
+          "sd_train": 132.80654127258566,
+          "season_share": 0.939065373153256,
+          "stock_code": "22086",
+          "units_test": 19355.0,
+          "units_train": 15771.0
+        },
+        {
+          "adi": 4.746032,
+          "air_bootstrap_Q": 126.34406643482578,
+          "air_bootstrap_heldout_fill": 0.9271593532633041,
+          "air_bootstrap_heldout_p05": 0.8810682926299027,
+          "air_bootstrap_heldout_p95": 0.9713795966352152,
+          "air_bootstrap_insample_fill": 0.8765204623582363,
+          "air_bootstrap_model_fill": 0.9503378485384006,
+          "air_bootstrap_r": 999.3164115216102,
+          "air_bootstrap_z": 4.75,
+          "air_normal_Q": 126.34406643482578,
+          "air_normal_heldout_fill": 0.4322228138934773,
+          "air_normal_heldout_p05": 0.386250902410186,
+          "air_normal_heldout_p95": 0.493349331206501,
+          "air_normal_insample_fill": 0.22509647491086276,
+          "air_normal_model_fill": 0.9519471926172363,
+          "air_normal_r": 412.25713672548653,
+          "air_normal_z": 1.45,
+          "cv2": 0.718749,
+          "description": "PAPER CHAIN KIT VINTAGE CHRISTMAS",
+          "group": "intermittent",
+          "mean_test": 28.352941176470587,
+          "mean_train": 22.043835616438358,
+          "ocean_bootstrap_Q": 282.51392110202,
+          "ocean_bootstrap_heldout_fill": 0.5428765280887969,
+          "ocean_bootstrap_heldout_p05": 0.4799238997739002,
+          "ocean_bootstrap_heldout_p95": 0.5909321529154855,
+          "ocean_bootstrap_insample_fill": 0.3230455577616776,
+          "ocean_bootstrap_model_fill": 0.9507357823088061,
+          "ocean_bootstrap_r": 2234.617081702469,
+          "ocean_bootstrap_z": 3.75,
+          "ocean_normal_Q": 282.51392110202,
+          "ocean_normal_heldout_fill": 0.24295490271515552,
+          "ocean_normal_heldout_p05": 0.21292013452494493,
+          "ocean_normal_heldout_p95": 0.2715784885996778,
+          "ocean_normal_insample_fill": 0.20045099415715728,
+          "ocean_normal_model_fill": 0.9508582558501362,
+          "ocean_normal_r": 1330.3147778864673,
+          "ocean_normal_z": 1.5,
+          "sd_train": 66.06696774490162,
+          "season_share": 1.0,
+          "stock_code": "22910",
+          "units_test": 10604.0,
+          "units_train": 8046.0
+        },
+        {
+          "adi": 4.271429,
+          "air_bootstrap_Q": 96.16344305827405,
+          "air_bootstrap_heldout_fill": 0.9210704272676405,
+          "air_bootstrap_heldout_p05": 0.8881899260214818,
+          "air_bootstrap_heldout_p95": 0.9534423996918583,
+          "air_bootstrap_insample_fill": 0.8078343705074559,
+          "air_bootstrap_model_fill": 0.9501757100377924,
+          "air_bootstrap_r": 977.53174699408,
+          "air_bootstrap_z": 6.35,
+          "air_normal_Q": 96.16344305827405,
+          "air_normal_heldout_fill": 0.306797752886071,
+          "air_normal_heldout_p05": 0.2525406353769796,
+          "air_normal_heldout_p95": 0.3652378050342981,
+          "air_normal_insample_fill": 0.31321452502113284,
+          "air_normal_model_fill": 0.9520408405972549,
+          "air_normal_r": 313.84397674322804,
+          "air_normal_z": 1.45,
+          "cv2": 0.910906,
+          "description": "HAND WARMER OWL DESIGN",
+          "group": "intermittent",
+          "mean_test": 22.72192513368984,
+          "mean_train": 16.778082191780822,
+          "ocean_bootstrap_Q": 215.02799562873108,
+          "ocean_bootstrap_heldout_fill": 0.5674306979654555,
+          "ocean_bootstrap_heldout_p05": 0.4774903961210002,
+          "ocean_bootstrap_heldout_p95": 0.6405957242305697,
+          "ocean_bootstrap_insample_fill": 0.5158835770319798,
+          "ocean_bootstrap_model_fill": 0.9507978398180781,
+          "ocean_bootstrap_r": 2053.0710985160936,
+          "ocean_bootstrap_z": 4.9,
+          "ocean_normal_Q": 215.02799562873108,
+          "ocean_normal_heldout_fill": 0.14821651790559578,
+          "ocean_normal_heldout_p05": 0.14073038219672118,
+          "ocean_normal_heldout_p95": 0.15606560539158687,
+          "ocean_normal_insample_fill": 0.22477067585314206,
+          "ocean_normal_model_fill": 0.9548164207585839,
+          "ocean_normal_r": 1027.9749365308805,
+          "ocean_normal_z": 1.55,
+          "sd_train": 50.30246494783721,
+          "season_share": 1.0,
+          "stock_code": "22865",
+          "units_test": 8498.0,
+          "units_train": 6124.0
+        },
+        {
+          "adi": 2.491667,
+          "air_bootstrap_Q": 38.50306374573612,
+          "air_bootstrap_heldout_fill": 0.6737058482102829,
+          "air_bootstrap_heldout_p05": 0.643793197245675,
+          "air_bootstrap_heldout_p95": 0.706788778415388,
+          "air_bootstrap_insample_fill": 0.9217092236387401,
+          "air_bootstrap_model_fill": 0.9522783527364421,
+          "air_bootstrap_r": 179.94494583594783,
+          "air_bootstrap_z": 3.5,
+          "air_normal_Q": 38.50306374573612,
+          "air_normal_heldout_fill": 0.3524477742590898,
+          "air_normal_heldout_p05": 0.3215957720693039,
+          "air_normal_heldout_p95": 0.3849213872756,
+          "air_normal_insample_fill": 0.4511062056649679,
+          "air_normal_model_fill": 0.9511405758411995,
+          "air_normal_r": 96.39505033202133,
+          "air_normal_z": 1.3,
+          "cv2": 0.720272,
+          "description": "RECIPE BOX PANTRY YELLOW DESIGN",
+          "group": "intermittent",
+          "mean_test": 22.128342245989305,
+          "mean_train": 6.717808219178083,
+          "ocean_bootstrap_Q": 86.09546787747365,
+          "ocean_bootstrap_heldout_fill": 0.2651755232380404,
+          "ocean_bootstrap_heldout_p05": 0.21011869520515916,
+          "ocean_bootstrap_heldout_p95": 0.3189644566696554,
+          "ocean_bootstrap_insample_fill": 0.4614963306991476,
+          "ocean_bootstrap_model_fill": 0.9514883425292551,
+          "ocean_bootstrap_r": 493.5524294300775,
+          "ocean_bootstrap_z": 3.05,
+          "ocean_normal_Q": 86.09546787747365,
+          "ocean_normal_heldout_fill": 0.07255392117797818,
+          "ocean_normal_heldout_p05": 0.04592237471908693,
+          "ocean_normal_heldout_p95": 0.10036762091107357,
+          "ocean_normal_insample_fill": 0.32877374798127207,
+          "ocean_normal_model_fill": 0.9532224431242036,
+          "ocean_normal_r": 342.0212527299984,
+          "ocean_normal_z": 1.35,
+          "sd_train": 13.83953707288255,
+          "season_share": 0.7740619902120718,
+          "stock_code": "22666",
+          "units_test": 8276.0,
+          "units_train": 2452.0
+        },
+        {
+          "adi": 4.271429,
+          "air_bootstrap_Q": 97.18411970732495,
+          "air_bootstrap_heldout_fill": 0.8552233477227421,
+          "air_bootstrap_heldout_p05": 0.7974529094868335,
+          "air_bootstrap_heldout_p95": 0.9162786720929815,
+          "air_bootstrap_insample_fill": 0.7710454702332525,
+          "air_bootstrap_model_fill": 0.9520171095410784,
+          "air_bootstrap_r": 895.2672691796289,
+          "air_bootstrap_z": 5.6,
+          "air_normal_Q": 97.18411970732495,
+          "air_normal_heldout_fill": 0.4487083801160413,
+          "air_normal_heldout_p05": 0.3953909917578037,
+          "air_normal_heldout_p95": 0.49148201414883436,
+          "air_normal_insample_fill": 0.2908731208319685,
+          "air_normal_model_fill": 0.951413590731296,
+          "air_normal_r": 319.77037779516564,
+          "air_normal_z": 1.45,
+          "cv2": 0.957776,
+          "description": "HAND WARMER SCOTTY DOG DESIGN",
+          "group": "intermittent",
+          "mean_test": 17.732620320855617,
+          "mean_train": 16.956164383561642,
+          "ocean_bootstrap_Q": 217.3102979990556,
+          "ocean_bootstrap_heldout_fill": 0.6501793517734856,
+          "ocean_bootstrap_heldout_p05": 0.5865014382167043,
+          "ocean_bootstrap_heldout_p95": 0.732744166439307,
+          "ocean_bootstrap_insample_fill": 0.49276133348167006,
+          "ocean_bootstrap_model_fill": 0.9504430571862728,
+          "ocean_bootstrap_r": 1905.382273608162,
+          "ocean_bootstrap_z": 4.3,
+          "ocean_normal_Q": 217.3102979990556,
+          "ocean_normal_heldout_fill": 0.20398154125798132,
+          "ocean_normal_heldout_p05": 0.15941924585236222,
+          "ocean_normal_heldout_p95": 0.26455032415532054,
+          "ocean_normal_insample_fill": 0.20480982539112141,
+          "ocean_normal_model_fill": 0.953317532367185,
+          "ocean_normal_r": 1029.0286045240323,
+          "ocean_normal_z": 1.5,
+          "sd_train": 51.52470064402529,
+          "season_share": 1.0,
+          "stock_code": "22866",
+          "units_test": 6632.0,
+          "units_train": 6189.0
+        },
+        {
+          "adi": 4.671875,
+          "air_bootstrap_Q": 266.5379298613886,
+          "air_bootstrap_heldout_fill": 1.0,
+          "air_bootstrap_heldout_p05": 1.0,
+          "air_bootstrap_heldout_p95": 1.0,
+          "air_bootstrap_insample_fill": 0.9208981976276696,
+          "air_bootstrap_model_fill": 0.9511537525147679,
+          "air_bootstrap_r": 2781.9584293370895,
+          "air_bootstrap_z": 6.0,
+          "air_normal_Q": 266.5379298613886,
+          "air_normal_heldout_fill": 0.7938566123915379,
+          "air_normal_heldout_p05": 0.7280885680784628,
+          "air_normal_heldout_p95": 0.844653084764571,
+          "air_normal_insample_fill": 0.31182804499730904,
+          "air_normal_model_fill": 0.9525639230213482,
+          "air_normal_r": 939.6361826767381,
+          "air_normal_z": 1.5,
+          "cv2": 1.055207,
+          "description": "60 CAKE CASES VINTAGE CHRISTMAS",
+          "group": "intermittent",
+          "mean_test": 42.99197860962567,
+          "mean_train": 46.50410958904109,
+          "ocean_bootstrap_Q": 595.996929752136,
+          "ocean_bootstrap_heldout_fill": 0.9271661748278563,
+          "ocean_bootstrap_heldout_p05": 0.868516163757902,
+          "ocean_bootstrap_heldout_p95": 0.9706907305275132,
+          "ocean_bootstrap_insample_fill": 0.37333846414930916,
+          "ocean_bootstrap_model_fill": 0.9520608636560863,
+          "ocean_bootstrap_r": 5119.854073447974,
+          "ocean_bootstrap_z": 3.9,
+          "ocean_normal_Q": 595.996929752136,
+          "ocean_normal_heldout_fill": 0.43296668791367227,
+          "ocean_normal_heldout_p05": 0.3333679544776018,
+          "ocean_normal_heldout_p95": 0.5260214343235319,
+          "ocean_normal_insample_fill": 0.2094732851979049,
+          "ocean_normal_model_fill": 0.9531325642717624,
+          "ocean_normal_r": 2959.530131403717,
+          "ocean_normal_z": 1.55,
+          "sd_train": 152.4778604343113,
+          "season_share": 1.0,
+          "stock_code": "22952",
+          "units_test": 16079.0,
+          "units_train": 16974.0
+        },
+        {
+          "adi": 4.271429,
+          "air_bootstrap_Q": 85.65832493188846,
+          "air_bootstrap_heldout_fill": 0.7834999255146861,
+          "air_bootstrap_heldout_p05": 0.7529886663561559,
+          "air_bootstrap_heldout_p95": 0.8306850754467913,
+          "air_bootstrap_insample_fill": 0.7632030544116993,
+          "air_bootstrap_model_fill": 0.9501700199308107,
+          "air_bootstrap_r": 744.8009394912301,
+          "air_bootstrap_z": 5.45,
+          "air_normal_Q": 85.65832493188846,
+          "air_normal_heldout_fill": 0.38757290993403276,
+          "air_normal_heldout_p05": 0.33392829871634633,
+          "air_normal_heldout_p95": 0.4419172699522915,
+          "air_normal_insample_fill": 0.29249313362992413,
+          "air_normal_model_fill": 0.9527486337993258,
+          "air_normal_r": 274.9407551719158,
+          "air_normal_z": 1.45,
+          "cv2": 0.818138,
+          "description": "HAND WARMER BIRD DESIGN",
+          "group": "intermittent",
+          "mean_test": 17.22192513368984,
+          "mean_train": 14.945205479452055,
+          "ocean_bootstrap_Q": 191.53783738646766,
+          "ocean_bootstrap_heldout_fill": 0.6489015794504965,
+          "ocean_bootstrap_heldout_p05": 0.5650390052232132,
+          "ocean_bootstrap_heldout_p95": 0.7212274113124447,
+          "ocean_bootstrap_insample_fill": 0.5036778693627708,
+          "ocean_bootstrap_model_fill": 0.9514021433581622,
+          "ocean_bootstrap_r": 1649.9942448185118,
+          "ocean_bootstrap_z": 4.35,
+          "ocean_normal_Q": 191.53783738646766,
+          "ocean_normal_heldout_fill": 0.1986315378268416,
+          "ocean_normal_heldout_p05": 0.17086275467874945,
+          "ocean_normal_heldout_p95": 0.2547601564529066,
+          "ocean_normal_insample_fill": 0.20071490164766634,
+          "ocean_normal_model_fill": 0.9543740569473556,
+          "ocean_normal_r": 892.0891822000538,
+          "ocean_normal_z": 1.5,
+          "sd_train": 43.581580193577196,
+          "season_share": 1.0,
+          "stock_code": "22867",
+          "units_test": 6441.0,
+          "units_train": 5455.0
+        },
+        {
+          "adi": 2.354331,
+          "air_bootstrap_Q": 98.83290506348415,
+          "air_bootstrap_heldout_fill": 0.9736188852485883,
+          "air_bootstrap_heldout_p05": 0.9545420607377071,
+          "air_bootstrap_heldout_p95": 0.9920226375692963,
+          "air_bootstrap_insample_fill": 0.9576974701776024,
+          "air_bootstrap_model_fill": 0.9513260883409191,
+          "air_bootstrap_r": 652.0389738669057,
+          "air_bootstrap_z": 3.65,
+          "air_normal_Q": 98.83290506348415,
+          "air_normal_heldout_fill": 0.7508120999842076,
+          "air_normal_heldout_p05": 0.7039412412683517,
+          "air_normal_heldout_p95": 0.7900857237214,
+          "air_normal_insample_fill": 0.6685960699934729,
+          "air_normal_model_fill": 0.9502288529372205,
+          "air_normal_r": 331.7839946849765,
+          "air_normal_z": 1.45,
+          "cv2": 2.769057,
+          "description": "DOLLY GIRL LUNCH BOX",
+          "group": "intermittent",
+          "mean_test": 31.532085561497325,
+          "mean_train": 17.243835616438357,
+          "ocean_bootstrap_Q": 220.99709413573373,
+          "ocean_bootstrap_heldout_fill": 0.893336720038478,
+          "ocean_bootstrap_heldout_p05": 0.84344977876498,
+          "ocean_bootstrap_heldout_p95": 0.9412741939731469,
+          "ocean_bootstrap_insample_fill": 0.7938832507998803,
+          "ocean_bootstrap_model_fill": 0.952572497093576,
+          "ocean_bootstrap_r": 1470.483965420694,
+          "ocean_bootstrap_z": 2.75,
+          "ocean_normal_Q": 220.99709413573373,
+          "ocean_normal_heldout_fill": 0.6049982574585168,
+          "ocean_normal_heldout_p05": 0.523648489020579,
+          "ocean_normal_heldout_p95": 0.6777610632698302,
+          "ocean_normal_insample_fill": 0.4293936054799724,
+          "ocean_normal_model_fill": 0.9504406508832874,
+          "ocean_normal_r": 1060.7396972033175,
+          "ocean_normal_z": 1.5,
+          "sd_train": 54.14493417980616,
+          "season_share": 0.7311725452812202,
+          "stock_code": "22630",
+          "units_test": 11793.0,
+          "units_train": 6294.0
+        },
+        {
+          "adi": 4.6,
+          "air_bootstrap_Q": 128.43252788596072,
+          "air_bootstrap_heldout_fill": 0.9922144868048836,
+          "air_bootstrap_heldout_p05": 0.9699208169450417,
+          "air_bootstrap_heldout_p95": 1.0,
+          "air_bootstrap_insample_fill": 0.834502635014039,
+          "air_bootstrap_model_fill": 0.9511913134008909,
+          "air_bootstrap_r": 1107.1071056668522,
+          "air_bootstrap_z": 4.55,
+          "air_normal_Q": 128.43252788596072,
+          "air_normal_heldout_fill": 0.7443084474814927,
+          "air_normal_heldout_p05": 0.6992978554850611,
+          "air_normal_heldout_p95": 0.7910415966329924,
+          "air_normal_insample_fill": 0.3150520089779221,
+          "air_normal_model_fill": 0.9505966270245084,
+          "air_normal_r": 470.12662372578757,
+          "air_normal_z": 1.5,
+          "cv2": 1.324781,
+          "description": "SET OF 20 VINTAGE CHRISTMAS NAPKINS",
+          "group": "intermittent",
+          "mean_test": 24.029411764705884,
+          "mean_train": 22.40821917808219,
+          "ocean_bootstrap_Q": 287.18386287514556,
+          "ocean_bootstrap_heldout_fill": 0.7591601797686122,
+          "ocean_bootstrap_heldout_p05": 0.6642502983920878,
+          "ocean_bootstrap_heldout_p95": 0.8469009670629873,
+          "ocean_bootstrap_insample_fill": 0.35010013381389193,
+          "ocean_bootstrap_model_fill": 0.9506491115125864,
+          "ocean_bootstrap_r": 2304.9357581086674,
+          "ocean_bootstrap_z": 3.35,
+          "ocean_normal_Q": 287.18386287514556,
+          "ocean_normal_heldout_fill": 0.3240219826197276,
+          "ocean_normal_heldout_p05": 0.2741989363195374,
+          "ocean_normal_heldout_p95": 0.4026458542085835,
+          "ocean_normal_insample_fill": 0.21408173406880215,
+          "ocean_normal_model_fill": 0.9518686678395449,
+          "ocean_normal_r": 1463.790640073587,
+          "ocean_normal_z": 1.55,
+          "sd_train": 77.90735155789226,
+          "season_share": 1.0,
+          "stock_code": "22909",
+          "units_test": 8987.0,
+          "units_train": 8179.0
+        },
+        {
+          "adi": 2.41129,
+          "air_bootstrap_Q": 103.27677416627506,
+          "air_bootstrap_heldout_fill": 0.9489558490889373,
+          "air_bootstrap_heldout_p05": 0.9242202872326076,
+          "air_bootstrap_heldout_p95": 0.973297843131418,
+          "air_bootstrap_insample_fill": 0.9301734395380598,
+          "air_bootstrap_model_fill": 0.9518801106592782,
+          "air_bootstrap_r": 608.1096121742813,
+          "air_bootstrap_z": 3.65,
+          "air_normal_Q": 103.27677416627506,
+          "air_normal_heldout_fill": 0.6841197846843053,
+          "air_normal_heldout_p05": 0.6459660408143982,
+          "air_normal_heldout_p95": 0.7210241311531658,
+          "air_normal_insample_fill": 0.6333494391765903,
+          "air_normal_model_fill": 0.9549873100235626,
+          "air_normal_r": 317.6039123612223,
+          "air_normal_z": 1.45,
+          "cv2": 1.829989,
+          "description": "SPACEBOY LUNCH BOX",
+          "group": "intermittent",
+          "mean_test": 38.1283422459893,
+          "mean_train": 18.019178082191782,
+          "ocean_bootstrap_Q": 230.93388753268522,
+          "ocean_bootstrap_heldout_fill": 0.766299715026163,
+          "ocean_bootstrap_heldout_p05": 0.6975044660970724,
+          "ocean_bootstrap_heldout_p95": 0.8333422884005595,
+          "ocean_bootstrap_insample_fill": 0.7746305676606575,
+          "ocean_bootstrap_model_fill": 0.9500624593676031,
+          "ocean_bootstrap_r": 1466.787555371951,
+          "ocean_bootstrap_z": 2.9,
+          "ocean_normal_Q": 230.93388753268522,
+          "ocean_normal_heldout_fill": 0.354633767129648,
+          "ocean_normal_heldout_p05": 0.286918764737651,
+          "ocean_normal_heldout_p95": 0.4192302900882479,
+          "ocean_normal_insample_fill": 0.3808555612496989,
+          "ocean_normal_model_fill": 0.9508477744160709,
+          "ocean_normal_r": 1030.71021604214,
+          "ocean_normal_z": 1.45,
+          "sd_train": 48.85274087020488,
+          "season_share": 0.7378744108256043,
+          "stock_code": "22629",
+          "units_test": 14260.0,
+          "units_train": 6577.0
+        }
+      ],
+      "target": 0.95,
+      "test_days": 374,
+      "train_days": 365,
+      "warmup_days": 120
+    },
+    "lambda": 0.5,
+    "method_seeds": 10,
+    "n_boot": 2000,
+    "slotting": {
+      "by_size": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "orders": 1572,
+          "red_heur_vs_random": {
+            "hi": 36.88,
+            "lo": 33.11,
+            "mean": 34.97,
+            "n_boot": 2000
+          },
+          "share_orders": 0.08519863422036746,
+          "share_travel_random": 0.02637352234473336,
+          "travel_random_m": 81.04055979643766
+        },
+        {
+          "lines": [
+            2,
+            3
+          ],
+          "orders": 2129,
+          "red_heur_vs_random": {
+            "hi": 30.04,
+            "lo": 27.9,
+            "mean": 28.99,
+            "n_boot": 2000
+          },
+          "share_orders": 0.11538669990786407,
+          "share_travel_random": 0.06202733074331204,
+          "travel_random_m": 140.732456552372
+        },
+        {
+          "lines": [
+            4,
+            8
+          ],
+          "orders": 4715,
+          "red_heur_vs_random": {
+            "hi": 27.46,
+            "lo": 26.27,
+            "mean": 26.87,
+            "n_boot": 2000
+          },
+          "share_orders": 0.2555417050566365,
+          "share_travel_random": 0.21537923482863666,
+          "travel_random_m": 220.65255991516437
+        },
+        {
+          "lines": [
+            9,
+            20
+          ],
+          "orders": 6058,
+          "red_heur_vs_random": {
+            "hi": 25.02,
+            "lo": 24.3,
+            "mean": 24.66,
+            "n_boot": 2000
+          },
+          "share_orders": 0.32832908785431686,
+          "share_travel_random": 0.3887377195959156,
+          "travel_random_m": 309.9661373390558
+        },
+        {
+          "lines": [
+            21,
+            null
+          ],
+          "orders": 3977,
+          "red_heur_vs_random": {
+            "hi": 16.51,
+            "lo": 15.68,
+            "mean": 16.1,
+            "n_boot": 2000
+          },
+          "share_orders": 0.21554387296081512,
+          "share_travel_random": 0.3074821924874025,
+          "travel_random_m": 373.46612522001516
+        }
+      ],
+      "n_sku": 1000,
+      "n_slots": 1200,
+      "n_test_days": 305,
+      "n_test_orders": 18451,
+      "n_test_weeks": 53,
+      "n_train_orders": 18975,
+      "red_vs_abc": {
+        "heuristic": {
+          "return": {
+            "hi": 16.5,
+            "lo": 16.01,
+            "mean": 16.25,
+            "n_boot": 2000
+          },
+          "s_shape": {
+            "hi": 11.23,
+            "lo": 10.75,
+            "mean": 11.0,
+            "n_boot": 2000
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 12.8,
+            "lo": 12.34,
+            "mean": 12.56,
+            "n_boot": 2000
+          },
+          "s_shape": {
+            "hi": 8.36,
+            "lo": 7.95,
+            "mean": 8.16,
+            "n_boot": 2000
+          }
+        }
+      },
+      "red_vs_random": {
+        "abc": {
+          "return": {
+            "hi": 19.01,
+            "lo": 18.61,
+            "mean": 18.81,
+            "n_boot": 2000
+          },
+          "s_shape": {
+            "hi": 13.73,
+            "lo": 13.34,
+            "mean": 13.54,
+            "n_boot": 2000
+          }
+        },
+        "heuristic": {
+          "return": {
+            "hi": 32.29,
+            "lo": 31.71,
+            "mean": 32.0,
+            "n_boot": 2000
+          },
+          "s_shape": {
+            "hi": 23.36,
+            "lo": 22.72,
+            "mean": 23.04,
+            "n_boot": 2000
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 29.31,
+            "lo": 28.71,
+            "mean": 29.01,
+            "n_boot": 2000
+          },
+          "s_shape": {
+            "hi": 20.88,
+            "lo": 20.3,
+            "mean": 20.59,
+            "n_boot": 2000
+          }
+        }
+      },
+      "red_vs_turnover": {
+        "heuristic": {
+          "return": {
+            "hi": 4.4,
+            "lo": 4.01,
+            "mean": 4.22,
+            "n_boot": 2000
+          },
+          "s_shape": {
+            "hi": 3.29,
+            "lo": 2.9,
+            "mean": 3.09,
+            "n_boot": 2000
+          }
+        }
+      },
+      "seed_range_heur_vs_random": [
+        22.24,
+        24.27
+      ],
+      "structure": {
+        "affinity_order_share": 0.2837944664031621,
+        "affinity_pairs": 8221,
+        "affinity_weight_per_pick": 0.07846495109588883,
+        "best_partner_rate": 0.02279988966405002,
+        "gini": 0.326695254404818,
+        "lines_per_order_mean": 16.05333044279443,
+        "lines_per_order_median": 10.0,
+        "pick_aisles_random": 6.014362365183459,
+        "single_line_share": 0.08519863422036746,
+        "top20_pick_share": 0.420052409576241
+      },
+      "travel": {
+        "abc": {
+          "return": {
+            "hi": 252.92,
+            "lo": 247.45,
+            "mean": 250.11,
+            "n_boot": 2000
+          },
+          "s_shape": {
+            "hi": 228.4,
+            "lo": 224.47,
+            "mean": 226.36,
+            "n_boot": 2000
+          }
+        },
+        "heuristic": {
+          "return": {
+            "hi": 212.1,
+            "lo": 206.97,
+            "mean": 209.46,
+            "n_boot": 2000
+          },
+          "s_shape": {
+            "hi": 203.49,
+            "lo": 199.55,
+            "mean": 201.47,
+            "n_boot": 2000
+          }
+        },
+        "random": {
+          "return": {
+            "hi": 311.27,
+            "lo": 304.96,
+            "mean": 308.06,
+            "n_boot": 2000
+          },
+          "s_shape": {
+            "hi": 263.86,
+            "lo": 259.82,
+            "mean": 261.8,
+            "n_boot": 2000
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 221.27,
+            "lo": 216.21,
+            "mean": 218.69,
+            "n_boot": 2000
+          },
+          "s_shape": {
+            "hi": 209.85,
+            "lo": 206.01,
+            "mean": 207.9,
+            "n_boot": 2000
+          }
+        }
+      },
+      "week_blocks_heur_vs_random": {
+        "return": {
+          "hi": 32.42,
+          "lo": 31.59,
+          "mean": 32.0,
+          "n_boot": 2000
+        },
+        "s_shape": {
+          "hi": 23.56,
+          "lo": 22.58,
+          "mean": 23.04,
+          "n_boot": 2000
+        }
+      }
+    },
+    "synthetic_relaxed": {
+      "by_size": [
+        {
+          "lines": [
+            1,
+            1
+          ],
+          "orders": 12740,
+          "red_heur_vs_random_pooled": 52.91963371150603,
+          "share_orders": 0.21233333333333335
+        },
+        {
+          "lines": [
+            2,
+            3
+          ],
+          "orders": 32737,
+          "red_heur_vs_random_pooled": 46.92349998243556,
+          "share_orders": 0.5456166666666666
+        },
+        {
+          "lines": [
+            4,
+            8
+          ],
+          "orders": 14522,
+          "red_heur_vs_random_pooled": 54.53248312247935,
+          "share_orders": 0.24203333333333332
+        },
+        {
+          "lines": [
+            9,
+            20
+          ],
+          "orders": 1,
+          "red_heur_vs_random_pooled": 33.679525222551945,
+          "share_orders": 1.6666666666666667e-05
+        },
+        {
+          "lines": [
+            21,
+            null
+          ],
+          "orders": 0,
+          "red_heur_vs_random_pooled": null,
+          "share_orders": 0.0
+        }
+      ],
+      "red_vs_abc": {
+        "heuristic": {
+          "return": {
+            "hi": 26.49,
+            "lo": 25.17,
+            "mean": 25.83,
+            "n": 20,
+            "sd": 1.41
+          },
+          "s_shape": {
+            "hi": 22.19,
+            "lo": 20.87,
+            "mean": 21.53,
+            "n": 20,
+            "sd": 1.41
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 20.15,
+            "lo": 18.95,
+            "mean": 19.55,
+            "n": 20,
+            "sd": 1.28
+          },
+          "s_shape": {
+            "hi": 13.73,
+            "lo": 12.64,
+            "mean": 13.18,
+            "n": 20,
+            "sd": 1.16
+          }
+        }
+      },
+      "red_vs_random": {
+        "abc": {
+          "return": {
+            "hi": 45.31,
+            "lo": 43.57,
+            "mean": 44.44,
+            "n": 20,
+            "sd": 1.86
+          },
+          "s_shape": {
+            "hi": 37.34,
+            "lo": 35.64,
+            "mean": 36.49,
+            "n": 20,
+            "sd": 1.82
+          }
+        },
+        "heuristic": {
+          "return": {
+            "hi": 59.55,
+            "lo": 58.03,
+            "mean": 58.79,
+            "n": 20,
+            "sd": 1.63
+          },
+          "s_shape": {
+            "hi": 50.9,
+            "lo": 49.43,
+            "mean": 50.17,
+            "n": 20,
+            "sd": 1.57
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 56.12,
+            "lo": 54.48,
+            "mean": 55.3,
+            "n": 20,
+            "sd": 1.76
+          },
+          "s_shape": {
+            "hi": 45.73,
+            "lo": 43.99,
+            "mean": 44.86,
+            "n": 20,
+            "sd": 1.85
+          }
+        }
+      },
+      "red_vs_turnover": {
+        "heuristic": {
+          "return": {
+            "hi": 8.28,
+            "lo": 7.33,
+            "mean": 7.8,
+            "n": 20,
+            "sd": 1.02
+          },
+          "s_shape": {
+            "hi": 10.33,
+            "lo": 8.89,
+            "mean": 9.61,
+            "n": 20,
+            "sd": 1.54
+          }
+        }
+      },
+      "seeds": 20,
+      "structure": {
+        "affinity_order_share": 0.7884833333333333,
+        "affinity_pairs": 1397.15,
+        "affinity_weight_per_pick": 0.5778158199500647,
+        "best_partner_rate": 0.3721103882497796,
+        "gini": 0.7049179980641516,
+        "lines_per_order_mean": 2.6363500000000006,
+        "lines_per_order_median": 2.6,
+        "pick_aisles_random": 2.36805,
+        "single_line_share": 0.21233333333333335,
+        "top20_pick_share": 0.7341093514165943
+      },
+      "travel": {
+        "abc": {
+          "return": {
+            "hi": 80.73,
+            "lo": 78.87,
+            "mean": 79.8,
+            "n": 20,
+            "sd": 1.99
+          },
+          "s_shape": {
+            "hi": 90.54,
+            "lo": 88.96,
+            "mean": 89.75,
+            "n": 20,
+            "sd": 1.68
+          }
+        },
+        "heuristic": {
+          "return": {
+            "hi": 60.01,
+            "lo": 58.36,
+            "mean": 59.19,
+            "n": 20,
+            "sd": 1.76
+          },
+          "s_shape": {
+            "hi": 71.06,
+            "lo": 69.77,
+            "mean": 70.41,
+            "n": 20,
+            "sd": 1.37
+          }
+        },
+        "random": {
+          "return": {
+            "hi": 145.16,
+            "lo": 142.25,
+            "mean": 143.7,
+            "n": 20,
+            "sd": 3.12
+          },
+          "s_shape": {
+            "hi": 142.76,
+            "lo": 139.98,
+            "mean": 141.37,
+            "n": 20,
+            "sd": 2.97
+          }
+        },
+        "turnover": {
+          "return": {
+            "hi": 65.08,
+            "lo": 63.32,
+            "mean": 64.2,
+            "n": 20,
+            "sd": 1.88
+          },
+          "s_shape": {
+            "hi": 78.8,
+            "lo": 77.04,
+            "mean": 77.92,
+            "n": 20,
+            "sd": 1.88
+          }
+        }
+      }
+    }
+  },
   "reverse": {
     "finite_difference_penang": 8.944000000017695,
     "greedy_net_value": 357298.0,
@@ -444,6 +2117,1154 @@
         "B": 2500,
         "C": 2150
       }
+    }
+  },
+  "rollout": {
+    "config": {
+      "n_lead": 200000,
+      "reps_rollout": 2000,
+      "sites_per_week": 6,
+      "speed_kn": 16.0,
+      "target": 0.95,
+      "weeks": 12
+    },
+    "consolidation": {
+      "DZA|1": {
+        "containers": 24,
+        "cost_per_site": 5011.638467967291,
+        "early_days": 30.177671014570592,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 1463.3333333333333,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9487013888888889,
+        "sailings": 12
+      },
+      "DZA|2": {
+        "containers": 18,
+        "cost_per_site": 4895.848829729197,
+        "early_days": 33.66988340669385,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 1231.0,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9593611111111111,
+        "sailings": 6
+      },
+      "DZA|4": {
+        "containers": 18,
+        "cost_per_site": 5085.655260846259,
+        "early_days": 40.503096828969795,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 1182.5,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9731458333333334,
+        "sailings": 3
+      },
+      "IDN|1": {
+        "containers": 24,
+        "cost_per_site": 2299.2617267402566,
+        "early_days": 16.997603082413825,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 555.8333333333334,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9491944444444445,
+        "sailings": 12
+      },
+      "IDN|2": {
+        "containers": 18,
+        "cost_per_site": 2293.7571869382136,
+        "early_days": 20.371661807500235,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 430.75,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9639583333333334,
+        "sailings": 6
+      },
+      "IDN|4": {
+        "containers": 18,
+        "cost_per_site": 2508.6446357028008,
+        "early_days": 27.31936921496483,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 405.625,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9803125,
+        "sailings": 3
+      },
+      "IRQ|1": {
+        "containers": 24,
+        "cost_per_site": 3536.444920001056,
+        "early_days": 21.96125162210237,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 1023.3333333333334,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9491319444444445,
+        "sailings": 12
+      },
+      "IRQ|2": {
+        "containers": 18,
+        "cost_per_site": 3475.419565066525,
+        "early_days": 25.40169863946482,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 843.0,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9606736111111112,
+        "sailings": 6
+      },
+      "IRQ|4": {
+        "containers": 18,
+        "cost_per_site": 3674.2590952735754,
+        "early_days": 32.08566063167808,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 805.8333333333334,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9718055555555556,
+        "sailings": 3
+      },
+      "ITA|1": {
+        "containers": 24,
+        "cost_per_site": 3767.77144986697,
+        "early_days": 15.745961927813283,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 1408.3333333333333,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9500208333333333,
+        "sailings": 12
+      },
+      "ITA|2": {
+        "containers": 18,
+        "cost_per_site": 3659.7818643836554,
+        "early_days": 18.977206208892017,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 1182.5,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9667986111111111,
+        "sailings": 6
+      },
+      "ITA|4": {
+        "containers": 18,
+        "cost_per_site": 3854.780360994825,
+        "early_days": 25.967892015313762,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 1135.4166666666667,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9820555555555556,
+        "sailings": 3
+      },
+      "NGA|1": {
+        "containers": 24,
+        "cost_per_site": 4851.086779113517,
+        "early_days": 27.70559823715603,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 1573.3333333333333,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.948625,
+        "sailings": 12
+      },
+      "NGA|2": {
+        "containers": 18,
+        "cost_per_site": 4725.165246535321,
+        "early_days": 30.867797742660358,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 1328.0,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.95675,
+        "sailings": 6
+      },
+      "NGA|4": {
+        "containers": 18,
+        "cost_per_site": 4910.28374966135,
+        "early_days": 37.69369727356504,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 1276.6666666666667,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9716180555555556,
+        "sailings": 3
+      },
+      "PAK|1": {
+        "containers": 24,
+        "cost_per_site": 3022.572983744016,
+        "early_days": 19.964971959314443,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 803.3333333333334,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9503888888888888,
+        "sailings": 12
+      },
+      "PAK|2": {
+        "containers": 18,
+        "cost_per_site": 2985.645236278303,
+        "early_days": 23.261677676053658,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 649.0,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9645763888888889,
+        "sailings": 6
+      },
+      "PAK|4": {
+        "containers": 18,
+        "cost_per_site": 3195.3824847616033,
+        "early_days": 29.93869361993201,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 617.5,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.9770277777777778,
+        "sailings": 3
+      },
+      "PER|1": {
+        "containers": 24,
+        "cost_per_site": 3598.432769034689,
+        "early_days": 13.722899636279774,
+        "fill_volume": 0.48573043007085287,
+        "freight_per_site": 1243.3333333333333,
+        "mix_per_sailing": "1 x 40HC + 1 x 20GP",
+        "on_time": 0.9497638888888889,
+        "sailings": 12
+      },
+      "PER|2": {
+        "containers": 18,
+        "cost_per_site": 3511.6851920927047,
+        "early_days": 17.15807134344664,
+        "fill_volume": 0.5240577566202895,
+        "freight_per_site": 1037.0,
+        "mix_per_sailing": "3 x 40GP",
+        "on_time": 0.9662708333333333,
+        "sailings": 6
+      },
+      "PER|4": {
+        "containers": 18,
+        "cost_per_site": 3711.0160799967293,
+        "early_days": 24.198012048304836,
+        "fill_volume": 0.5124585413534315,
+        "freight_per_site": 994.1666666666666,
+        "mix_per_sailing": "5 x 40HC + 1 x 20GP",
+        "on_time": 0.984125,
+        "sailings": 3
+      }
+    },
+    "customs_score_vs_dwell": {
+      "n": 108,
+      "p_value": 8.298587838252489e-07,
+      "spearman_rho": -0.4534483424185757
+    },
+    "data_checks": {
+      "air_mean_below_fifth_of_range": 16,
+      "air_rows": 121,
+      "ct_mean_ge_median": 162,
+      "ct_rows": 163
+    },
+    "dwell_fit": {
+      "max_abs_mean_rel_err_pct": 14.795657834657362,
+      "rows": [
+        {
+          "dwell": "import",
+          "fitted_mean": 3.5586653928743783,
+          "fitted_p95": 11.903699828209238,
+          "iso3": "IDN",
+          "mean_rel_err_pct": 14.795657834657362,
+          "median": 2.0,
+          "mu": 0.6580270086740032,
+          "published_mean": 3.1,
+          "q1": 0.9,
+          "q3": 4.0,
+          "sigma": 1.1057654147776717
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 8.539263871079019,
+          "fitted_p95": 23.53367954239219,
+          "iso3": "PAK",
+          "mean_rel_err_pct": -8.17995837549443,
+          "median": 6.1,
+          "mu": 1.8073019135975514,
+          "published_mean": 9.3,
+          "q1": 3.5,
+          "q3": 10.6,
+          "sigma": 0.8214291116362546
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 7.571544756388909,
+          "fitted_p95": 25.107093860783948,
+          "iso3": "IRQ",
+          "mean_rel_err_pct": 8.164925091270131,
+          "median": 4.2,
+          "mu": 1.4305182438366018,
+          "published_mean": 7.0,
+          "q1": 2.0,
+          "q3": 8.7,
+          "sigma": 1.0898429847697435
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 20.5018324842655,
+          "fitted_p95": 46.65815312207883,
+          "iso3": "DZA",
+          "mean_rel_err_pct": -10.472347230281658,
+          "median": 16.7,
+          "mu": 2.831484804615499,
+          "published_mean": 22.9,
+          "q1": 11.3,
+          "q3": 25.9,
+          "sigma": 0.614864972185322
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 16.114711811024684,
+          "fitted_p95": 40.81764730176726,
+          "iso3": "NGA",
+          "mean_rel_err_pct": -6.309815052182068,
+          "median": 12.4,
+          "mu": 2.5171757747701453,
+          "published_mean": 17.2,
+          "q1": 7.6,
+          "q3": 20.2,
+          "sigma": 0.7246473032619796
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 2.557840768108007,
+          "fitted_p95": 7.590625293163974,
+          "iso3": "PER",
+          "mean_rel_err_pct": -14.73864106306643,
+          "median": 1.7,
+          "mu": 0.5188899489651483,
+          "published_mean": 3.0,
+          "q1": 0.9,
+          "q3": 3.1,
+          "sigma": 0.9168135073879078
+        },
+        {
+          "dwell": "import",
+          "fitted_mean": 5.319204853498676,
+          "fitted_p95": 14.437198491625399,
+          "iso3": "ITA",
+          "mean_rel_err_pct": -3.2871844818422504,
+          "median": 4.0,
+          "mu": 1.3488512994619175,
+          "published_mean": 5.5,
+          "q1": 2.2,
+          "q3": 6.5,
+          "sigma": 0.8030847142023884
+        },
+        {
+          "dwell": "export",
+          "fitted_mean": 4.6402515984581125,
+          "fitted_p95": 11.330740709797777,
+          "iso3": "CHN",
+          "mean_rel_err_pct": -1.2712425859976095,
+          "median": 3.7,
+          "mu": 1.2996999533792188,
+          "published_mean": 4.7,
+          "q1": 2.3,
+          "q3": 5.8,
+          "sigma": 0.6856655674518232
+        }
+      ]
+    },
+    "lead": {
+      "DZA|air": {
+        "analytic_mean": 19.251680037394543,
+        "analytic_sd": 3.27134692677369,
+        "buffer_95": 5.775449593575598,
+        "mean": 19.260912339754444,
+        "mean_z": 1.2621135041725002,
+        "on_time_if_plan_on_mean": 0.53419,
+        "p50": 18.98721821940289,
+        "p95": 25.036361933330042,
+        "sd": 3.2665237172050006,
+        "share_dest_port_customs_mean": 0.6286474508791527,
+        "share_port_customs_mean": 0.6286474508791527,
+        "share_port_customs_tail": 0.6590239743694446,
+        "var_z": -0.8373091414740489
+      },
+      "DZA|sea": {
+        "analytic_mean": 68.13372991605695,
+        "analytic_sd": 16.236610841611895,
+        "buffer_95": 29.461811244201783,
+        "mean": 68.10631894811692,
+        "mean_z": -0.7549948476425486,
+        "on_time_if_plan_on_mean": 0.577285,
+        "p50": 65.33846852873089,
+        "p95": 97.5681301923187,
+        "sd": 16.21357518908502,
+        "share_dest_port_customs_mean": 0.30103967642281015,
+        "share_port_customs_mean": 0.3692380474816746,
+        "share_port_customs_tail": 0.5708054641227629,
+        "var_z": -0.45817909962237324
+      },
+      "IDN|air": {
+        "analytic_mean": 8.910303434192219,
+        "analytic_sd": 4.20505648000119,
+        "buffer_95": 6.0650491654466165,
+        "mean": 8.906432508095577,
+        "mean_z": -0.41167836527927737,
+        "on_time_if_plan_on_mean": 0.620855,
+        "p50": 8.107776187005058,
+        "p95": 14.971481673542193,
+        "sd": 4.201329760612656,
+        "share_dest_port_customs_mean": 0.24631652708071736,
+        "share_port_customs_mean": 0.24631652708071736,
+        "share_port_customs_tail": 0.6341435561478947,
+        "var_z": -0.0660155473371192
+      },
+      "IDN|sea": {
+        "analytic_mean": 24.329875324665824,
+        "analytic_sd": 9.576010175216814,
+        "buffer_95": 16.634652099976535,
+        "mean": 24.340107903639115,
+        "mean_z": 0.4778763128015447,
+        "on_time_if_plan_on_mean": 0.556,
+        "p50": 23.01858003376769,
+        "p95": 40.97476000361565,
+        "sd": 9.573027821509655,
+        "share_dest_port_customs_mean": 0.14624662588683748,
+        "share_port_customs_mean": 0.3370179791579454,
+        "share_port_customs_tail": 0.4682151110707797,
+        "var_z": -0.06620973646299301
+      },
+      "IRQ|air": {
+        "analytic_mean": 9.235342653274449,
+        "analytic_sd": 3.485699648681212,
+        "buffer_95": 5.696339012068352,
+        "mean": 9.227692366927966,
+        "mean_z": -0.9815280742588034,
+        "on_time_if_plan_on_mean": 0.59846,
+        "p50": 8.584463922403167,
+        "p95": 14.924031378996318,
+        "sd": 3.4498275232731097,
+        "share_dest_port_customs_mean": 0.24831911278984117,
+        "share_port_customs_mean": 0.24831911278984117,
+        "share_port_customs_tail": 0.5692671727794774,
+        "var_z": -1.0552262259386833
+      },
+      "IRQ|sea": {
+        "analytic_mean": 43.75256718818036,
+        "analytic_sd": 13.338616429234305,
+        "buffer_95": 21.14149872472896,
+        "mean": 43.77486407150057,
+        "mean_z": 0.7475639929357519,
+        "on_time_if_plan_on_mean": 0.60506,
+        "p50": 41.24974179729371,
+        "p95": 64.91636279622954,
+        "sd": 13.337705725397583,
+        "share_dest_port_customs_mean": 0.17321654648516072,
+        "share_port_customs_mean": 0.27913435721973645,
+        "share_port_customs_tail": 0.5725285525658853,
+        "var_z": -0.007371098031523011
+      },
+      "ITA|air": {
+        "analytic_mean": 9.595609373281224,
+        "analytic_sd": 2.9948000201171743,
+        "buffer_95": 5.222393622995849,
+        "mean": 9.596270949054668,
+        "mean_z": 0.09879313421602223,
+        "on_time_if_plan_on_mean": 0.579525,
+        "p50": 9.098417506376023,
+        "p95": 14.818664572050517,
+        "sd": 2.9786439776821294,
+        "share_dest_port_customs_mean": 0.26082105918832676,
+        "share_port_customs_mean": 0.26082105918832676,
+        "share_port_customs_tail": 0.5078004732592836,
+        "var_z": -1.382289136614605
+      },
+      "ITA|sea": {
+        "analytic_mean": 45.987248118623455,
+        "analytic_sd": 8.77411005271783,
+        "buffer_95": 15.33605193005338,
+        "mean": 45.974247410724594,
+        "mean_z": -0.6626419418677654,
+        "on_time_if_plan_on_mean": 0.544635,
+        "p50": 45.063723416250554,
+        "p95": 61.31029934077797,
+        "sd": 8.788557198033574,
+        "share_dest_port_customs_mean": 0.11564012683914764,
+        "share_port_customs_mean": 0.21678214094072856,
+        "share_port_customs_tail": 0.35881003303679576,
+        "var_z": 0.48205361860214285
+      },
+      "NGA|air": {
+        "analytic_mean": 13.153502356624163,
+        "analytic_sd": 6.6397293807805156,
+        "buffer_95": 11.46185450976086,
+        "mean": 13.175653514783123,
+        "mean_z": 1.4919733194897926,
+        "on_time_if_plan_on_mean": 0.64181,
+        "p50": 11.533479779681551,
+        "p95": 24.637508024543983,
+        "sd": 6.6973008785158985,
+        "share_dest_port_customs_mean": 0.4497648743286759,
+        "share_port_customs_mean": 0.4497648743286759,
+        "share_port_customs_tail": 0.7717068960018372,
+        "var_z": 1.1991856760511161
+      },
+      "NGA|sea": {
+        "analytic_mean": 62.361171742816126,
+        "analytic_sd": 15.071790186597589,
+        "buffer_95": 26.786801251430113,
+        "mean": 62.33708805918152,
+        "mean_z": -0.7146165530285828,
+        "on_time_if_plan_on_mean": 0.592925,
+        "p50": 59.517685938422616,
+        "p95": 89.12388931061163,
+        "sd": 15.045643105011525,
+        "share_dest_port_customs_mean": 0.25798402067959314,
+        "share_port_customs_mean": 0.3326775165914779,
+        "share_port_customs_tail": 0.5798619193481043,
+        "var_z": -0.41467568244135133
+      },
+      "PAK|air": {
+        "analytic_mean": 11.70219821679892,
+        "analytic_sd": 6.906480998740901,
+        "buffer_95": 11.042602707953511,
+        "mean": 11.69674871487623,
+        "mean_z": -0.35287020249152684,
+        "on_time_if_plan_on_mean": 0.6585,
+        "p50": 10.024026920998507,
+        "p95": 22.739351422829742,
+        "sd": 6.746057286658892,
+        "share_dest_port_customs_mean": 0.418456243482016,
+        "share_port_customs_mean": 0.418456243482016,
+        "share_port_customs_tail": 0.7799597409844669,
+        "var_z": -3.0075468034297628
+      },
+      "PAK|sea": {
+        "analytic_mean": 36.602369636203804,
+        "analytic_sd": 11.018518769667333,
+        "buffer_95": 19.36486137403604,
+        "mean": 36.602190732280356,
+        "mean_z": -0.007261254305299996,
+        "on_time_if_plan_on_mean": 0.569365,
+        "p50": 34.91126612422923,
+        "p95": 55.967052106316395,
+        "sd": 10.99329841852847,
+        "share_dest_port_customs_mean": 0.233397666327389,
+        "share_port_customs_mean": 0.3599400937616021,
+        "share_port_customs_tail": 0.5669516482104419,
+        "var_z": -0.6214754353699192
+      },
+      "PER|air": {
+        "analytic_mean": 9.97315230583025,
+        "analytic_sd": 4.160036391400654,
+        "buffer_95": 6.158667099222333,
+        "mean": 9.953701839441804,
+        "mean_z": -2.090970412112119,
+        "on_time_if_plan_on_mean": 0.61787,
+        "p50": 9.170029640165515,
+        "p95": 16.112368938664137,
+        "sd": 4.049300834950008,
+        "share_dest_port_customs_mean": 0.22886957948646858,
+        "share_port_customs_mean": 0.22886957948646858,
+        "share_port_customs_tail": 0.6028779417678275,
+        "var_z": -2.711669823872428
+      },
+      "PER|sea": {
+        "analytic_mean": 48.06459236656612,
+        "analytic_sd": 7.7438463456512805,
+        "buffer_95": 13.470768152430367,
+        "mean": 48.0572128392644,
+        "mean_z": -0.4261738663685611,
+        "on_time_if_plan_on_mean": 0.53527,
+        "p50": 47.40138360259581,
+        "p95": 61.52798099169477,
+        "sd": 7.734668282600211,
+        "share_dest_port_customs_mean": 0.05313749125834355,
+        "share_port_customs_mean": 0.14951788478097983,
+        "share_port_customs_tail": 0.24386945682911432,
+        "var_z": -0.5179762352008658
+      }
+    },
+    "lead_check": {
+      "max_abs_mean_z": 2.090970412112119,
+      "max_abs_var_z": 3.0075468034297628
+    },
+    "loading": {
+      "random_40hc": {
+        "equal_lb": 105,
+        "max_gap_boxes": 1,
+        "mean_ratio": 1.1865833333333333,
+        "n": 200
+      },
+      "weekly_batch": [
+        {
+          "container": "20GP",
+          "fill_volume": 0.5358483862221098,
+          "fill_weight": 0.13613861386138615,
+          "heuristic": 3,
+          "lb_floor": 3,
+          "lb_volume": 2,
+          "lb_weight": 1,
+          "lower_bound": 3
+        },
+        {
+          "container": "40GP",
+          "fill_volume": 0.3930433174652174,
+          "fill_weight": 0.21645427286356822,
+          "heuristic": 2,
+          "lb_floor": 2,
+          "lb_volume": 1,
+          "lb_weight": 1,
+          "lower_bound": 2
+        },
+        {
+          "container": "40HC",
+          "fill_volume": 0.3480225305362701,
+          "fill_weight": 0.2175550951214918,
+          "heuristic": 2,
+          "lb_floor": 2,
+          "lb_volume": 1,
+          "lb_weight": 1,
+          "lower_bound": 2
+        }
+      ],
+      "weekly_fill_volume": 0.48573043007085287,
+      "weekly_mix": "1 x 40HC + 1 x 20GP"
+    },
+    "market_names": {
+      "DZA": "Algeria",
+      "IDN": "Indonesia",
+      "IRQ": "Iraq",
+      "ITA": "Italy",
+      "NGA": "Nigeria",
+      "PAK": "Pakistan",
+      "PER": "Peru"
+    },
+    "markets": [
+      "IDN",
+      "PAK",
+      "IRQ",
+      "DZA",
+      "NGA",
+      "PER",
+      "ITA"
+    ],
+    "plan": {
+      "DZA|air": {
+        "buffer_days": 5.775449593575598,
+        "on_time_oos_hi": 0.9530066314916533,
+        "on_time_oos_lo": 0.9487989240639022,
+        "on_time_oos_plan_mean": 0.5364652777777777,
+        "on_time_oos_plan_p95": 0.9509027777777778,
+        "ship_days_before_need_mean": 19.260912339754444,
+        "ship_days_before_need_p95": 25.036361933330042,
+        "week_all_sites_on_time_p95": 0.8737083333333333,
+        "worst_week_on_time_plan_mean": 0.0036666666666666666
+      },
+      "DZA|sea": {
+        "buffer_days": 29.461811244201783,
+        "on_time_oos_hi": 0.9530132233079716,
+        "on_time_oos_lo": 0.9477506655809174,
+        "on_time_oos_plan_mean": 0.5751944444444445,
+        "on_time_oos_plan_p95": 0.9503819444444445,
+        "ship_days_before_need_mean": 68.10631894811692,
+        "ship_days_before_need_p95": 97.5681301923187,
+        "week_all_sites_on_time_p95": 0.9415,
+        "worst_week_on_time_plan_mean": 0.00225
+      },
+      "IDN|air": {
+        "buffer_days": 6.0650491654466165,
+        "on_time_oos_hi": 0.9524686611160225,
+        "on_time_oos_lo": 0.9476146722173109,
+        "on_time_oos_plan_mean": 0.6196597222222222,
+        "on_time_oos_plan_p95": 0.9500416666666667,
+        "ship_days_before_need_mean": 8.906432508095577,
+        "ship_days_before_need_p95": 14.971481673542193,
+        "week_all_sites_on_time_p95": 0.911875,
+        "worst_week_on_time_plan_mean": 0.02708333333333333
+      },
+      "IDN|sea": {
+        "buffer_days": 16.634652099976535,
+        "on_time_oos_hi": 0.9517201250593563,
+        "on_time_oos_lo": 0.9463770971628658,
+        "on_time_oos_plan_mean": 0.5564027777777778,
+        "on_time_oos_plan_p95": 0.9490486111111112,
+        "ship_days_before_need_mean": 24.340107903639115,
+        "ship_days_before_need_p95": 40.97476000361565,
+        "week_all_sites_on_time_p95": 0.9317916666666667,
+        "worst_week_on_time_plan_mean": 0.0016666666666666666
+      },
+      "IRQ|air": {
+        "buffer_days": 5.696339012068352,
+        "on_time_oos_hi": 0.9521277931981407,
+        "on_time_oos_lo": 0.9472472068018594,
+        "on_time_oos_plan_mean": 0.601625,
+        "on_time_oos_plan_p95": 0.9496875,
+        "ship_days_before_need_mean": 9.227692366927966,
+        "ship_days_before_need_p95": 14.924031378996318,
+        "week_all_sites_on_time_p95": 0.9012083333333333,
+        "worst_week_on_time_plan_mean": 0.02858333333333333
+      },
+      "IRQ|sea": {
+        "buffer_days": 21.14149872472896,
+        "on_time_oos_hi": 0.9539251455245991,
+        "on_time_oos_lo": 0.948658187808734,
+        "on_time_oos_plan_mean": 0.6074583333333333,
+        "on_time_oos_plan_p95": 0.9512916666666666,
+        "ship_days_before_need_mean": 43.77486407150057,
+        "ship_days_before_need_p95": 64.91636279622954,
+        "week_all_sites_on_time_p95": 0.9420416666666667,
+        "worst_week_on_time_plan_mean": 0.00425
+      },
+      "ITA|air": {
+        "buffer_days": 5.222393622995849,
+        "on_time_oos_hi": 0.951431454683882,
+        "on_time_oos_lo": 0.9466241008716736,
+        "on_time_oos_plan_mean": 0.5776527777777778,
+        "on_time_oos_plan_p95": 0.9490277777777778,
+        "ship_days_before_need_mean": 9.596270949054668,
+        "ship_days_before_need_p95": 14.818664572050517,
+        "week_all_sites_on_time_p95": 0.8867916666666666,
+        "worst_week_on_time_plan_mean": 0.019666666666666666
+      },
+      "ITA|sea": {
+        "buffer_days": 15.33605193005338,
+        "on_time_oos_hi": 0.9530595705538568,
+        "on_time_oos_lo": 0.9477876516683653,
+        "on_time_oos_plan_mean": 0.5492013888888889,
+        "on_time_oos_plan_p95": 0.9504236111111111,
+        "ship_days_before_need_mean": 45.974247410724594,
+        "ship_days_before_need_p95": 61.31029934077797,
+        "week_all_sites_on_time_p95": 0.9312916666666666,
+        "worst_week_on_time_plan_mean": 0.0011666666666666665
+      },
+      "NGA|air": {
+        "buffer_days": 11.46185450976086,
+        "on_time_oos_hi": 0.952596208469586,
+        "on_time_oos_lo": 0.9473204581970804,
+        "on_time_oos_plan_mean": 0.6397986111111111,
+        "on_time_oos_plan_p95": 0.9499583333333333,
+        "ship_days_before_need_mean": 13.175653514783123,
+        "ship_days_before_need_p95": 24.637508024543983,
+        "week_all_sites_on_time_p95": 0.9331666666666667,
+        "worst_week_on_time_plan_mean": 0.011916666666666666
+      },
+      "NGA|sea": {
+        "buffer_days": 26.786801251430113,
+        "on_time_oos_hi": 0.952797735634509,
+        "on_time_oos_lo": 0.9473967088099353,
+        "on_time_oos_plan_mean": 0.5911041666666667,
+        "on_time_oos_plan_p95": 0.9500972222222223,
+        "ship_days_before_need_mean": 62.33708805918152,
+        "ship_days_before_need_p95": 89.12388931061163,
+        "week_all_sites_on_time_p95": 0.9417916666666667,
+        "worst_week_on_time_plan_mean": 0.0029166666666666664
+      },
+      "PAK|air": {
+        "buffer_days": 11.042602707953511,
+        "on_time_oos_hi": 0.9531385535404271,
+        "on_time_oos_lo": 0.9479447797929059,
+        "on_time_oos_plan_mean": 0.6577291666666667,
+        "on_time_oos_plan_p95": 0.9505416666666666,
+        "ship_days_before_need_mean": 11.69674871487623,
+        "ship_days_before_need_p95": 22.739351422829742,
+        "week_all_sites_on_time_p95": 0.9336666666666666,
+        "worst_week_on_time_plan_mean": 0.014583333333333332
+      },
+      "PAK|sea": {
+        "buffer_days": 19.36486137403604,
+        "on_time_oos_hi": 0.9543768484916663,
+        "on_time_oos_lo": 0.9491648181750002,
+        "on_time_oos_plan_mean": 0.5668125,
+        "on_time_oos_plan_p95": 0.9517708333333333,
+        "ship_days_before_need_mean": 36.602190732280356,
+        "ship_days_before_need_p95": 55.967052106316395,
+        "week_all_sites_on_time_p95": 0.9387083333333334,
+        "worst_week_on_time_plan_mean": 0.0018333333333333333
+      },
+      "PER|air": {
+        "buffer_days": 6.158667099222333,
+        "on_time_oos_hi": 0.9512599772444243,
+        "on_time_oos_lo": 0.9464205783111308,
+        "on_time_oos_plan_mean": 0.6197361111111112,
+        "on_time_oos_plan_p95": 0.9488402777777778,
+        "ship_days_before_need_mean": 9.953701839441804,
+        "ship_days_before_need_p95": 16.112368938664137,
+        "week_all_sites_on_time_p95": 0.9104583333333334,
+        "worst_week_on_time_plan_mean": 0.028999999999999998
+      },
+      "PER|sea": {
+        "buffer_days": 13.470768152430367,
+        "on_time_oos_hi": 0.9500148705276881,
+        "on_time_oos_lo": 0.9448462405834228,
+        "on_time_oos_plan_mean": 0.5379861111111112,
+        "on_time_oos_plan_p95": 0.9474305555555556,
+        "ship_days_before_need_mean": 48.0572128392644,
+        "ship_days_before_need_p95": 61.52798099169477,
+        "week_all_sites_on_time_p95": 0.922875,
+        "worst_week_on_time_plan_mean": 0.00041666666666666664
+      }
+    },
+    "plan_range": {
+      "air": {
+        "buffer_days": {
+          "max": 11.46185450976086,
+          "min": 5.222393622995849
+        },
+        "on_time_oos_plan_mean": {
+          "max": 0.6577291666666667,
+          "min": 0.5364652777777777
+        },
+        "on_time_oos_plan_p95": {
+          "max": 0.9509027777777778,
+          "min": 0.9488402777777778
+        }
+      },
+      "sea": {
+        "buffer_days": {
+          "max": 29.461811244201783,
+          "min": 13.470768152430367
+        },
+        "on_time_oos_plan_mean": {
+          "max": 0.6074583333333333,
+          "min": 0.5379861111111112
+        },
+        "on_time_oos_plan_p95": {
+          "max": 0.9517708333333333,
+          "min": 0.9474305555555556
+        }
+      }
+    },
+    "policy": {
+      "DZA|air": {
+        "cost_per_site": 9925.207896781705,
+        "expedite_rate": 0.0,
+        "lead_days": 25.023904226759324,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "DZA|sea": {
+        "cost_per_site": 5012.17286423746,
+        "expedite_rate": 0.0,
+        "lead_days": 97.60970563599317,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "DZA|sea_expedite": {
+        "cost_per_site": 6387.682901480007,
+        "expedite_rate": 0.042405,
+        "lead_days": 121.80624397210296,
+        "on_time": 0.99956,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "DZA|split": {
+        "cost_per_site": 5127.995877895365,
+        "expedite_rate": 0.0,
+        "lead_days": 107.35997823091675,
+        "on_time": 0.95004,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "IDN|air": {
+        "cost_per_site": 5776.92485153224,
+        "expedite_rate": 0.0,
+        "lead_days": 15.008739105807582,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "IDN|sea": {
+        "cost_per_site": 2295.4470899368757,
+        "expedite_rate": 0.0,
+        "lead_days": 40.854446911031296,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "IDN|sea_expedite": {
+        "cost_per_site": 3072.740293607772,
+        "expedite_rate": 0.04639,
+        "lead_days": 53.21922625230502,
+        "on_time": 0.999535,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "IDN|split": {
+        "cost_per_site": 3073.321185076795,
+        "expedite_rate": 0.0,
+        "lead_days": 47.342560451527575,
+        "on_time": 0.95991,
+        "plan_quantile": 0.96,
+        "target_missed": false
+      },
+      "IRQ|air": {
+        "cost_per_site": 8657.693652711489,
+        "expedite_rate": 0.0,
+        "lead_days": 14.943206529301879,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "IRQ|sea": {
+        "cost_per_site": 3534.6304759762907,
+        "expedite_rate": 0.0,
+        "lead_days": 64.84979726136834,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "IRQ|sea_expedite": {
+        "cost_per_site": 4497.150097302707,
+        "expedite_rate": 0.045705,
+        "lead_days": 77.81090160737547,
+        "on_time": 0.99908,
+        "plan_quantile": 0.98,
+        "target_missed": false
+      },
+      "IRQ|split": {
+        "cost_per_site": 4212.004986039875,
+        "expedite_rate": 0.0,
+        "lead_days": 77.63718863422018,
+        "on_time": 0.95996,
+        "plan_quantile": 0.96,
+        "target_missed": false
+      },
+      "ITA|air": {
+        "cost_per_site": 8649.155540140317,
+        "expedite_rate": 0.0,
+        "lead_days": 14.815117879181216,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "ITA|sea": {
+        "cost_per_site": 3770.28189452755,
+        "expedite_rate": 0.0,
+        "lead_days": 61.388394910422186,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "ITA|sea_expedite": {
+        "cost_per_site": 4797.962102030266,
+        "expedite_rate": 0.05837,
+        "lead_days": 71.99008807423434,
+        "on_time": 0.99956,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "ITA|split": {
+        "cost_per_site": 4262.748172507236,
+        "expedite_rate": 0.0,
+        "lead_days": 67.21484770524924,
+        "on_time": 0.959965,
+        "plan_quantile": 0.96,
+        "target_missed": false
+      },
+      "NGA|air": {
+        "cost_per_site": 10911.820703179199,
+        "expedite_rate": 0.0,
+        "lead_days": 24.601669145243775,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "NGA|sea": {
+        "cost_per_site": 4864.545397989092,
+        "expedite_rate": 0.0,
+        "lead_days": 89.49839492822741,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "NGA|sea_expedite": {
+        "cost_per_site": 6269.140525859966,
+        "expedite_rate": 0.03883,
+        "lead_days": 114.56914682982332,
+        "on_time": 0.999525,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "NGA|split": {
+        "cost_per_site": 5373.952562735126,
+        "expedite_rate": 0.0,
+        "lead_days": 99.39978614378256,
+        "on_time": 0.9501,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PAK|air": {
+        "cost_per_site": 7965.79362355351,
+        "expedite_rate": 0.0,
+        "lead_days": 22.68799779729079,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PAK|sea": {
+        "cost_per_site": 3023.6061359995474,
+        "expedite_rate": 0.0,
+        "lead_days": 55.98181362216061,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PAK|sea_expedite": {
+        "cost_per_site": 4291.809242176211,
+        "expedite_rate": 0.067515,
+        "lead_days": 72.79420454778398,
+        "on_time": 0.99957,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "PAK|split": {
+        "cost_per_site": 3939.967501594793,
+        "expedite_rate": 0.0,
+        "lead_days": 62.44794212779241,
+        "on_time": 0.950075,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PER|air": {
+        "cost_per_site": 11582.89271130181,
+        "expedite_rate": 0.0,
+        "lead_days": 16.035084294459786,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PER|sea": {
+        "cost_per_site": 3601.9980730110337,
+        "expedite_rate": 0.0,
+        "lead_days": 61.63064036913426,
+        "on_time": 0.950005,
+        "plan_quantile": 0.95,
+        "target_missed": false
+      },
+      "PER|sea_expedite": {
+        "cost_per_site": 5722.889358193368,
+        "expedite_rate": 0.12148,
+        "lead_days": 69.8293855424729,
+        "on_time": 0.99951,
+        "plan_quantile": 0.99,
+        "target_missed": false
+      },
+      "PER|split": {
+        "cost_per_site": 4751.308338605248,
+        "expedite_rate": 0.0,
+        "lead_days": 66.1857770008887,
+        "on_time": 0.95998,
+        "plan_quantile": 0.96,
+        "target_missed": false
+      }
+    },
+    "policy_best": {
+      "DZA": "sea",
+      "IDN": "sea",
+      "IRQ": "sea",
+      "ITA": "sea",
+      "NGA": "sea",
+      "PAK": "sea",
+      "PER": "sea"
+    },
+    "sea_port_share": {
+      "share_dest_port_customs_mean": {
+        "max": 0.30103967642281015,
+        "min": 0.05313749125834355
+      },
+      "share_port_customs_mean": {
+        "max": 0.3692380474816746,
+        "min": 0.14951788478097983
+      },
+      "share_port_customs_tail": {
+        "max": 0.5798619193481043,
+        "min": 0.24386945682911432
+      }
+    },
+    "selection": {
+      "cover_share_pct": 33.83,
+      "rule_2024_2025": [
+        "IDN",
+        "PAK",
+        "IRQ",
+        "DZA",
+        "NGA",
+        "PER",
+        "ITA"
+      ],
+      "rule_2025_only": [
+        "IDN",
+        "PAK",
+        "LBN",
+        "DZA",
+        "NGA",
+        "ARG",
+        "ITA"
+      ],
+      "shares": {
+        "DZA": 5.43,
+        "IDN": 15.87,
+        "IRQ": 1.49,
+        "ITA": 2.07,
+        "NGA": 3.38,
+        "PAK": 3.06,
+        "PER": 2.53
+      }
+    },
+    "sensitivity": {
+      "DZA|Cape route (avoid Red Sea)": 14.108193830210325,
+      "DZA|LPI 2.0 year 2023": -5.471636960523469,
+      "DZA|base": 0.0,
+      "DZA|destination dwell x 0.75": -10.716121386510252,
+      "DZA|destination dwell x 1.25": 10.636754814477968,
+      "DZA|dwell fit: median + mean": 13.45755725356095,
+      "DZA|no transshipment": -16.4835180314805,
+      "DZA|sea speed 14 kn": 2.8312323012052616,
+      "DZA|sea speed 18 kn": -2.671673664685983,
+      "IDN|Cape route (avoid Red Sea)": 0.15528576099657698,
+      "IDN|LPI 2.0 year 2023": -3.4085039705601616,
+      "IDN|base": 0.0,
+      "IDN|destination dwell x 0.75": -1.5039662101362552,
+      "IDN|destination dwell x 1.25": 1.9213573808702549,
+      "IDN|dwell fit: median + mean": -1.1077529642857584,
+      "IDN|no transshipment": -11.516888002672506,
+      "IDN|sea speed 14 kn": 1.0208064765823934,
+      "IDN|sea speed 18 kn": -0.26283553392369186,
+      "IRQ|Cape route (avoid Red Sea)": -0.20572582601283784,
+      "IRQ|LPI 2.0 year 2023": -2.182882949361286,
+      "IRQ|base": 0.0,
+      "IRQ|destination dwell x 0.75": -4.9873803375710395,
+      "IRQ|destination dwell x 1.25": 5.0544162906775085,
+      "IRQ|dwell fit: median + mean": -2.6600868149268067,
+      "IRQ|no transshipment": -13.222141198330775,
+      "IRQ|sea speed 14 kn": 1.8221601065984459,
+      "IRQ|sea speed 18 kn": -1.631284456656502,
+      "ITA|Cape route (avoid Red Sea)": 16.37827169394381,
+      "ITA|LPI 2.0 year 2023": -1.781561080500694,
+      "ITA|base": 0.0,
+      "ITA|destination dwell x 0.75": -2.3772808409708617,
+      "ITA|destination dwell x 1.25": 2.732228905571155,
+      "ITA|dwell fit: median + mean": 0.448442207151281,
+      "ITA|no transshipment": -10.395382918827295,
+      "ITA|sea speed 14 kn": 3.1363845136701727,
+      "ITA|sea speed 18 kn": -2.224393033863471,
+      "NGA|Cape route (avoid Red Sea)": -0.7990208019706557,
+      "NGA|LPI 2.0 year 2023": -1.012674574451239,
+      "NGA|base": 0.0,
+      "NGA|destination dwell x 0.75": -9.703599884305504,
+      "NGA|destination dwell x 1.25": 9.218419573640531,
+      "NGA|dwell fit: median + mean": 5.508705432344286,
+      "NGA|no transshipment": -9.247280937017791,
+      "NGA|sea speed 14 kn": 3.328601339785749,
+      "NGA|sea speed 18 kn": -3.4963285185548045,
+      "PAK|Cape route (avoid Red Sea)": 0.0056514927105482116,
+      "PAK|LPI 2.0 year 2023": 4.639770384013161,
+      "PAK|base": 0.0,
+      "PAK|destination dwell x 0.75": -4.669137396921748,
+      "PAK|destination dwell x 1.25": 5.057784570259656,
+      "PAK|dwell fit: median + mean": 3.304376413470308,
+      "PAK|no transshipment": -8.343156819129241,
+      "PAK|sea speed 14 kn": 1.7711355822603423,
+      "PAK|sea speed 18 kn": -1.085064313578826,
+      "PER|Cape route (avoid Red Sea)": -0.11649940523955848,
+      "PER|LPI 2.0 year 2023": -3.793637589577294,
+      "PER|base": 0.0,
+      "PER|destination dwell x 0.75": -1.1536845939428417,
+      "PER|destination dwell x 1.25": 0.9799989173857,
+      "PER|dwell fit: median + mean": 1.3973465517194938,
+      "PER|no transshipment": -9.220645112401087,
+      "PER|sea speed 14 kn": 3.9663263811943352,
+      "PER|sea speed 18 kn": -3.135892142449997
     }
   },
   "slotting": {
@@ -655,7 +3476,6 @@
         },
         "max_heuristic_gap_pct": 2.3686512084301854,
         "max_mip_gap": 2.755555932226223e-07,
-        "mean_runtime_s": 4.635959458351135,
         "n": 10,
         "n_binaries": 954,
         "n_optimal": 10,

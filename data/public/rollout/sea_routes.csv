@@ -1,0 +1,8 @@
+origin,dest,origin_lat,origin_lon,dest_lat,dest_lon,great_circle_nm,route_nm_base,passages_base,route_nm_avoid_red_sea,passages_avoid_red_sea
+CNYTN,IDTPP,22.5835,114.2921,-6.1010,106.8910,1776,1814,-,1814,-
+CNYTN,PKKHI,22.5835,114.2921,24.8765,66.9337,2594,4453,malacca,4453,malacca
+CNYTN,IQUQR,22.5835,114.2921,30.0167,47.9500,3551,5393,malacca;ormuz,5393,malacca;ormuz
+CNYTN,DZALG,22.5835,114.2921,36.7860,3.0650,5534,8051,babalmandab;malacca;suez,12523,gibraltar;south_africa;sunda
+CNYTN,NGAPP,22.5835,114.2921,6.4486,3.3924,6395,9602,south_africa;sunda,9602,south_africa;sunda
+CNYTN,PECLL,22.5835,114.2921,-12.0537,-77.1213,9898,10008,-,10008,-
+CNYTN,ITGOA,22.5835,114.2921,44.4147,8.9153,5080,7966,babalmandab;malacca;suez,12951,gibraltar;south_africa;sunda

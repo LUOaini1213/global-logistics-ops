@@ -1,0 +1,101 @@
+{
+  "_about": "Part 5 - overseas rollout logistics. A network-equipment vendor ships radio-access equipment from Shenzhen to network-rollout projects in seven overseas markets. Every number below is labelled REAL (public data, see data/public/rollout/sources.meta.json), SYNTHETIC (invented but documented) or ILLUSTRATIVE (a round, plausible-order-of-magnitude assumption, NOT a quote and NOT market data). No company data.",
+
+  "selection": {
+    "_note": "REAL data, documented rule: rank partners by the 2024+2025 share of China's HS 851761 ('base stations') exports (UN Comtrade); keep partners that have LPI 2.0 2024 container import dwell quartiles AND aviation import dwell (mean, median) - this drops landlocked markets and those without published data (e.g. Uzbekistan, Russia, Uganda, Iran, Ukraine); take the largest eligible partner in each region. 2025 alone would pick Lebanon instead of Iraq and Argentina instead of Peru (reported in the README).",
+    "regions": ["South-eastern Asia", "Southern Asia", "Middle East (Western Asia)", "Northern Africa",
+                "Sub-Saharan Africa", "Latin America & Caribbean", "Europe"],
+    "lpi_year": 2024
+  },
+
+  "origin": {"name": "Shenzhen", "port_locode": "CNYTN", "port_name": "Yantian (Shenzhen)", "airport_iata": "SZX", "lpi_iso3": "CHN"},
+  "markets": [
+    {"iso3": "IDN", "name": "Indonesia", "region": "South-eastern Asia", "port_locode": "IDTPP", "port_name": "Tanjung Priok (Jakarta)", "airport_iata": "CGK", "lane": "intra-Asia"},
+    {"iso3": "PAK", "name": "Pakistan", "region": "Southern Asia", "port_locode": "PKKHI", "port_name": "Karachi", "airport_iata": "KHI", "lane": "Asia-Indian Subcontinent"},
+    {"iso3": "IRQ", "name": "Iraq", "region": "Middle East (Western Asia)", "port_locode": "IQUQR", "port_name": "Umm Qasr", "airport_iata": "BGW", "lane": "Asia-Gulf"},
+    {"iso3": "DZA", "name": "Algeria", "region": "Northern Africa", "port_locode": "DZALG", "port_name": "Algiers", "airport_iata": "ALG", "lane": "Asia-Mediterranean"},
+    {"iso3": "NGA", "name": "Nigeria", "region": "Sub-Saharan Africa", "port_locode": "NGAPP", "port_name": "Apapa (Lagos)", "airport_iata": "LOS", "lane": "Asia-West Africa"},
+    {"iso3": "PER", "name": "Peru", "region": "Latin America & Caribbean", "port_locode": "PECLL", "port_name": "Callao", "airport_iata": "LIM", "lane": "Asia-West Coast South America"},
+    {"iso3": "ITA", "name": "Italy", "region": "Europe", "port_locode": "ITGOA", "port_name": "Genoa", "airport_iata": "MXP", "lane": "Asia-Mediterranean"}
+  ],
+
+  "sea": {
+    "speed_kn": 16.0,
+    "_speed_note": "ASSUMPTION (not a cited figure): slow-steaming liner services typically sail in the mid-teens of knots; sensitivity at 14 and 18 kn.",
+    "port_call_days_per_1000nm": 0.5,
+    "_port_call_note": "ILLUSTRATIVE allowance for intermediate calls of a liner loop (e.g. 8,000 nm -> +4 days).",
+    "ocean_cv": 0.10,
+    "_ocean_cv_note": "ILLUSTRATIVE schedule variability of the port-to-port leg (gamma, coefficient of variation).",
+    "transshipment_cv": 0.5,
+    "_transshipment_note": "REAL mean: LPI 2.0 2024 'number of transshipments' n and 'time spent in transshipment' t of the destination economy, both averaged over ALL inbound containers (all origins, not only China). Model: with probability min(1, n) a transshipment happens and then lasts gamma(mean t / min(1, n), CV 0.5 - ILLUSTRATIVE). The component mean equals t.",
+    "origin_truck_days": {"mean": 1.0, "sd": 0.3, "_note": "ILLUSTRATIVE: Shenzhen factory/DC to Yantian gate-in."},
+    "route_scenario": "base"
+  },
+
+  "air": {
+    "block_speed_kmh": 750.0,
+    "routing_factor": 1.15,
+    "_flight_note": "ILLUSTRATIVE: airborne time = great-circle km x 1.15 / 750 km/h (OurAirports coordinates are REAL).",
+    "origin_days": {"mean": 2.0, "sd": 0.7, "_note": "ILLUSTRATIVE: factory to SZX, export clearance, build-up, booking wait."},
+    "hub_days": {"mean": 1.0, "sd": 0.6, "_note": "ILLUSTRATIVE: one transfer at a hub airport (no direct freighter assumed)."},
+    "arrival_to_nfd_days": {"mean": 0.5, "sd": 0.25, "_note": "ILLUSTRATIVE: arrival to 'freight notified' (warehouse check-in). LPI 2.0 aviation dwell starts at NFD."}
+  },
+
+  "inland_days": {"mean": 3.0, "sd": 1.5, "_note": "ILLUSTRATIVE, same for every market: port/airport or in-country warehouse to site."},
+
+  "dwell_model": {
+    "container": "quartiles",
+    "_container_note": "Lognormal fitted to the REAL LPI 2.0 quartiles (Q1, median, Q3) of container import (destination) and export (China) dwell time: mu = mean of the three log-quartiles, sigma = ln(Q3/Q1) / (2 x 0.6745). Alternative for the sensitivity check: 'median_mean' (median and mean matched, sigma = sqrt(2 ln(mean/median))). The lognormal shape itself is an ASSUMPTION; only three or four summary statistics are published.",
+    "air": "median_mean",
+    "_air_note": "Lognormal matched to the REAL LPI 2.0 aviation import dwell median and mean. The published P80-P20 range is not used: for some economies (count in results/rollout/summary.json, data_checks) the mean is below 0.2 x (P80 - P20), which is impossible for one non-negative sample, so the three statistics cannot all describe the same distribution."
+  },
+
+  "containers": {
+    "_source": "Typical ISO dry containers, 'Intermodal container' article, Wikipedia (accessed 2026-10-21): maximum interior dimensions, typical door aperture and common net load (payload). Values vary by manufacturer; check the actual equipment.",
+    "clearance_m": 0.05,
+    "_clearance_note": "ASSUMPTION: a loaded stack must pass under the door aperture with 5 cm to spare.",
+    "max_tiers": 2,
+    "types": {
+      "20GP": {"length_m": 5.867, "width_m": 2.330, "height_m": 2.350, "door_width_m": 2.286, "door_height_m": 2.261, "payload_kg": 28280},
+      "40GP": {"length_m": 11.998, "width_m": 2.330, "height_m": 2.350, "door_width_m": 2.286, "door_height_m": 2.261, "payload_kg": 26680},
+      "40HC": {"length_m": 11.998, "width_m": 2.330, "height_m": 2.654, "door_width_m": 2.286, "door_height_m": 2.565, "payload_kg": 26545}
+    }
+  },
+
+  "site_kit": {
+    "_note": "SYNTHETIC packing list of one radio-access site (three sectors). Packed dimensions (L x W x H, m), gross kg, whether the unit may sit on top of another, the load it can carry on top, and an ILLUSTRATIVE value. 'critical' units are small, high-value and flown in the split policy. No brands, no product data.",
+    "units": [
+      {"id": "radio", "desc": "3 radio units on one pallet", "l": 1.20, "w": 1.00, "h": 1.10, "kg": 210, "top_ok": true, "max_top_kg": 300, "value_usd": 21000, "critical": true},
+      {"id": "baseband", "desc": "baseband unit + transmission, palletised", "l": 1.20, "w": 1.00, "h": 0.70, "kg": 95, "top_ok": true, "max_top_kg": 300, "value_usd": 9000, "critical": true},
+      {"id": "antenna", "desc": "3 passive antennas, crated", "l": 2.10, "w": 0.60, "h": 0.45, "kg": 120, "top_ok": true, "max_top_kg": 150, "value_usd": 2400, "critical": false},
+      {"id": "cabinet", "desc": "outdoor cabinet, crated", "l": 1.20, "w": 1.00, "h": 1.95, "kg": 290, "top_ok": false, "max_top_kg": 0, "value_usd": 3500, "critical": false},
+      {"id": "power", "desc": "rectifier and power distribution", "l": 1.20, "w": 1.00, "h": 1.10, "kg": 240, "top_ok": true, "max_top_kg": 300, "value_usd": 4500, "critical": false},
+      {"id": "battery", "desc": "VRLA battery strings", "l": 1.20, "w": 1.00, "h": 0.85, "kg": 640, "top_ok": false, "max_top_kg": 400, "value_usd": 2600, "critical": false},
+      {"id": "cable", "desc": "feeders, fibre, power cable, installation material", "l": 1.20, "w": 1.00, "h": 1.00, "kg": 330, "top_ok": true, "max_top_kg": 400, "value_usd": 1800, "critical": false}
+    ]
+  },
+
+  "costs": {
+    "_about": "ILLUSTRATIVE round numbers in USD, NOT quotes. Order-of-magnitude references only: Drewry World Container Index 15 Oct 2026, composite USD 4,485 per 40ft, Shanghai-Genoa USD 3,945 (https://www.drewry.co.uk/supply-chain-advisors/supply-chain-expertise/world-container-index-assessed-by-drewry); WorldACD via AJOT, Hong Kong-Europe air spot USD 4.96/kg in week 31 of 2026 (https://www.ajot.com/news/weekly-air-cargo-trends-july-27-to-august-2-2026). Accessed 2026-10-21.",
+    "ocean_40hc_usd": {"IDN": 900, "PAK": 1800, "IRQ": 2600, "DZA": 4200, "NGA": 4600, "PER": 3400, "ITA": 4000},
+    "ocean_type_factor": {"20GP": 0.65, "40GP": 0.97, "40HC": 1.0},
+    "per_container_handling_usd": 700,
+    "per_shipment_sea_usd": 450,
+    "air_usd_per_kg": {"IDN": 2.5, "PAK": 3.5, "IRQ": 4.0, "DZA": 4.5, "NGA": 5.0, "PER": 5.5, "ITA": 4.0},
+    "air_volumetric_cm3_per_kg": 6000,
+    "_air_volumetric_note": "IATA general-cargo volume rule: chargeable kg = max(gross kg, cm3 / 6000), about 167 kg/m3; express couriers often use 5,000. Same convention as config/rates_illustrative.json.",
+    "per_shipment_air_usd": 400,
+    "per_delivery_inland_usd": 400,
+    "expedite_premium": 0.30,
+    "redeploy_days": 7,
+    "holding_rate_per_year": 0.25,
+    "storage_usd_per_m3_day": 0.5,
+    "_holding_note": "Holding 25%/yr of equipment value (as Part 2) charged in transit (buyer owns goods in transit) and while waiting early at an in-country warehouse; storage per m3-day while waiting."
+  },
+
+  "schedule": {"sites_per_week": 6, "weeks": 12, "_note": "SYNTHETIC rollout: 6 sites per week for 12 weeks in each market; the sites of one week share a need date."},
+
+  "mc": {"seed": 20261021, "n_lead": 200000, "n_sens": 100000, "reps_rollout": 2000, "reps_policy": 4000,
+         "on_time_target": 0.95, "plan_quantiles": [0.5, 0.8, 0.9, 0.95, 0.98], "consolidation_weeks": [1, 2, 4],
+         "loading_random_instances": 200}
+}

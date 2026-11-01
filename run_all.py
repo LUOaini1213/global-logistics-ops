@@ -38,7 +38,9 @@ def main() -> int:
     summary = {}
     for key, fn in (("public", E.run_public), ("landed", E.run_landed), ("reverse", E.run_reverse),
                     ("inventory_validation", E.run_inventory_validation),
-                    ("inventory", E.run_inventory), ("slotting", E.run_slotting)):
+                    ("inventory", E.run_inventory), ("slotting", E.run_slotting),
+                    ("real_orders", E.run_real_orders),
+                    ("rollout", E.run_rollout)):
         t = time.time()
         print(f"[{key}]", flush=True)
         summary[key] = fn(log=lambda m: print(m, flush=True))

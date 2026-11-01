@@ -1,0 +1,2 @@
+# derived data tables: tests/test_real_orders.py compares regenerated files byte for byte
+data/public/online_retail_ii/* text eol=lf

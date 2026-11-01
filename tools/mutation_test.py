@@ -10,12 +10,14 @@ from __future__ import annotations
 
 import hashlib
 import json
+import os
 import subprocess
 import sys
 import time
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+LF, CRLF = chr(10), chr(13) + chr(10)
 
 MUTANTS = [
     # ---- Incoterms configuration
@@ -84,6 +86,88 @@ MUTANTS = [
     ("glops/reverse.py", "cross-border recycling flag ignored",
      "            if cross and not allow_x:\n                continue\n            border = cb[\"waste_for_recycling_per_unit\"] if cross else 0.0\n            for g",
      "            border = cb[\"waste_for_recycling_per_unit\"] if cross else 0.0\n            for g"),
+    # ---- overseas rollout (Part 5)
+    ("glops/rollout.py", "quartile fit: sigma from one z instead of two",
+     'return Dist("lognorm", mu, math.log(q3 / q1) / (2 * Z75))', 'return Dist("lognorm", mu, math.log(q3 / q1) / Z75)'),
+    ("glops/rollout.py", "median-mean fit drops the factor 2",
+     "math.sqrt(2 * math.log(mean / md))", "math.sqrt(math.log(mean / md))"),
+    ("glops/rollout.py", "occurrence mixture variance loses the Bernoulli term",
+     "return self.p * (self.cond_var() + m * m) - (self.p * m) ** 2", "return self.p * self.cond_var()"),
+    ("glops/rollout.py", "ocean leg drops the port-call allowance",
+     'ocean_mean = nm / (24.0 * v) + sea["port_call_days_per_1000nm"] * nm / 1000.0', "ocean_mean = nm / (24.0 * v)"),
+    ("glops/rollout.py", "transshipment time not conditioned on occurrence",
+     "        cond = t_ts / p_ts\n", "        cond = t_ts\n"),
+    ("glops/rollout.py", "planning quantile rounds down",
+     'np.quantile(x, p, method="higher")', 'np.quantile(x, p, method="lower")'),
+    ("glops/rollout.py", "rollout shares one inland leg across a week's sites",
+     'inland = comps["inland"].sample(rng, (reps, weeks, sites))', 'inland = comps["inland"].sample(rng, (reps, weeks, 1))'),
+    ("glops/rollout.py", "checker ignores overlapping stacks",
+     "if min(r1[2], r2[2]) - max(r1[0], r2[0]) > 1e-9", "if min(r1[2], r2[2]) - max(r1[0], r2[0]) > 1e9"),
+    ("glops/rollout.py", "stacking ignores the top-load limit",
+     "return (same_fp and upper.top_ok and upper.kg <= lower.max_top_kg\n", "return (same_fp and upper.top_ok\n"),
+    ("glops/rollout.py", "packer ignores the payload",
+     "    if box.kg + kg > ct.payload + 1e-9:\n        return False\n", ""),
+    ("glops/rollout.py", "floor bound ignores what carriers can hold",
+     "floor = c_fp + max(0.0, t_fp - carriers) / max_tiers", "floor = c_fp + max(0.0, t_fp) / max_tiers"),
+    ("glops/rollout.py", "split policy plans each leg at p instead of sqrt(p)",
+     "        q = math.sqrt(p)\n", "        q = p\n"),
+    ("glops/rollout.py", "expedited air kit never arrives first",
+     "arrive = np.where(exp, np.minimum(t, decide + t2), t)", "arrive = t"),
+    ("glops/rollout.py", "holding on a 360-day year",
+     'rate = kit.value * c["holding_rate_per_year"] / 365.0', 'rate = kit.value * c["holding_rate_per_year"] / 360.0'),
+    ("glops/rollout.py", "air chargeable weight ignores volume",
+     "return max(kit.kg, kit.cbm * 1e6 / divisor_cm3_per_kg)", "return kit.kg"),
+    ("glops/rollout.py", "market rule picks the smallest eligible partner",
+     'picked.append(max(cands, key=lambda r: (r[share_key], r["iso3"]))["iso3"])',
+     'picked.append(min(cands, key=lambda r: (r[share_key], r["iso3"]))["iso3"])'),
+    ("glops/rollout.py", "consolidation forgets the later weeks' slack",
+     "slack = L + 7.0 * np.arange(k)[None, None, :, None]", "slack = L + 0.0 * np.arange(k)[None, None, :, None]"),
+    ("config/rollout.json", "container dwell fitted to median + mean instead of quartiles",
+     '"container": "quartiles",', '"container": "median_mean",'),
+    # ---- real orders (Online Retail II): cleaning and derived tables
+    ("glops/online_retail.py", "cancellations kept",
+     '    if row["Invoice"].startswith("C"):\n        return "cancellation"',
+     '    if row["Invoice"].startswith("c"):\n        return "cancellation"'),
+    ("glops/online_retail.py", "duplicated sheet-overlap invoices kept",
+     '    if row["sheet"] == "1" and row["Invoice"] in first_sheet_invoices:', "    if False:"),
+    ("glops/online_retail.py", "stock codes not upper-cased",
+     "    return code.strip().upper()", "    return code.strip()"),
+    ("glops/online_retail.py", "zero-price lines kept",
+     '    if float(row["Price"]) <= 0:', '    if float(row["Price"]) < 0:'),
+    ("glops/online_retail.py", "'Next Day Carriage' counted as a product",
+     '    "23444": "next day carriage", "23574": "packing charge",', '    "23574": "packing charge",'),
+    ("glops/online_retail.py", "repeat lines overwrite instead of adding quantities",
+     '        o["lines"][code] = o["lines"].get(code, 0) + int(r["Quantity"])',
+     '        o["lines"][code] = int(r["Quantity"])'),
+    ("glops/online_retail.py", "top SKUs ranked on training + held-out lines (leakage)",
+     '    lines = Counter(c for o in orders.values() if o["date"] < SPLIT_DAY for c in o["lines"])',
+     '    lines = Counter(c for o in orders.values() for c in o["lines"])'),
+    ("glops/online_retail.py", "demand interval counts closed days",
+     "    x = units[train & trading]", "    x = units[train]"),
+    ("glops/online_retail.py", "inventory SKUs: least-ordered instead of most-ordered",
+     '    key = lambda s: (-s["train_lines"], s["stock_code"])', '    key = lambda s: (s["train_lines"], s["stock_code"])'),
+    # ---- real orders: experiments
+    ("glops/real_orders.py", "velocity / affinity estimated on held-out orders (leakage)",
+     "    sl.estimate_stats(inst, inst.train_orders)          # training orders only",
+     "    sl.estimate_stats(inst, inst.test_orders)          # training orders only"),
+    ("glops/real_orders.py", "bootstrap not paired (methods resampled independently)",
+     "    rb = 100.0 * (1.0 - other_day[idx].sum(axis=1) / base_day[idx].sum(axis=1))",
+     "    rb = 100.0 * (1.0 - other_day[idx].sum(axis=1) / base_day[idx[::-1]].sum(axis=1))"),
+    ("glops/real_orders.py", "Gini off by one rank",
+     "    return float(((2 * i - n - 1) * v).sum() / (n * v.sum()))",
+     "    return float(((2 * i - n) * v).sum() / (n * v.sum()))"),
+    ("glops/real_orders.py", "replay also scores the warm-up days",
+     "                       len(path) - warmup, warmup, reps, seed, demand=path)",
+     "                       len(path), 0, reps, seed, demand=path)"),
+    ("glops/real_orders.py", "bootstrap resamples single days, not weeks",
+     "BLOCK_DAYS = 7", "BLOCK_DAYS = 1"),
+    ("glops/real_orders.py", "r search skips the fine step (not the smallest r)",
+     "    if ok[0] > 0:", "    if ok[0] < 0:"),
+    ("glops/slotting.py", "vectorised router uses the nearest pick aisle as the farthest",
+     "    last = np.cumsum(m) - 1                          # farthest pick aisle of each order",
+     "    last = np.cumsum(m) - m                          # farthest pick aisle of each order"),
+    ("glops/inventory.py", "given (real) demand ignored",
+     "    if demand is None:\n        base = draw_demand(", "    if True:\n        base = draw_demand("),
 ]
 
 
@@ -96,9 +180,12 @@ def tree_hash() -> str:
 
 
 def run_tests(timeout=600) -> tuple[bool, str]:
+    # GLOPS_NO_RAW: behave like CI, which has no raw Online Retail II download, so a mutant
+    # only counts as caught if a check that also runs in CI catches it
+    env = {**os.environ, "GLOPS_NO_RAW": "1"}
     try:
         r = subprocess.run([sys.executable, "-m", "pytest", "-x", "-q", "-p", "no:cacheprovider"],
-                           cwd=ROOT, capture_output=True, text=True, timeout=timeout)
+                           cwd=ROOT, capture_output=True, text=True, timeout=timeout, env=env)
     except subprocess.TimeoutExpired:
         return True, "timeout"
     tail = [l for l in r.stdout.splitlines() if l.startswith("FAILED") or l.startswith("ERROR")]
@@ -115,7 +202,9 @@ def main() -> int:
     for i, (rel, name, old, new) in enumerate(MUTANTS, 1):
         path = ROOT / rel
         orig = path.read_bytes()
-        text = orig.decode("utf-8")
+        # match on LF text: a Windows checkout (core.autocrlf) has CRLF files, and multi-line
+        # patterns would silently never match; the original bytes are restored afterwards
+        text = orig.decode("utf-8").replace("\r\n", "\n")
         if text.count(old) != 1:
             print(f"[{i:2d}] SKIP pattern not unique/missing: {name}")
             results.append({"id": i, "file": rel, "mutant": name, "status": "invalid"})
@@ -132,13 +221,17 @@ def main() -> int:
     assert tree_hash() == before, "source tree changed - restore failed!"
     valid = [r for r in results if r["status"] != "invalid"]
     caught = sum(r["status"] == "caught" for r in valid)
-    report = {"caught": caught, "total": len(valid), "mutants": results}
+    report = {"caught": caught, "total": len(valid), "invalid": len(results) - len(valid), "mutants": results}
     out = ROOT / "results" / "mutation_report.json"
     out.write_text(json.dumps(report, indent=2) + "\n", encoding="utf-8", newline="\n")
-    print(f"caught {caught}/{len(valid)}")
+    print(f"caught {caught}/{len(valid)}" + (f"  WARNING: {len(results) - len(valid)} mutants invalid (not run)"
+                                              if len(results) > len(valid) else ""))
     # README carries the mutation score: re-render it from the new report
     subprocess.run([sys.executable, "run_all.py", "--readme-only"], cwd=ROOT, check=True)
-    return 0
+    invalid = len(results) - len(valid)
+    if invalid:
+        print(f"{invalid} mutant pattern(s) did not match - the score above leaves them out")
+    return 1 if invalid else 0
 
 
 if __name__ == "__main__":

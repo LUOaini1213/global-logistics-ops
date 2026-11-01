@@ -1,0 +1,41 @@
+rank,iso3,partner,region,share_2024_pct,share_2025_pct,share_2024_2025_pct
+1,IDN,Indonesia,South-eastern Asia,7.35,21.89,15.87
+2,DZA,Algeria,Northern Africa,1.33,8.34,5.43
+3,UZB,Uzbekistan,Central Asia,7.59,2.11,4.38
+4,NGA,Nigeria,Sub-Saharan Africa,2.37,4.09,3.38
+5,PAK,Pakistan,Southern Asia,4.04,2.37,3.06
+6,RUS,Russian Federation,Europe,4.83,1.48,2.87
+7,MYS,Malaysia,South-eastern Asia,2.85,2.83,2.84
+8,VNM,Viet Nam,South-eastern Asia,2.00,3.42,2.83
+9,PER,Peru,Latin America & Caribbean,4.06,1.45,2.53
+10,BGD,Bangladesh,Southern Asia,4.03,1.14,2.34
+11,CMR,Cameroon,Sub-Saharan Africa,3.42,1.27,2.16
+12,CIV,Côte d'Ivoire,Sub-Saharan Africa,0.77,3.03,2.09
+13,ITA,Italy,Europe,2.02,2.11,2.07
+14,UGA,Uganda,Sub-Saharan Africa,0.81,2.65,1.88
+15,TZA,United Rep. of Tanzania,Sub-Saharan Africa,1.10,2.39,1.85
+16,UKR,Ukraine,Europe,1.07,2.35,1.82
+17,ZWE,Zimbabwe,Sub-Saharan Africa,2.51,1.05,1.65
+18,MAR,Morocco,Northern Africa,1.19,1.80,1.55
+19,IRQ,Iraq,Middle East (Western Asia),2.40,0.84,1.49
+20,IRN,Iran,Southern Asia,0.08,2.44,1.46
+21,KAZ,Kazakhstan,Central Asia,1.62,1.31,1.44
+22,ARG,Argentina,Latin America & Caribbean,0.91,1.75,1.40
+23,AUT,Austria,Europe,2.13,0.80,1.35
+24,THA,Thailand,South-eastern Asia,1.69,0.84,1.19
+25,KGZ,Kyrgyzstan,Central Asia,1.05,0.95,0.99
+26,COD,Dem. Rep. of the Congo,Sub-Saharan Africa,1.01,0.97,0.99
+27,KHM,Cambodia,South-eastern Asia,0.59,1.27,0.99
+28,ETH,Ethiopia,Sub-Saharan Africa,1.05,0.91,0.97
+29,PHL,Philippines,South-eastern Asia,1.81,0.34,0.95
+30,CUB,Cuba,Latin America & Caribbean,1.70,0.40,0.94
+31,AFG,Afghanistan,Southern Asia,0.88,0.88,0.88
+32,BFA,Burkina Faso,Sub-Saharan Africa,0.53,0.87,0.73
+33,COG,Congo,Sub-Saharan Africa,1.21,0.39,0.73
+34,LBN,Lebanon,Middle East (Western Asia),0.14,1.08,0.69
+35,MMR,Myanmar,South-eastern Asia,0.62,0.74,0.69
+36,MOZ,Mozambique,Sub-Saharan Africa,1.07,0.40,0.67
+37,HKG,"China, Hong Kong SAR",Eastern Asia,1.05,0.39,0.66
+38,EGY,Egypt,Northern Africa,1.05,0.39,0.66
+39,CHL,Chile,Latin America & Caribbean,0.70,0.52,0.59
+40,ARE,United Arab Emirates,Middle East (Western Asia),1.19,0.17,0.59

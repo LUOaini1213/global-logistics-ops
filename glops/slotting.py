@@ -466,3 +466,34 @@ def evaluate(inst, slots, assign, orders=None, policy: str = "s_shape") -> float
     """Mean travel (m) per order over held-out orders."""
     orders = inst.test_orders if orders is None else orders
     return float(np.mean([tour_length(inst.layout, slots, assign[o], policy) for o in orders]))
+
+
+def tour_lengths(layout: Layout, slots: dict, assign: np.ndarray, orders,
+                 policy: str = "s_shape") -> np.ndarray:
+    """``tour_length`` for every order at once (same routing rules, vectorised).
+
+    orders: list of non-empty SKU-index arrays. Returns one travel distance (m) per order.
+    tests/test_slotting.py checks it against ``tour_length`` order by order."""
+    if policy not in ("s_shape", "return"):
+        raise ValueError(policy)
+    n = len(orders)
+    sizes = np.array([len(o) for o in orders])
+    if n == 0 or sizes.min() == 0:
+        raise ValueError("orders must be non-empty")
+    oid = np.repeat(np.arange(n), sizes)
+    s = assign[np.concatenate(orders)]
+    a, y = slots["aisle"][s], slots["y"][s]
+    srt = np.lexsort((a, oid))                       # by order, then aisle
+    oid, a, y = oid[srt], a[srt], y[srt]
+    new = np.ones(len(a), dtype=bool)
+    new[1:] = (oid[1:] != oid[:-1]) | (a[1:] != a[:-1])
+    start = np.flatnonzero(new)                      # one group per (order, pick aisle)
+    g_order, g_aisle = oid[start], a[start]
+    g_ymax = np.maximum.reduceat(y, start)
+    m = np.bincount(g_order, minlength=n)            # pick aisles per order
+    last = np.cumsum(m) - 1                          # farthest pick aisle of each order
+    horiz = 2.0 * (layout.aisle_pitch * (g_aisle[last] + 0.5) - layout.depot_x)
+    if policy == "return":
+        return horiz + 2.0 * np.bincount(g_order, weights=g_ymax, minlength=n)
+    vert = np.where(m % 2 == 0, m * layout.depth, (m - 1) * layout.depth + 2.0 * g_ymax[last])
+    return horiz + vert

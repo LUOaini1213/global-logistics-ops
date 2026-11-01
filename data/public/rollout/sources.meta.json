@@ -1,0 +1,28 @@
+{
+  "accessed": "2026-10-21",
+  "comtrade": {
+    "partners_with_trade": {
+      "2024": 170,
+      "2025": 178
+    },
+    "top_n_committed": 40
+  },
+  "lpi": {
+    "countries": 202
+  },
+  "raw_sha256": {
+    "comtrade_2024": "7b90f9aba311c660090350a564e26a4ad613915d543511ad0aa193d461d61cd1",
+    "comtrade_2025": "c0b355ca92cafe6fccbc671212c202934a73930df627c71682661e309dbf3b90",
+    "lpi20": "9abe1311de3e75ed0ac78b5097436555b3e88a2b25d895f8b8e2012268a86ddb",
+    "lpi_survey": "97a10ce566cd84a0306066fb92f60f4f003ab479ab27a2baacd3ec29e1393cb0",
+    "ourairports": "0499dbd88de2fc735ac5c09f59796ccc3af544e17ffda807f793c0c6fe6c3d75"
+  },
+  "sea": {
+    "network": "Eurostat SeaRoute marnet (EUPL-1.2), based on ORNL CTA Global Shipping Lane Network (2000)",
+    "scenarios": {
+      "avoid_red_sea": "also excludes Bab-el-Mandeb (Cape of Good Hope diversion)",
+      "base": "shortest path, Northwest Passage excluded"
+    },
+    "tool": "searoute 1.6.0 (Apache-2.0)"
+  }
+}
