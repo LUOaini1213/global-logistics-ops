@@ -339,6 +339,13 @@
       }
     ]
   },
+  "kit": {
+    "buffer_usd_per_site_day": 34.98843150684931,
+    "critical_value_share": 0.6696428571428571,
+    "critical_weight_share": 0.15844155844155844,
+    "expedite_premium": 0.3,
+    "holding_rate_per_year": 0.25
+  },
   "lead": {
     "DZA|air": {
       "analytic_mean": 19.251680037394543,
@@ -595,6 +602,15 @@
       }
     ],
     "weekly_fill_volume": 0.48573043007085287,
+    "weekly_floor": {
+      "floor_40ft_m2": 27.95534,
+      "floor_m2": 28.98,
+      "other_stacks": 3,
+      "pallet_length_m": 1.2,
+      "pallet_rows_not_fitting": 10,
+      "pallet_stacks": 21,
+      "rows_short_mm": 2.000000000000668
+    },
     "weekly_mix": "1 x 40HC + 1 x 20GP"
   },
   "market_names": {
@@ -804,225 +820,281 @@
   "policy": {
     "DZA|air": {
       "cost_per_site": 9925.207896781705,
+      "cost_per_site_fresh": 9925.20207278439,
       "expedite_rate": 0.0,
       "lead_days": 25.023904226759324,
       "on_time": 0.950005,
+      "on_time_fresh": 0.949665,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "DZA|sea": {
       "cost_per_site": 5012.17286423746,
+      "cost_per_site_fresh": 5012.474478655165,
       "expedite_rate": 0.0,
       "lead_days": 97.60970563599317,
       "on_time": 0.950005,
+      "on_time_fresh": 0.949225,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "DZA|sea_expedite": {
       "cost_per_site": 6387.682901480007,
+      "cost_per_site_fresh": 6394.075678848852,
       "expedite_rate": 0.042405,
       "lead_days": 121.80624397210296,
       "on_time": 0.99956,
+      "on_time_fresh": 0.99941,
       "plan_quantile": 0.99,
       "target_missed": false
     },
     "DZA|split": {
       "cost_per_site": 5127.995877895365,
+      "cost_per_site_fresh": 5128.014545606864,
       "expedite_rate": 0.0,
       "lead_days": 107.35997823091675,
       "on_time": 0.95004,
+      "on_time_fresh": 0.94952,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "IDN|air": {
       "cost_per_site": 5776.92485153224,
+      "cost_per_site_fresh": 5776.923839240937,
       "expedite_rate": 0.0,
       "lead_days": 15.008739105807582,
       "on_time": 0.950005,
+      "on_time_fresh": 0.949765,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "IDN|sea": {
       "cost_per_site": 2295.4470899368757,
+      "cost_per_site_fresh": 2295.226022501492,
       "expedite_rate": 0.0,
       "lead_days": 40.854446911031296,
       "on_time": 0.950005,
+      "on_time_fresh": 0.949785,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "IDN|sea_expedite": {
       "cost_per_site": 3072.740293607772,
+      "cost_per_site_fresh": 3070.909261991872,
       "expedite_rate": 0.04639,
       "lead_days": 53.21922625230502,
       "on_time": 0.999535,
+      "on_time_fresh": 0.99946,
       "plan_quantile": 0.99,
       "target_missed": false
     },
     "IDN|split": {
       "cost_per_site": 3073.321185076795,
+      "cost_per_site_fresh": 3073.2508924505073,
       "expedite_rate": 0.0,
       "lead_days": 47.342560451527575,
       "on_time": 0.95991,
+      "on_time_fresh": 0.95967,
       "plan_quantile": 0.96,
       "target_missed": false
     },
     "IRQ|air": {
       "cost_per_site": 8657.693652711489,
+      "cost_per_site_fresh": 8657.389686169421,
       "expedite_rate": 0.0,
       "lead_days": 14.943206529301879,
       "on_time": 0.950005,
+      "on_time_fresh": 0.95037,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "IRQ|sea": {
       "cost_per_site": 3534.6304759762907,
+      "cost_per_site_fresh": 3535.525773534386,
       "expedite_rate": 0.0,
       "lead_days": 64.84979726136834,
       "on_time": 0.950005,
+      "on_time_fresh": 0.95004,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "IRQ|sea_expedite": {
       "cost_per_site": 4497.150097302707,
+      "cost_per_site_fresh": 4498.609191481426,
       "expedite_rate": 0.045705,
       "lead_days": 77.81090160737547,
       "on_time": 0.99908,
+      "on_time_fresh": 0.99907,
       "plan_quantile": 0.98,
       "target_missed": false
     },
     "IRQ|split": {
       "cost_per_site": 4212.004986039875,
+      "cost_per_site_fresh": 4212.128295448933,
       "expedite_rate": 0.0,
       "lead_days": 77.63718863422018,
       "on_time": 0.95996,
+      "on_time_fresh": 0.96114,
       "plan_quantile": 0.96,
       "target_missed": false
     },
     "ITA|air": {
       "cost_per_site": 8649.155540140317,
+      "cost_per_site_fresh": 8649.221148390181,
       "expedite_rate": 0.0,
       "lead_days": 14.815117879181216,
       "on_time": 0.950005,
+      "on_time_fresh": 0.9493,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "ITA|sea": {
       "cost_per_site": 3770.28189452755,
+      "cost_per_site_fresh": 3770.3295737709846,
       "expedite_rate": 0.0,
       "lead_days": 61.388394910422186,
       "on_time": 0.950005,
+      "on_time_fresh": 0.950175,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "ITA|sea_expedite": {
       "cost_per_site": 4797.962102030266,
+      "cost_per_site_fresh": 4802.514979326677,
       "expedite_rate": 0.05837,
       "lead_days": 71.99008807423434,
       "on_time": 0.99956,
+      "on_time_fresh": 0.999555,
       "plan_quantile": 0.99,
       "target_missed": false
     },
     "ITA|split": {
       "cost_per_site": 4262.748172507236,
+      "cost_per_site_fresh": 4262.789000038437,
       "expedite_rate": 0.0,
       "lead_days": 67.21484770524924,
       "on_time": 0.959965,
+      "on_time_fresh": 0.960255,
       "plan_quantile": 0.96,
       "target_missed": false
     },
     "NGA|air": {
       "cost_per_site": 10911.820703179199,
+      "cost_per_site_fresh": 10911.810174191432,
       "expedite_rate": 0.0,
       "lead_days": 24.601669145243775,
       "on_time": 0.950005,
+      "on_time_fresh": 0.95044,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "NGA|sea": {
       "cost_per_site": 4864.545397989092,
+      "cost_per_site_fresh": 4865.056664242443,
       "expedite_rate": 0.0,
       "lead_days": 89.49839492822741,
       "on_time": 0.950005,
+      "on_time_fresh": 0.950775,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "NGA|sea_expedite": {
       "cost_per_site": 6269.140525859966,
+      "cost_per_site_fresh": 6264.713924869923,
       "expedite_rate": 0.03883,
       "lead_days": 114.56914682982332,
       "on_time": 0.999525,
+      "on_time_fresh": 0.99955,
       "plan_quantile": 0.99,
       "target_missed": false
     },
     "NGA|split": {
       "cost_per_site": 5373.952562735126,
+      "cost_per_site_fresh": 5374.159203991528,
       "expedite_rate": 0.0,
       "lead_days": 99.39978614378256,
       "on_time": 0.9501,
+      "on_time_fresh": 0.949985,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "PAK|air": {
       "cost_per_site": 7965.79362355351,
+      "cost_per_site_fresh": 7966.250377544501,
       "expedite_rate": 0.0,
       "lead_days": 22.68799779729079,
       "on_time": 0.950005,
+      "on_time_fresh": 0.94888,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "PAK|sea": {
       "cost_per_site": 3023.6061359995474,
+      "cost_per_site_fresh": 3023.5318942712124,
       "expedite_rate": 0.0,
       "lead_days": 55.98181362216061,
       "on_time": 0.950005,
+      "on_time_fresh": 0.94936,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "PAK|sea_expedite": {
       "cost_per_site": 4291.809242176211,
+      "cost_per_site_fresh": 4296.329037514424,
       "expedite_rate": 0.067515,
       "lead_days": 72.79420454778398,
       "on_time": 0.99957,
+      "on_time_fresh": 0.999435,
       "plan_quantile": 0.99,
       "target_missed": false
     },
     "PAK|split": {
       "cost_per_site": 3939.967501594793,
+      "cost_per_site_fresh": 3940.1059587029276,
       "expedite_rate": 0.0,
       "lead_days": 62.44794212779241,
       "on_time": 0.950075,
+      "on_time_fresh": 0.94955,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "PER|air": {
       "cost_per_site": 11582.89271130181,
+      "cost_per_site_fresh": 11583.229267401322,
       "expedite_rate": 0.0,
       "lead_days": 16.035084294459786,
       "on_time": 0.950005,
+      "on_time_fresh": 0.948365,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "PER|sea": {
       "cost_per_site": 3601.9980730110337,
+      "cost_per_site_fresh": 3602.051858350604,
       "expedite_rate": 0.0,
       "lead_days": 61.63064036913426,
       "on_time": 0.950005,
+      "on_time_fresh": 0.949755,
       "plan_quantile": 0.95,
       "target_missed": false
     },
     "PER|sea_expedite": {
       "cost_per_site": 5722.889358193368,
+      "cost_per_site_fresh": 5728.849700962138,
       "expedite_rate": 0.12148,
       "lead_days": 69.8293855424729,
       "on_time": 0.99951,
+      "on_time_fresh": 0.999465,
       "plan_quantile": 0.99,
       "target_missed": false
     },
     "PER|split": {
       "cost_per_site": 4751.308338605248,
+      "cost_per_site_fresh": 4751.469805240278,
       "expedite_rate": 0.0,
       "lead_days": 66.1857770008887,
       "on_time": 0.95998,
+      "on_time_fresh": 0.959515,
       "plan_quantile": 0.96,
       "target_missed": false
     }
@@ -1035,6 +1107,37 @@
     "NGA": "sea",
     "PAK": "sea",
     "PER": "sea"
+  },
+  "policy_fresh": {
+    "max_abs_cost_change_pct": 0.10531212090687492,
+    "n_draws": 200000,
+    "on_time": {
+      "air": {
+        "max": 0.95044,
+        "min": 0.948365
+      },
+      "sea": {
+        "max": 0.950775,
+        "min": 0.949225
+      },
+      "sea_expedite": {
+        "max": 0.999555,
+        "min": 0.99907
+      },
+      "split": {
+        "max": 0.96114,
+        "min": 0.94952
+      }
+    },
+    "policy_best_fresh": {
+      "DZA": "sea",
+      "IDN": "sea",
+      "IRQ": "sea",
+      "ITA": "sea",
+      "NGA": "sea",
+      "PAK": "sea",
+      "PER": "sea"
+    }
   },
   "sea_port_share": {
     "share_dest_port_customs_mean": {

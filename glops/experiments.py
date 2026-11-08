@@ -20,6 +20,8 @@ from . import rollout as ro
 from . import slotting as sl
 from .common import CONFIG, RESULTS, mean_ci, read_json, write_json
 
+TIMINGS = RESULTS / "timings"   # wall-clock runtimes, git-ignored (they differ on every run)
+
 SLOT_LARGE_SEEDS = list(range(20))
 SLOT_SMALL_SEEDS = list(range(10))
 SLOT_DEV_SEEDS = [1000, 1001, 1002]          # lambda tuning only; disjoint from evaluation
@@ -58,7 +60,7 @@ def run_slotting(log=print) -> dict:
     log(f"  slotting: lambda* = {lam_star} (dev seeds)")
 
     # ---- large instance: 1,000 SKUs, 1,200 slots, 20 seeds
-    rows = []
+    rows, timing_rows = [], []
     methods = ["random", "abc", "turnover", "heuristic"]
     for seed in SLOT_LARGE_SEEDS:
         inst = sl.generate(seed)
@@ -77,16 +79,20 @@ def run_slotting(log=print) -> dict:
             rows.append({"seed": seed, "method": m,
                          "travel_s_shape_m": sl.evaluate(inst, slots, a, policy="s_shape"),
                          "travel_return_m": sl.evaluate(inst, slots, a, policy="return"),
-                         "proxy": sl.proxy_objective(inst, slots, a, lam_star),
-                         "runtime_s": t_heur if m == "heuristic" else (t1 - t0) / 3})
+                         "proxy": sl.proxy_objective(inst, slots, a, lam_star)})
+            timing_rows.append({"seed": seed, "method": m,
+                                "runtime_s": t_heur if m == "heuristic" else (t1 - t0) / 3})
     _write_csv(out_dir / "large_instance.csv", rows)
+    # wall-clock runtimes change on every run, so they go to the git-ignored results/timings/
+    # and every committed result file is reproducible (CI: tools/check_results.py)
+    _write_csv(TIMINGS / "slotting_large_instance.csv", timing_rows)
     large = _slot_summary(rows, methods, SLOT_LARGE_SEEDS)
     log(f"  slotting large: heuristic vs random {large['red_vs_random']['heuristic']['s_shape']['mean']:.1f}%")
 
     # ---- small instance: MILP (HiGHS) vs heuristic, 10 seeds
     lay = sl.Layout(aisles=3, bays=3, levels=2)
     par = sl.GeneratorParams(n_sku=30, n_kits=5, n_train_orders=1500, n_test_orders=2000, max_pairs=30)
-    srows, milp_rows = [], []
+    srows, milp_rows, milp_timing = [], [], []
     for seed in SLOT_SMALL_SEEDS:
         inst = sl.generate(seed, lay, par)
         slots = lay.slots()
@@ -97,7 +103,8 @@ def run_slotting(log=print) -> dict:
         assigns["heuristic"] = sl.local_search(inst, slots, assigns["turnover"], lam_star, rng, 20000)
         t0 = time.time()
         assigns["milp"], info = sl.assign_milp(inst, slots, lam=lam_star, time_limit=120, threads=1)
-        info.update({"seed": seed, "runtime_s": time.time() - t0,
+        milp_timing.append({"seed": seed, "runtime_s": time.time() - t0})
+        info.update({"seed": seed,
                      "heuristic_proxy": sl.proxy_objective(inst, slots, assigns["heuristic"], lam_star),
                      "milp_proxy": sl.proxy_objective(inst, slots, assigns["milp"], lam_star)})
         info["heuristic_gap_pct"] = 100 * (info["heuristic_proxy"] - info["milp_proxy"]) / info["milp_proxy"]
@@ -107,9 +114,10 @@ def run_slotting(log=print) -> dict:
             srows.append({"seed": seed, "method": m,
                           "travel_s_shape_m": sl.evaluate(inst, slots, a, policy="s_shape"),
                           "travel_return_m": sl.evaluate(inst, slots, a, policy="return"),
-                          "proxy": sl.proxy_objective(inst, slots, a, lam_star), "runtime_s": 0.0})
+                          "proxy": sl.proxy_objective(inst, slots, a, lam_star)})
     _write_csv(out_dir / "small_instance.csv", srows)
     _write_csv(out_dir / "small_instance_milp.csv", milp_rows)
+    _write_csv(TIMINGS / "slotting_small_instance_milp.csv", milp_timing)
     small = _slot_summary(srows, ["random", "abc", "turnover", "heuristic", "milp"], SLOT_SMALL_SEEDS)
     small["milp"] = {
         "n_optimal": sum(r["status"] == "Optimal" for r in milp_rows),
@@ -117,8 +125,7 @@ def run_slotting(log=print) -> dict:
         "max_mip_gap": max(r["gap"] for r in milp_rows),
         "heuristic_gap_pct": _ci_round(mean_ci([r["heuristic_gap_pct"] for r in milp_rows]), 3),
         "max_heuristic_gap_pct": max(r["heuristic_gap_pct"] for r in milp_rows),
-        # wall-clock runtimes stay in small_instance_milp.csv, not in the summary: summary.json must
-        # be identical between runs
+        # wall-clock runtimes stay in results/timings/ (git-ignored), not in any committed result
         "n_binaries": milp_rows[0]["n_binaries"], "n_pairs": milp_rows[0]["n_pairs"],
     }
     res = {"lambda_tuning": tune, "lambda_star": lam_star, "large": large, "small": small,
@@ -457,6 +464,28 @@ def _rng(cfg: dict, *key: int) -> np.random.Generator:
     return np.random.default_rng([cfg["mc"]["seed"], *key])
 
 
+def _floor_stacks(units: list, cts: dict, tiers: int) -> dict:
+    """The argument behind the floor lower bound, per footprint: units that may not ride on top
+    need their own floor position, each carrier takes at most one unit on top, the remaining
+    stackable units share positions ``tiers`` high. Also: by how much a 40-foot box is too short
+    for one more row of pallets placed lengthwise."""
+    groups = {}
+    for u in units:
+        g = groups.setdefault(round(u.footprint, 6), {"own": 0, "carriers": 0, "stackable": 0})
+        g["own" if not u.top_ok else "stackable"] += 1
+        g["carriers"] += (not u.top_ok and u.max_top_kg > 0)
+    stacks = {fp: g["own"] + math.ceil(max(0, g["stackable"] - g["carriers"] * (tiers - 1)) / tiers)
+              for fp, g in groups.items()}
+    pallet = max(stacks, key=lambda fp: stacks[fp])
+    floor_m2 = sum(fp * n for fp, n in stacks.items())
+    hc = cts["40HC"]
+    pl = max(max(u.l, u.w) for u in units if round(u.footprint, 6) == pallet)
+    rows = math.floor(hc.length / pl + 1e-9) + 1          # the first row count that does not fit
+    return {"pallet_stacks": stacks[pallet], "other_stacks": sum(n for fp, n in stacks.items() if fp != pallet),
+            "floor_m2": floor_m2, "floor_40ft_m2": hc.floor, "pallet_length_m": pl,
+            "pallet_rows_not_fitting": rows, "rows_short_mm": 1000 * (rows * pl - hc.length)}
+
+
 def run_rollout(log=print) -> dict:
     cfg, lpi, routes, ap, shares = (ro.load_config(), ro.load_lpi(), ro.load_sea_routes(),
                                     ro.load_airports(), ro.load_shares())
@@ -566,6 +595,7 @@ def run_rollout(log=print) -> dict:
                           "fill_volume": sum(u.volume for u in week_units) / (len(boxes) * ct.volume),
                           "fill_weight": sum(u.kg for u in week_units) / (len(boxes) * ct.payload)})
     _write_csv(out_dir / "loading_weekly_batch.csv", load_rows)
+    weekly_floor = _floor_stacks(week_units, cts, tiers)
     rng = _rng(cfg, 4)
     kinds = [u["id"] for u in cfg["site_kit"]["units"]]
     inst_rows = []
@@ -599,6 +629,13 @@ def run_rollout(log=print) -> dict:
         Ta = np.sum(list(ro.sample_components(comps_of[iso, "air"], ra, mc["n_lead"]).values()), axis=0)
         Ta2 = np.sum(list(ro.sample_components(comps_of[iso, "air"], ra, mc["n_lead"]).values()), axis=0)
         T = {"sea": Ts, "sea_gate": Ts - Ss["inland"], "air": Ta, "air2": Ta2}
+        # fresh draws (own seed stream) to re-score each chosen plan out of sample
+        fs, fa = _rng(cfg, 7, i, 0), _rng(cfg, 7, i, 1)
+        Fs = ro.sample_components(comps_of[iso, "sea"], fs, mc["n_lead"])
+        Fts = np.sum(list(Fs.values()), axis=0)
+        T_fresh = {"sea": Fts, "sea_gate": Fts - Fs["inland"],
+                   "air": np.sum(list(ro.sample_components(comps_of[iso, "air"], fa, mc["n_lead"]).values()), axis=0),
+                   "air2": np.sum(list(ro.sample_components(comps_of[iso, "air"], fa, mc["n_lead"]).values()), axis=0)}
         sf, sb = ro.sea_freight_per_site(cfg, iso, sites), ro.sea_freight_per_site(cfg, iso, sites, bulky)
         batches[iso] = sf["batch"]
         fr = {"market": iso, "sea_full": sf["per_site"], "sea_bulky": sb["per_site"], "sites": sites}
@@ -609,10 +646,12 @@ def run_rollout(log=print) -> dict:
                                  "cost_per_site": r["cost"], "lead_days": r["lead_days"],
                                  "expedite_rate": r.get("expedite_rate", 0.0)})
             b = ro.cheapest_at_target(pol, T, kits, fr, cfg, target, fine)
+            f = ro.evaluate_policy(pol, b["plan_quantile"], T_fresh, kits, fr, cfg, plan=b["plan"])
             best_rows.append({"market": iso, "policy": pol, "plan_quantile": b["plan_quantile"],
                               "on_time": b["on_time"], "cost_per_site": b["cost"], "lead_days": b["lead_days"],
                               "expedite_rate": b.get("expedite_rate", 0.0),
-                              "target_missed": b.get("target_missed", False)})
+                              "target_missed": b.get("target_missed", False),
+                              "on_time_fresh": f["on_time"], "cost_per_site_fresh": f["cost"]})
     _write_csv(out_dir / "policy_frontier.csv", pol_rows)
     _write_csv(out_dir / "policy_at_target.csv", best_rows)
     log("  rollout: mode policies done")
@@ -657,7 +696,7 @@ def run_rollout(log=print) -> dict:
         "sea_port_share": {k: rng_of(sea_rows, k) for k in ("share_port_customs_mean", "share_port_customs_tail",
                                                            "share_dest_port_customs_mean")},
         "sensitivity": {f"{r['market']}|{r['variant']}": r["p95_change_days"] for r in sens_rows},
-        "loading": {"weekly_batch": load_rows, "weekly_mix": batches[markets[0]["iso3"]]["mix"],
+        "loading": {"weekly_batch": load_rows, "weekly_floor": weekly_floor, "weekly_mix": batches[markets[0]["iso3"]]["mix"],
                     "weekly_fill_volume": batches[markets[0]["iso3"]]["fill_volume"],
                     "random_40hc": {"n": len(hc), "equal_lb": sum(r["heuristic"] == r["lower_bound"] for r in hc),
                                     "max_gap_boxes": max(r["heuristic"] - r["lower_bound"] for r in hc),
@@ -665,6 +704,20 @@ def run_rollout(log=print) -> dict:
         "policy": {f"{r['market']}|{r['policy']}": {k: v for k, v in r.items() if k not in ("market", "policy")}
                    for r in best_rows},
         "policy_best": {m["iso3"]: cheapest(m["iso3"]) for m in markets},
+        "policy_fresh": {
+            "n_draws": mc["n_lead"],
+            "on_time": {pol: rng_of([r for r in best_rows if r["policy"] == pol], "on_time_fresh")
+                        for pol in POLICIES},
+            "max_abs_cost_change_pct": max(abs(100 * (r["cost_per_site_fresh"] - r["cost_per_site"])
+                                               / r["cost_per_site"]) for r in best_rows),
+            "policy_best_fresh": {m["iso3"]: min((r for r in best_rows if r["market"] == m["iso3"]),
+                                                 key=lambda r: r["cost_per_site_fresh"])["policy"]
+                                  for m in markets}},
+        "kit": {"critical_value_share": kits["critical"].value / kits["full"].value,
+                "critical_weight_share": kits["critical"].kg / kits["full"].kg,
+                "buffer_usd_per_site_day": float(ro.holding(kits["full"], 1.0, cfg, True)),
+                "holding_rate_per_year": cfg["costs"]["holding_rate_per_year"],
+                "expedite_premium": cfg["costs"]["expedite_premium"]},
         "consolidation": {f"{r['market']}|{r['k_weeks']}": {k: v for k, v in r.items()
                                                             if k not in ("market", "k_weeks")}
                           for r in cons_rows},

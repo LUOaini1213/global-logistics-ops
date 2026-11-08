@@ -24,7 +24,7 @@ jobs:
         run: python -m pytest
       - name: Reproduce all results from scratch
         run: python run_all.py
-      - name: Show drift of regenerated results (informational)
-        run: git diff --stat -- results/ README.md || true
+      - name: Regenerated results match the committed ones (numbers within rtol 1e-6)
+        run: python tools/check_results.py
       - name: README numbers reproduce (run_all rewrites them; any change fails)
         run: git diff --exit-code -- README.md
