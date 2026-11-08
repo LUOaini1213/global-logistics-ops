@@ -1,7 +1,7 @@
 [project]
 name = "global-logistics-ops"
 version = "0.1.0"
-description = "Logistics & warehouse operations analytics portfolio project (synthetic data, illustrative rates)"
+description = "Logistics and warehouse operations analytics: slotting, ocean-vs-air inventory, Incoterms 2020 landed cost, a returns-network LP and overseas rollout lead times; synthetic data re-checked on real UCI Online Retail II orders and World Bank LPI 2.0 dwell times; illustrative rates"
 requires-python = ">=3.10"
 
 [tool.pytest.ini_options]

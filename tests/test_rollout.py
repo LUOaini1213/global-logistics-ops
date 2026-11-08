@@ -7,7 +7,7 @@ import numpy as np
 import pytest
 
 from glops import rollout as ro
-from glops.common import read_json
+from glops.common import RESULTS, read_json
 
 CFG = ro.load_config()
 LPI = ro.load_lpi()
@@ -419,3 +419,68 @@ def test_consolidation_trade_off():
     assert res[0]["freight_per_site"] > res[1]["freight_per_site"]
     with pytest.raises(ValueError):
         ro.consolidation(5, comps, np.random.default_rng(0), T, KITS["full"], CFG, "ITA", 6, 12, 10, 0.95)
+
+
+# ----------------------------------------------------------------- out-of-sample policy scoring
+
+def _gamma_T(seed, n=50_000):
+    rng = np.random.default_rng(seed)
+    T = {"sea": rng.gamma(20.0, 2.0, n), "air": rng.gamma(10.0, 1.0, n)}
+    T["sea_gate"], T["air2"] = T["sea"] - 3.0, rng.gamma(10.0, 1.0, n)
+    return T
+
+
+@pytest.mark.parametrize("pol", ["sea", "air", "split", "sea_expedite"])
+def test_fixed_plan_reproduces_in_sample_and_moves_on_fresh_draws(pol):
+    T, F = _gamma_T(8), _gamma_T(9)
+    r = ro.evaluate_policy(pol, 0.95, T, KITS, FR, CFG)
+    same = ro.evaluate_policy(pol, 0.95, T, KITS, FR, CFG, plan=r["plan"])
+    assert same["on_time"] == r["on_time"] and same["cost"] == pytest.approx(r["cost"], rel=1e-12)
+    fresh = ro.evaluate_policy(pol, 0.95, F, KITS, FR, CFG, plan=r["plan"])
+    assert fresh["lead_days"] == r["lead_days"]                       # the plan is kept, not re-fitted
+    assert fresh["on_time"] != r["on_time"]                           # ... and scored on other draws
+    assert abs(fresh["on_time"] - r["on_time"]) < 0.01
+
+
+def test_committed_policies_hold_out_of_sample():
+    """README (c): the cost table is in-sample; re-scored on fresh draws the chosen plans stay
+    within 1 pp of the 95% target and their cost within 1%."""
+    R = read_json(RESULTS / "rollout" / "summary.json")
+    target = R["config"]["target"]
+    for key, r in R["policy"].items():
+        assert r["on_time"] >= target, key                             # in-sample choice met the target
+        assert r["on_time_fresh"] >= target - 0.01, key
+        assert abs(r["cost_per_site_fresh"] - r["cost_per_site"]) <= 0.01 * r["cost_per_site"], key
+    for pol in ("sea", "air"):
+        rng = R["policy_fresh"]["on_time"][pol]
+        assert target - 0.01 <= rng["min"] <= rng["max"] <= target + 0.01
+
+
+# ----------------------------------------------------------------- prose numbers from config
+
+def test_kit_shares_and_buffer_cost_from_config():
+    units = {u["id"]: u for u in CFG["site_kit"]["units"]}
+    crit = [u for u in units.values() if u["critical"]]
+    assert sorted(u["id"] for u in crit) == ["baseband", "radio"]
+    value = sum(u["value_usd"] for u in units.values())
+    kg = sum(u["kg"] for u in units.values())
+    assert 100 * sum(u["value_usd"] for u in crit) / value == pytest.approx(30000 / 448, abs=1e-9)   # 67%
+    assert round(100 * sum(u["kg"] for u in crit) / kg) == 16
+    cbm = sum(u["l"] * u["w"] * u["h"] for u in units.values())
+    c = CFG["costs"]
+    per_day = value * c["holding_rate_per_year"] / 365 + cbm * c["storage_usd_per_m3_day"]
+    assert per_day == pytest.approx(ro.holding(KITS["full"], 1.0, CFG, True))
+    assert round(per_day) == 35
+
+
+def test_weekly_floor_argument_numbers():
+    from glops.experiments import _floor_stacks
+    us = ro.kit_units(CFG, CFG["schedule"]["sites_per_week"])
+    f = _floor_stacks(us, CTS, CFG["containers"]["max_tiers"])
+    # 6 sites: 12 non-stackable pallets (cabinet, battery; 6 batteries carry one each),
+    # 24 stackable pallets -> 12 + (24 - 6) / 2 = 21; 6 antenna crates two high -> 3
+    assert (f["pallet_stacks"], f["other_stacks"]) == (21, 3)
+    assert f["floor_m2"] == pytest.approx(21 * 1.2 + 3 * 2.1 * 0.6)
+    assert f["floor_40ft_m2"] == pytest.approx(11.998 * 2.33)
+    assert math.ceil(f["floor_m2"] / f["floor_40ft_m2"]) == ro.lower_bound(us, CTS["40HC"])["floor"] == 2
+    assert (f["pallet_rows_not_fitting"], round(f["rows_short_mm"])) == (10, 2)

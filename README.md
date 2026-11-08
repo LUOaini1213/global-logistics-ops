@@ -7,6 +7,24 @@ Logistics and warehouse operations analytics for a global network-equipment supp
 (transport options, ship-date planning, container loading and transport cost for equipment shipped from Shenzhen
 to seven overseas markets).
 
+**Results at a glance** (generated numbers, see the sections below):
+
+* **Slotting.** A swap local search cuts picker travel by <!--n:slot_heur_vs_random-->49.4% (95% CI 48.7-50.2)<!--/n--> vs random
+  slotting on synthetic orders, but by only **<!--n:real_heur_vs_random-->23.0% (95% CI 22.7-23.4)<!--/n-->** on real UCI *Online Retail II*
+  orders: real orders are bigger (<!--n:real_lines_mean-->16.1<!--/n--> vs <!--n:syn_lines_mean-->2.6<!--/n--> lines), popularity is flatter and co-picks are weaker.
+* **Inventory.** With illustrative rates air beats ocean above a unit value of <!--n:inv_breakeven-->USD 185<!--/n-->; the simulator agrees
+  with an exact formula in <!--n:inv_val_pass-->20/20<!--/n--> checks. On real demand, a 95%-fill policy tuned on a normal model gives
+  seasonal intermittent SKUs only <!--n:ri_in_ocean_n-->28.3%<!--/n--> fill by ocean.
+* **Landed cost.** The Incoterm moves cost between invoices but not the buyer's total, except DDP: <!--n:land_ddp_premium-->9.0%<!--/n--> dearer
+  for a GST-registered Singapore buyer, under the stated assumption that the foreign importer of record cannot reclaim GST.
+* **Returns network.** The LP adds <!--n:rev_gain-->3.4%<!--/n--> net value over a nearest-facility rule (illustrative costs).
+* **Overseas rollout** (World Bank LPI 2.0 port and customs times, 7 markets): shipping on the average transit time
+  gets only <!--n:ro_ontime_mean_sea-->54-61%<!--/n--> of sites on time by sea; a P95 ship date gets <!--n:ro_oos_p95_sea-->94.7-95.2%<!--/n--> in an independent simulation.
+* **Limits.** Parts 1, 2 and 4 use synthetic data; freight, duty and cost inputs are illustrative round numbers, not
+  quotes; the real-order check is one UK shop and one held-out year.
+* **Checks.** CI re-runs the whole pipeline from committed inputs and fails if a README number or a committed result
+  changes; the tests catch <!--n:mut_caught-->60/60<!--/n--> deliberately injected bugs ([docs/TESTING.md](docs/TESTING.md)).
+
 > **What this is.** A personal portfolio project, October 2026, built with AI assistance
 > (code, tests and write-up were drafted with an AI coding assistant and checked by running
 > them). It is not work for, or data from, any company.
@@ -27,11 +45,14 @@ and checked by `tests/test_readme_and_data.py`; none is typed by hand.
 
 ## Reproduce
 
+Python 3.10 or newer (CI uses 3.11 on Ubuntu).
+
 ```bash
 python -m venv .venv
 .venv/Scripts/python -m pip install -r requirements.txt      # Windows; use .venv/bin/python elsewhere
-.venv/Scripts/python run_all.py          # ~5 min, writes results/ and results/report.html
-.venv/Scripts/python -m pytest           # ~10 s
+.venv/Scripts/python run_all.py          # ~5-10 min, writes results/ and results/report.html
+.venv/Scripts/python -m pytest           # ~20 s
+.venv/Scripts/python tools/check_results.py   # after run_all: regenerated results/ vs the committed ones
 .venv/Scripts/python tools/mutation_test.py   # optional, ~8 min, writes results/mutation_report.json
 ```
 
@@ -396,8 +417,8 @@ but far from interchangeable, which is why the measured dwell times are used rat
 
 **(c) Mode policy.** Cost per site (USD, ILLUSTRATIVE) for the cheapest plan of each policy that is on time at least
 95% of the time: freight + handling + inland delivery + holding of equipment value in transit and while waiting early
-(25%/yr) + storage + expedites. "Split" flies the radio and baseband pallets (67% of kit value, 16% of its weight) and
-ships the rest by sea; "sea + expedite" re-ships the whole kit by air (30% premium) when the sea shipment has not left
+(<!--n:ro_hold_rate-->25%/yr<!--/n-->) + storage + expedites. "Split" flies the radio and baseband pallets (<!--n:ro_kit_value_share-->67%<!--/n--> of kit value, <!--n:ro_kit_weight_share-->16%<!--/n--> of its weight) and
+ships the rest by sea; "sea + expedite" re-ships the whole kit by air (<!--n:ro_exp_premium-->30%<!--/n--> premium) when the sea shipment has not left
 the destination port by the last date an air shipment would still arrive at P95. Planned shipments, sea or air, go once
 a week per market, so a week's sites share the per-shipment fees; an expedite is a one-site shipment.
 
@@ -411,8 +432,15 @@ a week per market, so a week's sites share the per-shipment fees; an expedite is
 | Peru | <!--n:ro_per_cost_sea-->3,602<!--/n--> | <!--n:ro_per_cost_split-->4,751<!--/n--> | <!--n:ro_per_cost_sea_expedite-->5,723<!--/n--> | <!--n:ro_per_cost_air-->11,583<!--/n--> |
 | Italy | <!--n:ro_ita_cost_sea-->3,770<!--/n--> | <!--n:ro_ita_cost_split-->4,263<!--/n--> | <!--n:ro_ita_cost_sea_expedite-->4,798<!--/n--> | <!--n:ro_ita_cost_air-->8,649<!--/n--> |
 
+**These costs are in-sample.** Each policy's plan (how many days ahead to ship, picked on a grid of planning
+quantiles) is chosen and costed on the same <!--n:ro_fresh_n-->200,000<!--/n--> lead-time draws per market and mode. Re-scored on as many
+fresh draws from an independent seed, the chosen plans are on time (range over the seven markets) <!--n:ro_fresh_sea-->94.9-95.1%<!--/n--> (all sea),
+<!--n:ro_fresh_split-->95.0-96.1%<!--/n--> (split), <!--n:ro_fresh_expedite-->99.9-100.0%<!--/n--> (sea + expedite) and <!--n:ro_fresh_air-->94.8-95.0%<!--/n--> (all air), no
+cost per site moves by more than <!--n:ro_fresh_cost-->0.11%<!--/n-->, and the cheapest policy is the same in <!--n:ro_fresh_same_best-->7/7<!--/n--> markets
+(`results/rollout/policy_at_target.csv`, columns `*_fresh`).
+
 All sea with a P95 ship date is cheapest in <!--n:ro_best_sea-->7/7<!--/n--> markets under these inputs. The reason is
-arithmetic, not a law: a day of buffer costs about USD 35 per site (holding plus storage), while flying even the small
+arithmetic, not a law: a day of buffer costs about <!--n:ro_buffer_day-->USD 35<!--/n--> per site (holding plus storage), while flying even the small
 critical pallets costs more than the holding it saves, and an expedited kit costs several thousand USD. Split comes
 closest where the sea leg is longest (Algeria). A cost for late sites (not modelled) or a higher holding rate
 (`config/rollout.json`) could change the ranking.
@@ -426,13 +454,13 @@ An independent checker asserts that every unit is loaded exactly once, inside th
 overheight or illegal stacking. Lower bound per container type = max(volume, weight, floor-area bound).
 One weekly batch (6 sites, 42 units) loads as <!--n:ro_load_mix-->1 x 40HC + 1 x 20GP<!--/n--> at
 <!--n:ro_load_fill-->49%<!--/n--> volume fill: this cargo runs out of floor, never of weight. Two boxes is the minimum:
-under the stacking rules the batch needs at least 21 pallet-size floor stacks and 3 crate stacks, 29.0 m2 of floor,
-more than the 28.0 m2 of a 40-foot box. The floor bound encodes exactly this argument (units that may not ride on top
+under the stacking rules the batch needs at least <!--n:ro_floor_pallet-->21<!--/n--> pallet-size floor stacks and <!--n:ro_floor_other-->3<!--/n--> crate stacks, <!--n:ro_floor_m2-->29.0 m2<!--/n--> of floor,
+more than the <!--n:ro_floor_40-->28.0 m2<!--/n--> of a 40-foot box. The floor bound encodes exactly this argument (units that may not ride on top
 need floor; each can carry at most one unit; the rest pair up at best). On 200 random instances (40HC) the heuristic
 equals the lower bound in <!--n:ro_load_eq-->105/200<!--/n--> and is never more than <!--n:ro_load_gap-->1<!--/n--> box
 above it; whether such a gap is the heuristic's or the bound's is not resolved (the bound ignores the 33 cm of width a
-pair of 1.0 m pallets leaves unused). A detail the model surfaced: with the tabulated 11.998 m interior, ten 1.2 m pallet
-rows miss a 40-foot box by 2 mm.
+pair of 1.0 m pallets leaves unused). A detail the model surfaced: with the tabulated 11.998 m interior, <!--n:ro_rows_short-->10<!--/n--> rows of <!--n:ro_pallet_len-->1.2 m<!--/n--> pallets
+miss a 40-foot box by <!--n:ro_short_mm-->2 mm<!--/n-->.
 
 **(e) Consolidation frequency (sea, totals over the seven markets, 72 sites each).**
 
@@ -473,28 +501,12 @@ Monte Carlo, the market-selection rule re-derived from the committed shares, shi
 sample, container loading (every unit exactly once, no overweight, no overheight, no overlap, lower bound <=
 heuristic, plus hand-made infeasible plans the checker must reject), and the cost arithmetic of each mode policy.
 
-`tools/mutation_test.py` breaks the code or configuration on purpose (wrong payer cells, dropped
-insurance from customs value, receipts before demand, off-by-one lead time, one-sided MILP
-linearisation, LP rows removed, ...) and checks that the suite fails:
-**<!--n:mut_caught-->60/60<!--/n--> mutants caught** (details in `results/mutation_report.json`).
-The first run caught 20/25 (`results/mutation_report_round1.json`): one mutant was equivalent
-(it re-ordered two additions; replaced by a real timing change) and four were genuine test gaps -
-VAT base without duty (Singapore duty is 0, so only an EU-style test can see it), the (r,Q) "+1 batch",
-the 365-day holding convention, and the size-L floor-level rule. Tests were added for each, then
-the full set was re-run. The real-order check (Parts 1b, 2b) added 17 mutants for its own code (cleaning
-rules, training/held-out leakage, an unpaired bootstrap, the vectorised router, the replay window, ...); the
-mutation run hides the raw file, as CI does, so only checks that run in CI can catch them. Part 5 added 18 mutants: wrong lognormal fits, a mixture-variance error, a dropped port-call allowance,
-unconditioned transshipment time, a planning quantile that rounds down, one inland leg shared by a week's sites,
-a load checker blind to overlaps, ignored top-load and payload limits, a floor bound that forgets what carriers
-hold, split legs planned at p instead of sqrt(p), an expedite that never arrives first, a 360-day year, chargeable
-weight without volume, a market rule that picks the smallest partner, consolidation without slack, and a config
-switch to another dwell fit. All were caught on their first run.
-
-Both additions exposed the same tool bug: on a Windows checkout with CRLF line endings (`core.autocrlf`), the
-tool's multi-line patterns matched nothing, so those mutants were silently counted as "invalid" and left out of
-the score (8 of the original 25 on one run here) while a smaller total still looked clean. The tool now matches
-its patterns on LF-normalised text, restores the original bytes afterwards, prints the number of invalid mutants
-next to the score and exits with an error if any pattern fails to match; the score above is from a run with none.
+`tools/mutation_test.py` breaks the code or configuration on purpose (wrong payer cells, off-by-one lead
+time, leakage between training and held-out orders, a floor bound that forgets what carriers hold, ...) and checks
+that the suite fails: **<!--n:mut_caught-->60/60<!--/n--> mutants caught** (details in `results/mutation_report.json`;
+how the mutant set grew, and a tool bug it exposed, in [docs/TESTING.md](docs/TESTING.md)).
+`tools/check_results.py` compares every regenerated file in `results/` with the committed one (numbers within a
+relative 1e-6, text exact; wall-clock runtimes go to the git-ignored `results/timings/`).
 
 ## Limitations
 

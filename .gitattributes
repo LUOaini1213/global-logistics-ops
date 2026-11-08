@@ -1,2 +1,5 @@
+# LF in the repository and in every checkout, so results regenerated on Windows and Linux
+# compare byte for byte and the mutation tool's patterns match (see docs/TESTING.md)
+* text=auto eol=lf
 # derived data tables: tests/test_real_orders.py compares regenerated files byte for byte
 data/public/online_retail_ii/* text eol=lf

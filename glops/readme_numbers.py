@@ -1,7 +1,7 @@
 """README numbers are generated from results/summary.json, never typed by hand.
 
 The README contains markers ``<!--n:KEY-->VALUE<!--/n-->``. ``run_all.py`` rewrites
-VALUE from ``numbers(summary)``; tests/test_readme_numbers.py re-derives every value
+VALUE from ``numbers(summary)``; tests/test_readme_and_data.py re-derives every value
 from results/summary.json and fails if the README disagrees.
 """
 from __future__ import annotations
@@ -96,6 +96,24 @@ def rollout_numbers(R: dict) -> dict:
         "ro_load_gap": f"{R['loading']['random_40hc']['max_gap_boxes']}",
         "ro_best_sea": f"{sum(v == 'sea' for v in R['policy_best'].values())}/{len(mk)}",
     }
+    kit, fl, fr = R["kit"], R["loading"]["weekly_floor"], R["policy_fresh"]
+    n.update({
+        "ro_kit_value_share": f"{100 * kit['critical_value_share']:.0f}%",
+        "ro_kit_weight_share": f"{100 * kit['critical_weight_share']:.0f}%",
+        "ro_buffer_day": f"USD {kit['buffer_usd_per_site_day']:.0f}",
+        "ro_hold_rate": f"{100 * kit['holding_rate_per_year']:.0f}%/yr",
+        "ro_exp_premium": f"{100 * kit['expedite_premium']:.0f}%",
+        "ro_floor_pallet": str(fl["pallet_stacks"]), "ro_floor_other": str(fl["other_stacks"]),
+        "ro_floor_m2": f"{fl['floor_m2']:.1f} m2", "ro_floor_40": f"{fl['floor_40ft_m2']:.1f} m2",
+        "ro_rows_short": str(fl["pallet_rows_not_fitting"]), "ro_pallet_len": f"{fl['pallet_length_m']:.1f} m",
+        "ro_short_mm": f"{fl['rows_short_mm']:.0f} mm",
+        "ro_fresh_n": f"{fr['n_draws']:,}",
+        "ro_fresh_sea": _rng_pct(fr["on_time"]["sea"], 1), "ro_fresh_air": _rng_pct(fr["on_time"]["air"], 1),
+        "ro_fresh_split": _rng_pct(fr["on_time"]["split"], 1),
+        "ro_fresh_expedite": _rng_pct(fr["on_time"]["sea_expedite"], 1),
+        "ro_fresh_cost": f"{fr['max_abs_cost_change_pct']:.2f}%",
+        "ro_fresh_same_best": f"{sum(fr['policy_best_fresh'][m] == R['policy_best'][m] for m in mk)}/{len(mk)}",
+    })
     sens = R["sensitivity"]
     for key, var in (("transship", "no transshipment"), ("dwell_up", "destination dwell x 1.25"),
                      ("dwell_down", "destination dwell x 0.75"), ("fit", "dwell fit: median + mean"),

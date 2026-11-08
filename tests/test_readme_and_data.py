@@ -41,3 +41,40 @@ def test_seasonal_index_normalised():
     idx = public_data.seasonal_index()
     assert idx.shape == (12,) and np.isclose(idx.mean(), 1.0)
     assert idx.argmin() == 1          # February (Lunar New Year) is the weakest month
+
+
+def test_testing_doc_counts_match_mutation_reports():
+    """docs/TESTING.md quotes the mutant counts in prose; pin them to the reports and the tool."""
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("mutation_test", ROOT / "tools" / "mutation_test.py")
+    mt = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(mt)
+    doc = (ROOT / "docs" / "TESTING.md").read_text(encoding="utf-8")
+    now, first = read_json(RESULTS / "mutation_report.json"), read_json(RESULTS / "mutation_report_round1.json")
+    part5 = sum(f in ("glops/rollout.py", "config/rollout.json") for f, *_ in mt.MUTANTS)
+    real = len(mt.MUTANTS) - first["total"] - part5
+    assert now["total"] == len(mt.MUTANTS) and now["caught"] == now["total"] and not now.get("invalid")
+    assert f"({now['caught']}/{now['total']} caught, 0 invalid)" in doc
+    assert f"## Round 1: {first['total']} mutants" in doc and f"caught {first['caught']}/{first['total']}" in doc
+    assert f"{real} more mutants" in doc and f"{part5} more mutants" in doc
+
+
+def test_check_results_tolerates_float_noise_only():
+    import importlib.util
+    spec = importlib.util.spec_from_file_location("check_results", ROOT / "tools" / "check_results.py")
+    cr = importlib.util.module_from_spec(spec)
+    spec.loader.exec_module(cr)
+    D = cr.Diff(1e-6, 1e-9)
+    D.tree("j", {"a": 1.0, "b": [2.0, "x"], "c": True}, {"a": 1.0 + 1e-12, "b": [2.0, "x"], "c": True})
+    D.csv("c", "k,v\na,0.123456\n", "k,v\na,0.123456\n")
+    assert D.errors == []
+    for old, new in (({"a": 1.0}, {"a": 1.001}), ({"a": "x"}, {"a": "y"}), ({"a": 1}, {"b": 1}),
+                     ({"a": [1, 2]}, {"a": [1]}), ({"a": True}, {"a": False})):
+        D = cr.Diff(1e-6, 1e-9)
+        D.tree("j", old, new)
+        assert D.errors, (old, new)
+    for old, new in (("k,v\na,1.0\n", "k,v\na,1.1\n"), ("k,v\na,1\n", "k,w\na,1\n"),
+                     ("k,v\na,1\n", "k,v\na,1\nb,2\n")):
+        D = cr.Diff(1e-6, 1e-9)
+        D.csv("c", old, new)
+        assert D.errors, (old, new)

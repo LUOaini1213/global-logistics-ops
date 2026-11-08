@@ -584,36 +584,48 @@ def sea_freight_per_site(cfg: dict, market: str, sites: int, kinds: set | None =
     return {"per_site": per, "batch": lb}
 
 
-def evaluate_policy(policy: str, p: float, T: dict, kits: dict, freight: dict, cfg: dict) -> dict:
-    """In-sample evaluation of one plan. ``T`` holds lead-time samples: sea, air (site level),
-    sea_gate (sea time until the box leaves the destination port) and air2 (an independent air
-    draw, used for an expedited replacement). Planned air shipments are consolidated per week like
-    sea (``freight["sites"]`` sites share one air-waybill fee); an expedite is a single-site
-    shipment. Returns mean cost per site and on-time rate."""
+def evaluate_policy(policy: str, p: float, T: dict, kits: dict, freight: dict, cfg: dict,
+                    plan: dict | None = None) -> dict:
+    """Evaluate one plan on the lead-time samples ``T``: sea, air (site level), sea_gate (sea
+    time until the box leaves the destination port) and air2 (an independent air draw, used for
+    an expedited replacement). Planned air shipments are consolidated per week like sea
+    (``freight["sites"]`` sites share one air-waybill fee); an expedite is a single-site
+    shipment. Returns mean cost per site, on-time rate and the plan's fixed day counts
+    (``plan``).
+
+    With ``plan=None`` the ship-ahead days are quantiles of ``T`` itself (in-sample: the same
+    draws set the plan and score it). Passing the ``plan`` returned by an earlier call scores
+    those fixed day counts on other draws (out-of-sample)."""
     c = cfg["costs"]
     inland = c["per_delivery_inland_usd"]
     air_fee = c["per_shipment_air_usd"] / freight["sites"]
     full, bulky, crit = kits["full"], kits["bulky"], kits["critical"]
     if policy in ("sea", "air"):
         t = T[policy]
-        L = quantile(t, p)
+        L = quantile(t, p) if plan is None else plan["L"]
         early = np.maximum(0.0, L - t)
         fr = freight["sea_full"] if policy == "sea" else air_freight(full, freight["market"], cfg) + air_fee
         cost = fr + inland + holding(full, t, cfg, False) + holding(full, early, cfg, True)
-        return {"on_time": float(np.mean(t <= L)), "cost": float(np.mean(cost)), "lead_days": L}
+        return {"on_time": float(np.mean(t <= L)), "cost": float(np.mean(cost)), "lead_days": L,
+                "plan": {"L": L}}
     if policy == "split":
         q = math.sqrt(p)
         Ls, La = quantile(T["sea"], q), quantile(T["air"], q)
+        if plan is not None:
+            Ls, La = plan["Ls"], plan["La"]
         es, ea = np.maximum(0.0, Ls - T["sea"]), np.maximum(0.0, La - T["air"])
         fr = freight["sea_bulky"] + air_freight(crit, freight["market"], cfg) + air_fee
         cost = (fr + 2 * inland + holding(bulky, T["sea"], cfg, False) + holding(crit, T["air"], cfg, False)
                 + holding(bulky, es, cfg, True) + holding(crit, ea, cfg, True))
         ok = (T["sea"] <= Ls) & (T["air"] <= La)
-        return {"on_time": float(np.mean(ok)), "cost": float(np.mean(cost)), "lead_days": Ls}
+        return {"on_time": float(np.mean(ok)), "cost": float(np.mean(cost)), "lead_days": Ls,
+                "plan": {"Ls": Ls, "La": La}}
     if policy == "sea_expedite":
         t, gate, t2 = T["sea"], T["sea_gate"], T["air2"]
         L = quantile(t, p)
         decide = max(0.0, L - quantile(T["air"], cfg["mc"]["on_time_target"]))
+        if plan is not None:
+            L, decide = plan["L"], plan["decide"]
         exp = gate > decide                       # still at sea or in the port at the last safe air date
         arrive = np.where(exp, np.minimum(t, decide + t2), t)
         early = np.maximum(0.0, L - arrive)
@@ -623,13 +635,14 @@ def evaluate_policy(policy: str, p: float, T: dict, kits: dict, freight: dict, c
         cost = (freight["sea_full"] + inland + holding(full, t, cfg, False) + holding(full, early, cfg, True)
                 + exp * air_cost)
         return {"on_time": float(np.mean(arrive <= L)), "cost": float(np.mean(cost)), "lead_days": L,
-                "expedite_rate": float(np.mean(exp))}
+                "expedite_rate": float(np.mean(exp)), "plan": {"L": L, "decide": decide}}
     raise ValueError(f"unknown policy {policy!r}")
 
 
 def cheapest_at_target(policy: str, T: dict, kits: dict, freight: dict, cfg: dict,
                        target: float, grid: list) -> dict:
-    """Cheapest plan on ``grid`` whose in-sample on-time rate reaches ``target``. (Cost is not
+    """Cheapest plan on ``grid`` whose in-sample on-time rate reaches ``target`` (the experiment
+    then re-scores the chosen plan on fresh draws, see ``evaluate_policy(plan=...)``). (Cost is not
     monotone in the quantile for sea_expedite: a short sea plan triggers many air expedites.)"""
     evals = [{**evaluate_policy(policy, p, T, kits, freight, cfg), "plan_quantile": p} for p in sorted(grid)]
     ok = [r for r in evals if r["on_time"] >= target]
